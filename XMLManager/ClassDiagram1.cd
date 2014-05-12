@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="XMLManager.FileManager">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAgQAAgAAIgAAIBAAQAAAAAAAAggAAAAAA=</HashCode>
+      <FileName>FileManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XMLManager.Parser" Collapsed="true">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Parser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XMLManager.XMLObjects.GameState" Collapsed="true">
+    <Position X="5.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>XMLObjects\GameState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XMLManager.XMLObjects.HighScores" Collapsed="true">
+    <Position X="5.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>XMLObjects\HighScores.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XMLManager.XMLObjects.Settings" Collapsed="true">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>XMLObjects\Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

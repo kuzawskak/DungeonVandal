@@ -1,0 +1,73 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
+
+namespace Game.Map
+{
+    public class MapObject
+    {
+        protected Texture2D texture;
+        protected Rectangle rectangle;
+        protected ContentManager content;
+
+        public bool IsAccesible
+        {
+            get;
+            protected set;
+        }
+        //wspolrzedne na mapie
+        protected int x, y;
+
+        public Texture2D Texture
+        {
+            get { return texture;}
+            set {texture = value;}
+        }
+        public Rectangle Rectangle
+        {
+            get { return rectangle; }
+            set { rectangle = value; }
+        }
+        public MapObject() { }
+        public MapObject(ContentManager content , Rectangle rectangle, string assetName)
+        {
+            this.texture = content.Load<Texture2D>(assetName);
+            this.rectangle = rectangle;
+            IsAccesible = true;
+            
+        }
+
+        public MapObject(ContentManager content, Rectangle rectangle, string assetName,int x, int y)
+        {
+            this.texture = content.Load<Texture2D>(assetName);
+            this.rectangle = rectangle;
+            this.x = x;
+            this.y = y;
+        }
+
+        public void Draw(SpriteBatch spritebatch) {
+
+           spritebatch.Draw(texture, rectangle, Color.White);
+        }
+
+        public virtual void onCollisionDetected(Map map,MapObject map_object)
+        {
+
+        }
+
+        public virtual void Update(GameTime gametime,Map map) {
+        }
+
+        void onExplosion() { 
+            //default do nothing
+        }
+        void Die() { 
+            //change itself to empty firld
+            //get map and 
+        }
+    }
+}
