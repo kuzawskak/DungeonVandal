@@ -8,16 +8,99 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using System.Windows.Forms;
 using System.Threading;
-using DungeonVandal;
+using Game.Panels;
 
 
 namespace DungeonVandal
 {
     public partial class MenuForm : Form
     {
-        Game.Game gameInstance;
-        string playerName = null;
-        Panel activePanel;
+
+        /// <summary>
+        /// Wszytkie panele aplikacji
+        /// ( w zaleznosci od wyboru menu odpowiedni jest ustwiany na aktywny
+        /// </summary>
+        public MainPanel main_panel = new MainPanel();
+        public PausePanel pause_panel = new PausePanel();
+        public SettingsPanel settings_panel = new SettingsPanel();
+        public AudioSettingsPanel audio_settings_panel = new AudioSettingsPanel();
+        public GraphicSettingsPanel graphic_settings_panel = new GraphicSettingsPanel();
+       // public KeyboardSettingsPanel keyboard_settings_panel = new KeyboardSettingsPanel();
+        public PredefinedSettingsPanel predefined_settings_panel = new PredefinedSettingsPanel();
+        public HelpPanel help_panel = new HelpPanel();
+        public LoadGamePanel load_game_panel = new LoadGamePanel();  
+        public BestScoresPanel best_scores_panel = new BestScoresPanel();
+        public ChooseLevelPanel choose_level_panel = new ChooseLevelPanel();
+        public XnaGamePanel game_panel = new XnaGamePanel();
+
+
+        public Game.Game gameInstance = null;
+        public Game.Player player = null;
+        private Panel activePanel = null;
+
+        public MenuForm()
+        {
+            InitializeComponent();
+            InitializePanels();
+          
+            activePanel = LoginPanel;
+            activePanel.Visible = true;
+            player = new Game.Player();
+        }
+
+        public void InitializePanels()
+        {
+            pause_panel.Dock = DockStyle.Fill;
+            this.Controls.Add(pause_panel);
+            pause_panel.Visible = false;
+            settings_panel.Dock = DockStyle.Fill;
+            this.Controls.Add(settings_panel);
+            settings_panel.Visible = false;
+           // keyboard_settings_panel.Dock = DockStyle.Fill;
+         //   this.Controls.Add(keyboard_settings_panel);
+         //   keyboard_settings_panel.Visible = false;
+            audio_settings_panel.Dock = DockStyle.Fill;
+            this.Controls.Add(audio_settings_panel);
+            audio_settings_panel.Visible = false;
+            graphic_settings_panel.Dock = DockStyle.Fill;
+            this.Controls.Add(graphic_settings_panel);
+            graphic_settings_panel.Visible = false;
+          //  keyboard_settings_panel.Dock = DockStyle.Fill;
+           // this.Controls.Add(keyboard_settings_panel);
+         //   keyboard_settings_panel.Visible = false;
+            predefined_settings_panel.Dock = DockStyle.Fill;
+            this.Controls.Add(predefined_settings_panel);
+            predefined_settings_panel.Visible = false;
+           // keyboard_settings_panel.Dock = DockStyle.Fill;
+         //   this.Controls.Add(keyboard_settings_panel);
+         //   keyboard_settings_panel.Visible = false;
+            help_panel.Dock = DockStyle.Fill;
+            this.Controls.Add(help_panel);
+            help_panel.Visible = false;
+
+            load_game_panel.Dock = DockStyle.Fill;
+            this.Controls.Add(load_game_panel);
+            load_game_panel.Visible = false;
+
+
+            best_scores_panel.Dock = DockStyle.Fill;
+            this.Controls.Add(best_scores_panel);
+            best_scores_panel.Visible = false;
+
+            choose_level_panel.Dock = DockStyle.Fill;
+            this.Controls.Add(choose_level_panel);
+            choose_level_panel.Visible = false;
+
+            game_panel.Dock = DockStyle.Fill;
+            this.Controls.Add(game_panel);
+            game_panel.Visible = false;
+
+            main_panel.Dock = DockStyle.Fill;
+            this.Controls.Add(main_panel);
+            main_panel.Visible = true;
+
+  
+        }
 
         public void setActivePanel(Panel panel)
         {
@@ -30,17 +113,17 @@ namespace DungeonVandal
 
         public IntPtr CanvasHandle
         {
-            get { return GraphicsContainer.Handle; }
+            get { return game_panel.GraphicsContainer.Handle; }
         }
 
         public Size ViewportSize
         {
-            get { return GraphicsContainer.Size; }
+            get { return game_panel.GraphicsContainer.Size; }
         }
 
         public void setPlayerName(string player_name)
         {
-            this.playerNameLabel.Text = player_name;
+            this.game_panel.playerName.Text = player_name;
 
         }
 
@@ -50,32 +133,25 @@ namespace DungeonVandal
             if (minutes_str.Length == 1) minutes_str = "0" + minutes_str;
             string seconds_str = seconds == 0 ? "00" : seconds.ToString();
             if (seconds_str.Length == 1) seconds_str = "0" + seconds_str;
-            this.timeLabel.Text = minutes_str + ":" + seconds_str;
+            this.game_panel.timeLabel.Text = minutes_str + ":" + seconds_str;
         }
 
         public void updatePoints(int points)
         {
-            this.pointsLabel.Text = points.ToString();
+            this.game_panel.pointsLabel.Text = points.ToString();
         }
 
         public void updateDynamite(int dynamite)
         {
-            this.dynamiteLabel.Text = "x" + dynamite.ToString();
+            this.game_panel.dynamiteCounter.Text = "x" + dynamite.ToString();
         }
 
         public void updateRacket(int racket)
         {
-            this.racketLabel.Text = "x" + racket.ToString();
+            this.game_panel.racketCounter.Text = "x" + racket.ToString();
         }
 
-        public MenuForm()
-        {
-            InitializeComponent();
-            activePanel = LoginPanel;
-
-            activePanel.Visible = true;
-
-        }
+     
 
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -85,9 +161,9 @@ namespace DungeonVandal
 
         public void Pause()
         {
-            XnaGamePanel.Visible = false;
-            PausePanel.Visible = true;
-            PausePanel.Focus();
+            game_panel.Visible = false;
+           // PausePanel.Visible = true;
+          //  PausePanel.Focus();
         }
 
        /*
@@ -98,31 +174,10 @@ namespace DungeonVandal
         private void loginButton_Click(object sender, EventArgs e)
         {
             //TODO: 
-            //validate(loginButton.Text);
-            playerName = usernameTextBox.Text;
-            setActivePanel(MenuPanel);
-        }
-
-
-        /*************** MAIN MENU PANEL *********************/
-        private void newGameButton_Click(object sender, EventArgs e)
-        {
-            XnaGamePanel.Visible = true;
-            MenuPanel.Visible = false;
-            gameInstance = new Game.Game(this, playerName);
-            Thread thread = new Thread(new ThreadStart(gameInstance.Run));
-            thread.Start();
-            GraphicsContainer.Focus();
-        }
-
-        private void helpButton_Click(object sender, EventArgs e)
-        {
-            //TODO: show help
-        }
-
-        private void exitButton_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
+            //validate(loginButton.Text)
+            player.Name =  usernameTextBox.Text;          
+            activePanel.Visible = false;
+            main_panel.Visible = true;
         }
 
 
@@ -130,9 +185,9 @@ namespace DungeonVandal
         private void continueGameButton_Click(object sender, EventArgs e)
         {
             //TODO: go back to game
-            PausePanel.Visible = false;
-            XnaGamePanel.Visible = true;
-            GraphicsContainer.Focus();
+          //  PausePanel.Visible = false;
+           game_panel.Visible = true;
+            game_panel.GraphicsContainer.Focus();
             gameInstance.ContinueGame();
         }
 
@@ -149,9 +204,9 @@ namespace DungeonVandal
         private void backMainMenuButton_Click(object sender, EventArgs e)
         {
             //TODO: go to main menu - save instance game for player in XML file firstly
-            PausePanel.Visible = false;
-            MenuPanel.Visible = true;
-            MenuPanel.Focus();
+            //PausePanel.Visible = false;
+            //MenuPanel.Visible = true;
+            //MenuPanel.Focus();
         }
 
 

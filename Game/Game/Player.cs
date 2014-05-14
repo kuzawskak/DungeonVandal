@@ -51,8 +51,16 @@ namespace Game
 
         void UpGrade() { }
 
+
+        public Settings.KeySettings KeyboardSettings { get; set; }
+        public Settings.GraphicsSettings GraphicsSettings { get; set; }
+        public Settings.AudioSettings AudioSettings { get; set; }
+
         public Player()
         {
+            KeyboardSettings = new Settings.KeySettings();
+            GraphicsSettings = new Settings.GraphicsSettings();
+            AudioSettings = new Settings.AudioSettings();
             //inicializacja wszytkich pol na 0   
         }
 

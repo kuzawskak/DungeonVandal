@@ -111,6 +111,78 @@
     <Compile Include="NonDestroyableObjects\MarmurowyKamien.cs" />
     <Compile Include="NonDestroyableObjects\RadioaktywnyGlaz.cs" />
     <Compile Include="NonDestroyableObjects\StaticObject.cs" />
+    <Compile Include="Panels\BestScoresPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\BestScoresPanel.Designer.cs">
+      <DependentUpon>BestScoresPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\ChooseLevelPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\ChooseLevelPanel.Designer.cs">
+      <DependentUpon>ChooseLevelPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\GraphicSettingsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\GraphicSettingsPanel.Designer.cs">
+      <DependentUpon>GraphicSettingsPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\HelpPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\HelpPanel.Designer.cs">
+      <DependentUpon>HelpPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\KeyboardSettingsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\KeyboardSettingsPanel.Designer.cs">
+      <DependentUpon>KeyboardSettingsPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\LoadGamePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\LoadGamePanel.Designer.cs">
+      <DependentUpon>LoadGamePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\MainPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\MainPanel.Designer.cs">
+      <DependentUpon>MainPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\PausePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\PausePanel.Designer.cs">
+      <DependentUpon>PausePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\PredefinedSettingsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\PredefinedSettingsPanel.Designer.cs">
+      <DependentUpon>PredefinedSettingsPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\SettingsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\SettingsPanel.Designer.cs">
+      <DependentUpon>SettingsPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\AudioSettingsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\AudioSettingsPanel.Designer.cs">
+      <DependentUpon>AudioSettingsPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\XnaGamePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\XnaGamePanel.Designer.cs">
+      <DependentUpon>XnaGamePanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -189,6 +261,33 @@
     <EmbeddedResource Include="MenuForm.resx">
       <DependentUpon>MenuForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\AudioSettingsPanel.resx">
+      <DependentUpon>AudioSettingsPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\GraphicSettingsPanel.resx">
+      <DependentUpon>GraphicSettingsPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\HelpPanel.resx">
+      <DependentUpon>HelpPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\KeyboardSettingsPanel.resx">
+      <DependentUpon>KeyboardSettingsPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\MainPanel.resx">
+      <DependentUpon>MainPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\PausePanel.resx">
+      <DependentUpon>PausePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\PredefinedSettingsPanel.resx">
+      <DependentUpon>PredefinedSettingsPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\SettingsPanel.resx">
+      <DependentUpon>SettingsPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\XnaGamePanel.resx">
+      <DependentUpon>XnaGamePanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
