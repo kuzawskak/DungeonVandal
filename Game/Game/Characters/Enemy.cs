@@ -17,7 +17,7 @@ namespace Game.Characters
     {
         protected int velocity;
         
-        private Game.direction current_direction;
+        protected Game.direction current_direction;
         //ograniczenia mapy - okreslaja granice po ktorych przeciwnik moze sie poruszac
         protected int max_height, max_width;
 
@@ -47,6 +47,8 @@ namespace Game.Characters
                 
             }
         }
+
+
 
         
 

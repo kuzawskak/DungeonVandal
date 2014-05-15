@@ -144,11 +144,10 @@
             this.brightnessTrackbar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.brightnessTrackbar.BackColor = System.Drawing.Color.Black;
             this.brightnessTrackbar.Location = new System.Drawing.Point(169, -1);
-            this.brightnessTrackbar.Maximum = 100;
             this.brightnessTrackbar.Name = "brightnessTrackbar";
             this.brightnessTrackbar.Size = new System.Drawing.Size(506, 45);
             this.brightnessTrackbar.TabIndex = 0;
-            this.brightnessTrackbar.Value = 50;
+            this.brightnessTrackbar.Value = 10;
             this.brightnessTrackbar.Scroll += new System.EventHandler(this.brightnessTrackbar_Scroll);
             // 
             // splitContainer3
@@ -186,11 +185,10 @@
             // 
             this.contrastTrackbar.BackColor = System.Drawing.Color.Black;
             this.contrastTrackbar.Location = new System.Drawing.Point(169, 10);
-            this.contrastTrackbar.Maximum = 100;
             this.contrastTrackbar.Name = "contrastTrackbar";
             this.contrastTrackbar.Size = new System.Drawing.Size(506, 45);
             this.contrastTrackbar.TabIndex = 0;
-            this.contrastTrackbar.Value = 50;
+            this.contrastTrackbar.Value = 10;
             this.contrastTrackbar.Scroll += new System.EventHandler(this.contrastTrackbar_Scroll);
             // 
             // exitButton

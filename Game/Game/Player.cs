@@ -39,6 +39,9 @@ namespace Game
 
         public Player(string name) 
         {
+            KeyboardSettings = new Settings.KeySettings();
+            GraphicsSettings = new Settings.GraphicsSettings();
+            AudioSettings = new Settings.AudioSettings();
             this.name = name;
             this.points = 0;
             this.rackets_count = 0;

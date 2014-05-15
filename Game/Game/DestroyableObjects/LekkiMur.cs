@@ -25,6 +25,7 @@ namespace Game.DestroyableObjects
             this.rectangle = rectangle;
             this.x = x;
             this.y = y;
+            this.IsAccesible = false;
 
         }
         void Draw(GameTime gameTime) { }

@@ -31,6 +31,10 @@ namespace Game.Panels
         private void settings1Button_Click(object sender, EventArgs e)
         {
             ((MenuForm)Parent).player.KeyboardSettings = new Settings.KeySettings(1);
+            ((MenuForm)Parent).keyboard_settings_panel.Visible = true;
+            this.Visible = false;
+            
+
         }
 
         /// <summary>
@@ -41,6 +45,8 @@ namespace Game.Panels
         private void settings2Button_Click(object sender, EventArgs e)
         {
             ((MenuForm)Parent).player.KeyboardSettings = new Settings.KeySettings(2);
+            ((MenuForm)Parent).keyboard_settings_panel.Visible = true;
+            this.Visible = false;
         }
 
         /// <summary>
@@ -51,6 +57,8 @@ namespace Game.Panels
         private void settings3Button_Click(object sender, EventArgs e)
         {
             ((MenuForm)Parent).player.KeyboardSettings = new Settings.KeySettings(3);
+            ((MenuForm)Parent).keyboard_settings_panel.Visible = true;
+            this.Visible = false;
         }
 
         /// <summary>

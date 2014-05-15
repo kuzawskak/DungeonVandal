@@ -6,11 +6,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Game.Weapon;
+using AIHelper;
+
 
 namespace Game.Map
 {
     public class Map
     {
+        public RandomOperator random_operator;
+    
         Player player;
         Rectangle vandal_rectangle;
         public Random rand = new Random();
@@ -30,7 +34,9 @@ namespace Game.Map
         {
             return objects[x, y];
         }
-        private Characters.Blob[] blobs;
+
+        private List<Characters.Enemy> enemies = new List<Characters.Enemy>(); 
+
         ContentManager content;
         public Map(int tile_size,int width, int height, ContentManager content, Player player)
         {
@@ -39,96 +45,98 @@ namespace Game.Map
             this.height = height;
             this.player = player;
             this.tile_size = tile_size;
-            objects = GenerateRandomMap(0, width, height);
+            objects = new MapObject[width, height];
+            random_operator = new RandomOperator(width, height);
+            random_operator.GenerateRandomMap( width, height);
+            CovertIntToObjects(ref objects, random_operator.Map);
+           
         }
 
         public void setObject(int x, int y,MapObject obj)
         {
             objects[x,y] = obj;
         }
-        private List<Weapon.Dynamit> dynamites = new List<Weapon.Dynamit>();
         int last_update = 0;
 
-        public MapObject[,] GenerateRandomMap(int intelligence_level, int width, int height)
+    
+
+
+        private void CovertIntToObjects(ref MapObject[,] map_obj,ElementType[,] objects)
         {
-            MapObject[,] objects = new MapObject[width, height];
-            for (int i = 0; i < width ; i++)
-                for (int j = 0; j < height; j++)
+            for(int x=0;x<width;x++)
+                for (int y = 0; y < height; y++)
                 {
+                    switch(objects[x,y])
                     {
-                        MapObject obj = new DestroyableObjects.Ziemia(content, new Rectangle(i * tile_size, j * tile_size, tile_size, tile_size));
-                        objects[i, j] = obj;
+                        case ElementType.AMEBA:
+                            map_obj[x, y] = new DestroyableObjects.Ameba(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
+                            break;
+                        case ElementType.BECZKAZGAZEM:
+                            break;
+                        case ElementType.BLOB:
+                            map_obj[x, y] = new NonDestroyableObjects.Puste(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size));
+                            enemies.Add( new Characters.Blob(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y));
+                            break;
+                        case ElementType.CHODZACABOMBA:
+                             map_obj[x, y] = new NonDestroyableObjects.Puste(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size));
+                            enemies.Add( new Characters.ChodzacaBomba(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y));
+                            break;
+                        case ElementType.CIEZKIMUR:
+                            map_obj[x,y] = new NonDestroyableObjects.CiezkiMur(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x,y);
+                            break;
+                        case ElementType.DYNAMIT:
+                             map_obj[x,y] = new Weapon.Dynamit(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size,x,y);
+                             break;
+                        case ElementType.GIGANTYCZNYSZCZUR:
+                             break;
+                        case ElementType.GOBLIN:
+                            map_obj[x, y] = new NonDestroyableObjects.Puste(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size));
+                            enemies.Add( new Characters.Goblin(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y));
+                            break;
+                           
+                        case ElementType.KAMIEN:
+                             map_obj[x,y] = new DestroyableObjects.Kamien(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
+                             break;
+                        case ElementType.LEKKIMUR:
+                              map_obj[x,y] = new DestroyableObjects.LekkiMur(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
+                             break;
+                        case ElementType.MAGICZNYMUR:
+                             map_obj[x,y] = new NonDestroyableObjects.MagicznyMur(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
+                             break;
+                        case ElementType.MARMUROWYKAMIEN:
+                            map_obj[x,y] = new NonDestroyableObjects.MarmurowyKamien(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
+                             break;
+                        case ElementType.NIESTABILNABECZKA:
+                            break;
+                        case ElementType.PEKDYNAMITOW:
+
+                            break;
+                        case ElementType.POLESILOWE:
+                            break;
+                        case ElementType.PUSTE:
+                            map_obj[x,y] = new NonDestroyableObjects.Puste(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size));
+                            break;
+                        case ElementType.RACKET:
+                            map_obj[x,y] =  new Weapon.Racket(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
+                            break;
+                        case ElementType.RADIOAKTYWNYGLAZ:
+                            map_obj[x,y] = new NonDestroyableObjects.RadioaktywnyGlaz(content, new Rectangle(x* tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x,y);
+                            break;
+                        case ElementType.VANDAL:
+                            break;
+                        case ElementType.ZIEMIA:
+                            map_obj[x,y] = new DestroyableObjects.Ziemia(content, new Rectangle(x* tile_size, y * tile_size, tile_size, tile_size));
+                            break;
+
+
+
                     }
                 }
+        }
 
-
-            for (int i = 0; i < 10; i++)
-            {
-                int x = rand.Next() % (width);
-                int y = rand.Next() % (height);
-                MapObject d = new NonDestroyableObjects.MagicznyMur(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
-                objects[x, y] = d;
-                x = rand.Next() % (width);
-                y = rand.Next() % (height);
-                MapObject mm = new DestroyableObjects.Kamien(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
-                objects[x, y] = mm;
-               
-
-            }
-
-
-            for (int i = 0; i < 10; i++)
-            {
-                int x = rand.Next() % (width);
-                int y = rand.Next() % (height);
-                MapObject d = new Weapon.Dynamit(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width*tile_size, height*tile_size, x, y);
-                objects[x, y] = d;
-                dynamites.Add((Weapon.Dynamit)d);
-            }
-            blobs = new Characters.Blob[10];
-            //generate blobs in 10 random places
-            for (int i = 0; i < 10; i++)
-            {
-                int x = rand.Next() % (width);
-                int y = rand.Next() % (height);
-               // MapObject b = new Characters.Blob(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
-               // objects[x, y] = b;
-               // blobs[i] = (Characters.Blob)b;
-            }
-
-            for (int i = 0; i < 10; i++)
-            {
-                int x = rand.Next() % (width);
-                int y = rand.Next() % (height);
-                MapObject marmur = new NonDestroyableObjects.MarmurowyKamien(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
-                objects[x, y] = marmur;
-               
-            }
-            for (int i = 0; i < 5; i++)
-            {
-                int x = rand.Next() % (width);
-                int y = rand.Next() % (height);
-                MapObject racket = new Weapon.Racket(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
-                objects[x, y] = racket;
-
-            }
-            for (int i = 0; i < 10; i++)
-            {
-                int x = rand.Next() % (width);
-                int y = rand.Next() % (height);
-                MapObject rg = new NonDestroyableObjects.RadioaktywnyGlaz(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
-                objects[x, y] = rg;
-
-            }
-            for (int i = 0; i < 10; i++)
-            {
-                int x = rand.Next() % (width);
-                int y = rand.Next() % (height);
-                MapObject c = new NonDestroyableObjects.CiezkiMur(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
-                objects[x, y] = c;
-               
-            }
-            return objects;
+        private void ConvertObjectsToInt(ref int[,] int_obj, MapObject[,] objects)
+        {
+            
         }
 
         public void Draw(SpriteBatch spritebatch)
@@ -142,6 +150,14 @@ namespace Game.Map
                     }
                     catch { }
                 }
+            foreach (Characters.Enemy e in enemies)
+            {
+                try
+                {
+                    spritebatch.Draw(e.Texture, e.Rectangle, Color.White);
+                }
+                catch { }
+            }
         }
 
         public bool is_vandal_on_rectangle(int x, int y)
@@ -181,6 +197,16 @@ namespace Game.Map
                 {
                      objects[i,j].Update(gametime,this);
                 }
+
+            foreach (Characters.Enemy e in enemies)
+            {
+                e.Update(gametime, this);
+            }
+        }
+        public void setPlayerName(string name)
+        {
+            player.Name = name;
+
         }
     }
 

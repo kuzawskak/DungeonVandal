@@ -7,18 +7,25 @@ namespace Game.Settings
 {
     public class GraphicsSettings
     {
-        const int DEFAULT_BRIGHTNESS = 50;
-        const int DEFAULT_CONTRAST = 50;
+        const double DEFAULT_BRIGHTNESS = 0.5;
+        const double DEFAULT_CONTRAST = 0.5;
         const bool DEFAULT_IS_MONO = false;
 
-        private int brightness;
-        private int contrast;
-        private bool is_mono;
+        public double Brightness { get; private set; }
+        public double Contrast { get;private set; }
+        public bool IsMono { get; private set; }
 
         public GraphicsSettings() {
+
         //enable default settings
+            Brightness = DEFAULT_BRIGHTNESS;
+            Contrast = DEFAULT_CONTRAST;
+            IsMono = DEFAULT_IS_MONO;
         }
-        public GraphicsSettings(int brightness, int contrast, bool is_mono) {
+        public GraphicsSettings(double brightness, double contrast, bool is_mono) {
+            Brightness = brightness;
+            Contrast = contrast;
+            IsMono = is_mono;
         }
     }
 }

@@ -174,42 +174,25 @@ namespace DungeonVandal
         private void loginButton_Click(object sender, EventArgs e)
         {
             //TODO: 
-            //validate(loginButton.Text)
-            player.Name =  usernameTextBox.Text;          
+           
+           // sprawdzenie w pliku czy istnieje player - jesli tak zloadowanie jego ustawien , jesli nie stworzenie nowego playera   
+            player = new Game.Player(usernameTextBox.Text);
             activePanel.Visible = false;
             main_panel.Visible = true;
         }
 
-
-        /*************** PAUSE MENU PANEL **********************/
-        private void continueGameButton_Click(object sender, EventArgs e)
+        private void usernameTextBox_Validating(object sender, CancelEventArgs e)
         {
-            //TODO: go back to game
-          //  PausePanel.Visible = false;
-           game_panel.Visible = true;
-            game_panel.GraphicsContainer.Focus();
-            gameInstance.ContinueGame();
+            if (((TextBox)sender).Text.Length == 0)
+            {
+                ((TextBox)sender).BackColor = System.Drawing.Color.Tomato;
+                ((TextBox)sender).Refresh();
+                Thread.Sleep(1000);
+                ((TextBox)sender).BackColor = System.Drawing.Color.White;
+                e.Cancel = true;
+            }
+          
         }
-
-        private void settingsPauseButton_Click(object sender, EventArgs e)
-        {
-            //TODO:show settings menu
-        }
-
-        private void saveGameButton_Click(object sender, EventArgs e)
-        {
-            //TODO:save game state in xml
-        }
-
-        private void backMainMenuButton_Click(object sender, EventArgs e)
-        {
-            //TODO: go to main menu - save instance game for player in XML file firstly
-            //PausePanel.Visible = false;
-            //MenuPanel.Visible = true;
-            //MenuPanel.Focus();
-        }
-
-
 
 
     }

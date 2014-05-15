@@ -26,7 +26,7 @@ namespace Game.Panels
             XnaGamePanel game_panel = ((MenuForm)Parent).game_panel;
             MenuForm form = (MenuForm)Parent;
             game_panel.Visible = true;           
-            form.gameInstance = new Game(form, form.player.Name);
+            form.gameInstance = new Game(form, form.player);
             Thread thread = new Thread(new ThreadStart(form.gameInstance.Run));
             thread.Start();
             game_panel.GraphicsContainer.Focus();
@@ -40,9 +40,9 @@ namespace Game.Panels
         private void SettingsButton_Click(object sender, EventArgs e)
         {
             this.Visible = false;
-            SettingsPanel settings_panel = new SettingsPanel();
-            settings_panel.Dock = DockStyle.Fill;
-            this.Parent.Controls.Add(settings_panel);
+            ((MenuForm)Parent).settings_panel.GamePause = false;
+            ((MenuForm)Parent).settings_panel.Visible = true;
+            ((MenuForm)Parent).settings_panel.Focus();
 
 
         }
@@ -65,7 +65,7 @@ namespace Game.Panels
             MenuForm form = (MenuForm)Parent;
             game_panel.Visible = true;
             this.Visible = false;
-            form.gameInstance = new Game(form, form.player.Name);
+            form.gameInstance = new Game(form, form.player);
             Thread thread = new Thread(new ThreadStart(form.gameInstance.Run));
             thread.Start();
             game_panel.GraphicsContainer.Focus();

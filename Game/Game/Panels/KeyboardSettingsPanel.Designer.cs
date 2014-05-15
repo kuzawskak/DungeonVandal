@@ -135,8 +135,10 @@
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(111, 42);
             this.exitButton.TabIndex = 1;
+            this.exitButton.TabStop = false;
             this.exitButton.Text = "Wyjdź";
             this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click_1);
             // 
             // tableLayoutPanel1
             // 
@@ -207,8 +209,11 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(69, 67);
             this.button1.TabIndex = 2;
+            this.button1.TabStop = false;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button1_KeyDown);
+            this.button1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.button1_KeyUp);
             // 
             // splitContainer3
             // 
@@ -254,8 +259,12 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(69, 67);
             this.button2.TabIndex = 3;
+            this.button2.TabStop = false;
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.VisibleChanged += new System.EventHandler(this.button2_VisibleChanged);
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button2_KeyDown);
+            this.button2.KeyUp += new System.Windows.Forms.KeyEventHandler(this.button2_KeyUp);
             // 
             // splitContainer4
             // 
@@ -301,8 +310,11 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(69, 67);
             this.button3.TabIndex = 3;
+            this.button3.TabStop = false;
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button3_KeyDown);
+            this.button3.KeyUp += new System.Windows.Forms.KeyEventHandler(this.button3_KeyUp);
             // 
             // splitContainer5
             // 
@@ -348,8 +360,11 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(69, 67);
             this.button4.TabIndex = 3;
+            this.button4.TabStop = false;
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.button4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button4_KeyDown);
+            this.button4.KeyUp += new System.Windows.Forms.KeyEventHandler(this.button4_KeyUp);
             // 
             // splitContainer6
             // 
@@ -395,8 +410,11 @@
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(69, 64);
             this.button5.TabIndex = 3;
+            this.button5.TabStop = false;
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.button5.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button5_KeyDown);
+            this.button5.KeyUp += new System.Windows.Forms.KeyEventHandler(this.button5_KeyUp);
             // 
             // splitContainer7
             // 
@@ -442,8 +460,11 @@
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(69, 67);
             this.button6.TabIndex = 3;
+            this.button6.TabStop = false;
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.button6.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button6_KeyDown);
+            this.button6.KeyUp += new System.Windows.Forms.KeyEventHandler(this.button6_KeyUp);
             // 
             // splitContainer8
             // 
@@ -489,8 +510,11 @@
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(69, 67);
             this.button7.TabIndex = 3;
+            this.button7.TabStop = false;
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.button7.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button7_KeyDown);
+            this.button7.KeyUp += new System.Windows.Forms.KeyEventHandler(this.button7_KeyUp);
             // 
             // button8
             // 
@@ -502,8 +526,10 @@
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(270, 70);
             this.button8.TabIndex = 7;
+            this.button8.TabStop = false;
             this.button8.Text = "Predefiniowane ustawienia";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // KeyboardSettingsPanel
             // 
@@ -515,7 +541,8 @@
             this.Name = "KeyboardSettingsPanel";
             this.Size = new System.Drawing.Size(900, 700);
             this.Load += new System.EventHandler(this.KeyboardSettingsPanel_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyDownHandler);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyboardSettingsPanel_KeyDown);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyboardSettingsPanel_KeyPress);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyUpHandler);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();

@@ -11,17 +11,21 @@ namespace Game.Settings
     public class KeySettings
     {
 
-        public Keys Up { get; set; }
-        public Keys Down { get; set; }
-        public Keys Left { get; set; }
-        public Keys Right { get; set; }
-        public Keys Block { get; set; }
-        public Keys Dynamite { get; set; }
-        public Keys Racket { get; set; }
-        public Keys Pause { get; set; }
+        public Keys Up { get; private set; }
+        public Keys Down { get; private set; }
+        public Keys Left { get; private set; }
+        public Keys Right { get; private set; }
+        public Keys Block { get; private set; }
+        public Keys Dynamite { get; private set; }
+        public Keys Racket { get; private set; }
+        public Keys Pause { get; private set; }
+       
 
         public KeySettings(Dictionary<State, Keys> keys)
         {
+       
+            Pause = System.Windows.Forms.Keys.Escape;
+            
         }
 
        /// <summary>
@@ -30,6 +34,7 @@ namespace Game.Settings
        /// <param name="key_changes"></param>
         public void ApplyChanges(Dictionary<State, Keys> key_changes)
         {
+            Pause = System.Windows.Forms.Keys.Escape;
             foreach (State s in key_changes.Keys)
             {
                 switch (s)
@@ -66,6 +71,7 @@ namespace Game.Settings
         /// <param name="number"></param>
         public KeySettings(int number)
         {
+            Pause = System.Windows.Forms.Keys.Escape;
             switch (number)
             {
                 case 1:

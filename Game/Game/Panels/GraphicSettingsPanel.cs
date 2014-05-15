@@ -6,11 +6,13 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using DungeonVandal;
 
 namespace Game.Panels
 {
     public partial class GraphicSettingsPanel : UserControl
     {
+
         public GraphicSettingsPanel()
         {
             InitializeComponent();
@@ -33,7 +35,9 @@ namespace Game.Panels
 
         private void exitButton_Click(object sender, EventArgs e)
         {
-
+            ((MenuForm)Parent).player.GraphicsSettings = new Settings.GraphicsSettings((double)brightnessTrackbar.Value / 10, (double)contrastTrackbar.Value / 10, monochromaticCheckbox.Checked);
+            this.Visible = false;
+            ((MenuForm)Parent).settings_panel.Visible = true;
         }
     }
 }

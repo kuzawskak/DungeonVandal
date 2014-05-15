@@ -47,12 +47,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomOperator.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Game\Game\Game.csproj">
-      <Project>{2C22C096-EFEA-428D-89EE-27457D8A3AD0}</Project>
-      <Name>Game</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

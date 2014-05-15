@@ -34,11 +34,11 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.musicBarContainer = new System.Windows.Forms.SplitContainer();
             this.musicColumeLabel = new System.Windows.Forms.Label();
-            this.MusicVolumeTrackBar = new System.Windows.Forms.TrackBar();
+            MusicVolumeTrackBar = new System.Windows.Forms.TrackBar();
             this.soundVolumeContainer = new System.Windows.Forms.SplitContainer();
             this.soundVolumeLabel = new System.Windows.Forms.Label();
-            this.musicVolTrackbar = new System.Windows.Forms.TrackBar();
-            this.MuteCheckbox = new System.Windows.Forms.CheckBox();
+            musicVolTrackbar = new System.Windows.Forms.TrackBar();
+            MuteCheckbox = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -49,12 +49,12 @@
             this.musicBarContainer.Panel1.SuspendLayout();
             this.musicBarContainer.Panel2.SuspendLayout();
             this.musicBarContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MusicVolumeTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(MusicVolumeTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.soundVolumeContainer)).BeginInit();
             this.soundVolumeContainer.Panel1.SuspendLayout();
             this.soundVolumeContainer.Panel2.SuspendLayout();
             this.soundVolumeContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.musicVolTrackbar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(musicVolTrackbar)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -99,7 +99,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.musicBarContainer, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.soundVolumeContainer, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.MuteCheckbox, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(MuteCheckbox, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.button1, 0, 3);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -127,7 +127,7 @@
             // 
             // musicBarContainer.Panel2
             // 
-            this.musicBarContainer.Panel2.Controls.Add(this.MusicVolumeTrackBar);
+            this.musicBarContainer.Panel2.Controls.Add(MusicVolumeTrackBar);
             this.musicBarContainer.Size = new System.Drawing.Size(800, 118);
             this.musicBarContainer.SplitterDistance = 58;
             this.musicBarContainer.TabIndex = 1;
@@ -148,14 +148,14 @@
             // 
             // MusicVolumeTrackBar
             // 
-            this.MusicVolumeTrackBar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.MusicVolumeTrackBar.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.MusicVolumeTrackBar.Location = new System.Drawing.Point(46, 3);
-            this.MusicVolumeTrackBar.Maximum = 100;
-            this.MusicVolumeTrackBar.Name = "MusicVolumeTrackBar";
-            this.MusicVolumeTrackBar.Size = new System.Drawing.Size(715, 45);
-            this.MusicVolumeTrackBar.TabIndex = 0;
-            this.MusicVolumeTrackBar.Value = 50;
+            MusicVolumeTrackBar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            MusicVolumeTrackBar.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            MusicVolumeTrackBar.Location = new System.Drawing.Point(46, 3);
+            MusicVolumeTrackBar.Name = "MusicVolumeTrackBar";
+            MusicVolumeTrackBar.Size = new System.Drawing.Size(715, 45);
+            MusicVolumeTrackBar.TabIndex = 0;
+            MusicVolumeTrackBar.Value = 5;
+            MusicVolumeTrackBar.Scroll += new System.EventHandler(this.MusicVolumeTrackBar_Scroll);
             // 
             // soundVolumeContainer
             // 
@@ -172,7 +172,7 @@
             // 
             // soundVolumeContainer.Panel2
             // 
-            this.soundVolumeContainer.Panel2.Controls.Add(this.musicVolTrackbar);
+            this.soundVolumeContainer.Panel2.Controls.Add(musicVolTrackbar);
             this.soundVolumeContainer.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer2_Panel2_Paint);
             this.soundVolumeContainer.Size = new System.Drawing.Size(800, 118);
             this.soundVolumeContainer.SplitterDistance = 58;
@@ -192,31 +192,31 @@
             // 
             // musicVolTrackbar
             // 
-            this.musicVolTrackbar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.musicVolTrackbar.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.musicVolTrackbar.Location = new System.Drawing.Point(46, 3);
-            this.musicVolTrackbar.Maximum = 100;
-            this.musicVolTrackbar.Name = "musicVolTrackbar";
-            this.musicVolTrackbar.Size = new System.Drawing.Size(715, 45);
-            this.musicVolTrackbar.TabIndex = 1;
-            this.musicVolTrackbar.Value = 50;
+            musicVolTrackbar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            musicVolTrackbar.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            musicVolTrackbar.Location = new System.Drawing.Point(46, 3);
+            musicVolTrackbar.Name = "musicVolTrackbar";
+            musicVolTrackbar.Size = new System.Drawing.Size(715, 45);
+            musicVolTrackbar.TabIndex = 1;
+            musicVolTrackbar.Value = 5;
+            musicVolTrackbar.Scroll += new System.EventHandler(this.musicVolTrackbar_Scroll);
             // 
             // MuteCheckbox
             // 
-            this.MuteCheckbox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.MuteCheckbox.AutoSize = true;
-            this.MuteCheckbox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.MuteCheckbox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.MuteCheckbox.Font = new System.Drawing.Font("Trebuchet MS", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.MuteCheckbox.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.MuteCheckbox.Location = new System.Drawing.Point(275, 289);
-            this.MuteCheckbox.Name = "MuteCheckbox";
-            this.MuteCheckbox.Size = new System.Drawing.Size(255, 41);
-            this.MuteCheckbox.TabIndex = 3;
-            this.MuteCheckbox.Text = "Wycisz wszystko";
-            this.MuteCheckbox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MuteCheckbox.UseVisualStyleBackColor = true;
-            this.MuteCheckbox.CheckedChanged += new System.EventHandler(this.MuteCheckbox_CheckedChanged);
+            MuteCheckbox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            MuteCheckbox.AutoSize = true;
+            MuteCheckbox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            MuteCheckbox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            MuteCheckbox.Font = new System.Drawing.Font("Trebuchet MS", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            MuteCheckbox.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            MuteCheckbox.Location = new System.Drawing.Point(275, 289);
+            MuteCheckbox.Name = "MuteCheckbox";
+            MuteCheckbox.Size = new System.Drawing.Size(255, 41);
+            MuteCheckbox.TabIndex = 3;
+            MuteCheckbox.Text = "Wycisz wszystko";
+            MuteCheckbox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            MuteCheckbox.UseVisualStyleBackColor = true;
+            MuteCheckbox.CheckedChanged += new System.EventHandler(this.MuteCheckbox_CheckedChanged);
             // 
             // button1
             // 
@@ -230,6 +230,7 @@
             this.button1.TabIndex = 4;
             this.button1.Text = "Wyjdź";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // AudioSettingsPanel
             // 
@@ -253,14 +254,14 @@
             this.musicBarContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.musicBarContainer)).EndInit();
             this.musicBarContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.MusicVolumeTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(MusicVolumeTrackBar)).EndInit();
             this.soundVolumeContainer.Panel1.ResumeLayout(false);
             this.soundVolumeContainer.Panel1.PerformLayout();
             this.soundVolumeContainer.Panel2.ResumeLayout(false);
             this.soundVolumeContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.soundVolumeContainer)).EndInit();
             this.soundVolumeContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.musicVolTrackbar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(musicVolTrackbar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -270,13 +271,13 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Label audioLabel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TrackBar MusicVolumeTrackBar;
+        public  static System.Windows.Forms.TrackBar MusicVolumeTrackBar;
         private System.Windows.Forms.SplitContainer musicBarContainer;
         private System.Windows.Forms.Label musicColumeLabel;
         private System.Windows.Forms.SplitContainer soundVolumeContainer;
         private System.Windows.Forms.Label soundVolumeLabel;
-        private System.Windows.Forms.TrackBar musicVolTrackbar;
-        private System.Windows.Forms.CheckBox MuteCheckbox;
+        public static System.Windows.Forms.TrackBar musicVolTrackbar;
+        public static System.Windows.Forms.CheckBox MuteCheckbox;
         private System.Windows.Forms.Button button1;
     }
 }

@@ -65,6 +65,7 @@
             this.usernameTextBox.Name = "usernameTextBox";
             this.usernameTextBox.Size = new System.Drawing.Size(474, 38);
             this.usernameTextBox.TabIndex = 0;
+            this.usernameTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.usernameTextBox_Validating);
             // 
             // loginButton
             // 
@@ -99,6 +100,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(900, 700);
             this.Controls.Add(this.LoginPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
