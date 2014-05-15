@@ -265,6 +265,12 @@
     <EmbeddedResource Include="Panels\AudioSettingsPanel.resx">
       <DependentUpon>AudioSettingsPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Panels\BestScoresPanel.resx">
+      <DependentUpon>BestScoresPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\ChooseLevelPanel.resx">
+      <DependentUpon>ChooseLevelPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Panels\GraphicSettingsPanel.resx">
       <DependentUpon>GraphicSettingsPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -273,6 +279,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Panels\KeyboardSettingsPanel.resx">
       <DependentUpon>KeyboardSettingsPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\LoadGamePanel.resx">
+      <DependentUpon>LoadGamePanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Panels\MainPanel.resx">
       <DependentUpon>MainPanel.cs</DependentUpon>

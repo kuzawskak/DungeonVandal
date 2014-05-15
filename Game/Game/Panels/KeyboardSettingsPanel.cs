@@ -67,6 +67,11 @@ namespace Game.Panels
                 keyboard_changes.Add(current_state, e.KeyData);
         }
 
+        private void KeyboardSettingsPanel_Load(object sender, EventArgs e)
+        {
+
+        }
+
 
     }
 }

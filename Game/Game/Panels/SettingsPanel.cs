@@ -6,6 +6,8 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Game;
+using DungeonVandal;
 
 namespace Game.Panels
 {
@@ -20,34 +22,36 @@ namespace Game.Panels
         private void audioButton_Click(object sender, EventArgs e)
         {
             this.Visible = false;
-            AudioSettingsPanel audio_settings_panel = new AudioSettingsPanel();
-            this.Parent.Controls.Add(audio_settings_panel);
-            audio_settings_panel.Dock = DockStyle.Fill;
-            //audio_settings_panel.Show();
+            ((MenuForm)Parent).audio_settings_panel.Visible = true;
+            ((MenuForm)Parent).audio_settings_panel.Focus();
 
         }
 
         private void graphicsButton_Click(object sender, EventArgs e)
         {
-           // GraphicSettingsPanel graphic_settings_panel = new GraphicSettingsPanel(player);
-
+            this.Visible = false;
+            ((MenuForm)Parent).graphic_settings_panel.Visible = true;
+            ((MenuForm)Parent).graphic_settings_panel.Focus();
         }
 
         private void keyboardButton_Click(object sender, EventArgs e)
         {
-
+            this.Visible = false;
+            ((MenuForm)Parent).keyboard_settings_panel.Visible = true;
+            ((MenuForm)Parent).keyboard_settings_panel.Focus();
         }
 
         private void defaultSettingsButton_Click(object sender, EventArgs e)
         {
-
+            //przywroc ustawienia domyslne
+            //TODO
         }
 
         private void exitButton_Click(object sender, EventArgs e)
         {
-            Parent.Visible = true;
-            this.Parent.Controls.Remove(this);
-           
+            this.Visible = false;
+            ((MenuForm)Parent).settings_panel.Visible = true;
+            ((MenuForm)Parent).settings_panel.Focus();           
         }
     }
 }

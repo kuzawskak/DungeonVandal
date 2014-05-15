@@ -6,6 +6,8 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Game;
+using DungeonVandal;
 
 namespace Game.Panels
 {
@@ -28,7 +30,7 @@ namespace Game.Panels
         /// <param name="e"></param>
         private void settings1Button_Click(object sender, EventArgs e)
         {
-
+            ((MenuForm)Parent).player.KeyboardSettings = new Settings.KeySettings(1);
         }
 
         /// <summary>
@@ -38,7 +40,7 @@ namespace Game.Panels
         /// <param name="e"></param>
         private void settings2Button_Click(object sender, EventArgs e)
         {
-
+            ((MenuForm)Parent).player.KeyboardSettings = new Settings.KeySettings(2);
         }
 
         /// <summary>
@@ -48,7 +50,7 @@ namespace Game.Panels
         /// <param name="e"></param>
         private void settings3Button_Click(object sender, EventArgs e)
         {
-
+            ((MenuForm)Parent).player.KeyboardSettings = new Settings.KeySettings(3);
         }
 
         /// <summary>
@@ -58,7 +60,22 @@ namespace Game.Panels
         /// <param name="e"></param>
         private void backButton_Click(object sender, EventArgs e)
         {
-            this.Parent.Controls.Remove(this);
+           // this.Parent.Controls.Remove(this);
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void KeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Visible = false;
+                ((MenuForm)Parent).keyboard_settings_panel.Visible = true;
+                ((MenuForm)Parent).keyboard_settings_panel.Focus();
+            }
         }
     }
 }

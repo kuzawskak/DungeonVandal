@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AudioSettingsPanel));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.audioLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -61,7 +62,8 @@
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer1.BackColor = System.Drawing.Color.Transparent;
+            this.splitContainer1.Location = new System.Drawing.Point(45, 41);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -72,8 +74,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel1);
-            this.splitContainer1.Size = new System.Drawing.Size(894, 694);
-            this.splitContainer1.SplitterDistance = 125;
+            this.splitContainer1.Size = new System.Drawing.Size(809, 615);
+            this.splitContainer1.SplitterDistance = 110;
             this.splitContainer1.TabIndex = 0;
             // 
             // audioLabel
@@ -82,11 +84,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.audioLabel.AutoSize = true;
-            this.audioLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.audioLabel.Font = new System.Drawing.Font("Trebuchet MS", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.audioLabel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.audioLabel.Location = new System.Drawing.Point(324, 40);
+            this.audioLabel.Location = new System.Drawing.Point(225, 32);
             this.audioLabel.Name = "audioLabel";
-            this.audioLabel.Size = new System.Drawing.Size(309, 37);
+            this.audioLabel.Size = new System.Drawing.Size(365, 46);
             this.audioLabel.TabIndex = 0;
             this.audioLabel.Text = "Ustawienia dźwięku";
             this.audioLabel.Click += new System.EventHandler(this.audioLabel_Click);
@@ -106,7 +108,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(891, 559);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(806, 498);
             this.tableLayoutPanel1.TabIndex = 0;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
@@ -126,8 +128,8 @@
             // musicBarContainer.Panel2
             // 
             this.musicBarContainer.Panel2.Controls.Add(this.MusicVolumeTrackBar);
-            this.musicBarContainer.Size = new System.Drawing.Size(885, 133);
-            this.musicBarContainer.SplitterDistance = 66;
+            this.musicBarContainer.Size = new System.Drawing.Size(800, 118);
+            this.musicBarContainer.SplitterDistance = 58;
             this.musicBarContainer.TabIndex = 1;
             // 
             // musicColumeLabel
@@ -136,11 +138,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.musicColumeLabel.AutoSize = true;
-            this.musicColumeLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.musicColumeLabel.Font = new System.Drawing.Font("Trebuchet MS", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.musicColumeLabel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.musicColumeLabel.Location = new System.Drawing.Point(359, 16);
+            this.musicColumeLabel.Location = new System.Drawing.Point(289, 9);
             this.musicColumeLabel.Name = "musicColumeLabel";
-            this.musicColumeLabel.Size = new System.Drawing.Size(217, 30);
+            this.musicColumeLabel.Size = new System.Drawing.Size(239, 37);
             this.musicColumeLabel.TabIndex = 1;
             this.musicColumeLabel.Text = "Głośność muzyki";
             // 
@@ -148,7 +150,7 @@
             // 
             this.MusicVolumeTrackBar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.MusicVolumeTrackBar.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.MusicVolumeTrackBar.Location = new System.Drawing.Point(112, 3);
+            this.MusicVolumeTrackBar.Location = new System.Drawing.Point(46, 3);
             this.MusicVolumeTrackBar.Maximum = 100;
             this.MusicVolumeTrackBar.Name = "MusicVolumeTrackBar";
             this.MusicVolumeTrackBar.Size = new System.Drawing.Size(715, 45);
@@ -160,7 +162,7 @@
             this.soundVolumeContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.soundVolumeContainer.Location = new System.Drawing.Point(3, 142);
+            this.soundVolumeContainer.Location = new System.Drawing.Point(3, 127);
             this.soundVolumeContainer.Name = "soundVolumeContainer";
             this.soundVolumeContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -172,18 +174,18 @@
             // 
             this.soundVolumeContainer.Panel2.Controls.Add(this.musicVolTrackbar);
             this.soundVolumeContainer.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer2_Panel2_Paint);
-            this.soundVolumeContainer.Size = new System.Drawing.Size(885, 133);
-            this.soundVolumeContainer.SplitterDistance = 66;
+            this.soundVolumeContainer.Size = new System.Drawing.Size(800, 118);
+            this.soundVolumeContainer.SplitterDistance = 58;
             this.soundVolumeContainer.TabIndex = 2;
             // 
             // soundVolumeLabel
             // 
             this.soundVolumeLabel.AutoSize = true;
-            this.soundVolumeLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.soundVolumeLabel.Font = new System.Drawing.Font("Trebuchet MS", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.soundVolumeLabel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.soundVolumeLabel.Location = new System.Drawing.Point(350, 22);
+            this.soundVolumeLabel.Location = new System.Drawing.Point(267, 10);
             this.soundVolumeLabel.Name = "soundVolumeLabel";
-            this.soundVolumeLabel.Size = new System.Drawing.Size(249, 30);
+            this.soundVolumeLabel.Size = new System.Drawing.Size(278, 37);
             this.soundVolumeLabel.TabIndex = 0;
             this.soundVolumeLabel.Text = "Głośność dżwięków";
             this.soundVolumeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -192,7 +194,7 @@
             // 
             this.musicVolTrackbar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.musicVolTrackbar.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.musicVolTrackbar.Location = new System.Drawing.Point(112, 3);
+            this.musicVolTrackbar.Location = new System.Drawing.Point(46, 3);
             this.musicVolTrackbar.Maximum = 100;
             this.musicVolTrackbar.Name = "musicVolTrackbar";
             this.musicVolTrackbar.Size = new System.Drawing.Size(715, 45);
@@ -205,11 +207,11 @@
             this.MuteCheckbox.AutoSize = true;
             this.MuteCheckbox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.MuteCheckbox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.MuteCheckbox.Font = new System.Drawing.Font("Microsoft YaHei UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.MuteCheckbox.Font = new System.Drawing.Font("Trebuchet MS", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.MuteCheckbox.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.MuteCheckbox.Location = new System.Drawing.Point(331, 330);
+            this.MuteCheckbox.Location = new System.Drawing.Point(275, 289);
             this.MuteCheckbox.Name = "MuteCheckbox";
-            this.MuteCheckbox.Size = new System.Drawing.Size(229, 34);
+            this.MuteCheckbox.Size = new System.Drawing.Size(255, 41);
             this.MuteCheckbox.TabIndex = 3;
             this.MuteCheckbox.Text = "Wycisz wszystko";
             this.MuteCheckbox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -220,9 +222,9 @@
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Microsoft YaHei UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button1.Font = new System.Drawing.Font("Trebuchet MS", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button1.Location = new System.Drawing.Point(342, 457);
+            this.button1.Location = new System.Drawing.Point(299, 404);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(207, 61);
             this.button1.TabIndex = 4;
@@ -234,6 +236,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.Controls.Add(this.splitContainer1);
             this.Name = "AudioSettingsPanel";
             this.Size = new System.Drawing.Size(900, 700);

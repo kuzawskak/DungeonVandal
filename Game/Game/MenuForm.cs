@@ -25,7 +25,7 @@ namespace DungeonVandal
         public SettingsPanel settings_panel = new SettingsPanel();
         public AudioSettingsPanel audio_settings_panel = new AudioSettingsPanel();
         public GraphicSettingsPanel graphic_settings_panel = new GraphicSettingsPanel();
-       // public KeyboardSettingsPanel keyboard_settings_panel = new KeyboardSettingsPanel();
+        public KeyboardSettingsPanel keyboard_settings_panel = new KeyboardSettingsPanel();
         public PredefinedSettingsPanel predefined_settings_panel = new PredefinedSettingsPanel();
         public HelpPanel help_panel = new HelpPanel();
         public LoadGamePanel load_game_panel = new LoadGamePanel();  
@@ -34,7 +34,7 @@ namespace DungeonVandal
         public XnaGamePanel game_panel = new XnaGamePanel();
 
 
-        public Game.Game gameInstance = null;
+        public Game.Game gameInstance;
         public Game.Player player = null;
         private Panel activePanel = null;
 
@@ -53,27 +53,27 @@ namespace DungeonVandal
             pause_panel.Dock = DockStyle.Fill;
             this.Controls.Add(pause_panel);
             pause_panel.Visible = false;
+
             settings_panel.Dock = DockStyle.Fill;
             this.Controls.Add(settings_panel);
             settings_panel.Visible = false;
-           // keyboard_settings_panel.Dock = DockStyle.Fill;
-         //   this.Controls.Add(keyboard_settings_panel);
-         //   keyboard_settings_panel.Visible = false;
+
+            keyboard_settings_panel.Dock = DockStyle.Fill;
+            this.Controls.Add(keyboard_settings_panel);
+            keyboard_settings_panel.Visible = false;
+
             audio_settings_panel.Dock = DockStyle.Fill;
             this.Controls.Add(audio_settings_panel);
             audio_settings_panel.Visible = false;
+
             graphic_settings_panel.Dock = DockStyle.Fill;
             this.Controls.Add(graphic_settings_panel);
             graphic_settings_panel.Visible = false;
-          //  keyboard_settings_panel.Dock = DockStyle.Fill;
-           // this.Controls.Add(keyboard_settings_panel);
-         //   keyboard_settings_panel.Visible = false;
+
             predefined_settings_panel.Dock = DockStyle.Fill;
             this.Controls.Add(predefined_settings_panel);
             predefined_settings_panel.Visible = false;
-           // keyboard_settings_panel.Dock = DockStyle.Fill;
-         //   this.Controls.Add(keyboard_settings_panel);
-         //   keyboard_settings_panel.Visible = false;
+
             help_panel.Dock = DockStyle.Fill;
             this.Controls.Add(help_panel);
             help_panel.Visible = false;
@@ -81,7 +81,6 @@ namespace DungeonVandal
             load_game_panel.Dock = DockStyle.Fill;
             this.Controls.Add(load_game_panel);
             load_game_panel.Visible = false;
-
 
             best_scores_panel.Dock = DockStyle.Fill;
             this.Controls.Add(best_scores_panel);
@@ -162,8 +161,9 @@ namespace DungeonVandal
         public void Pause()
         {
             game_panel.Visible = false;
-           // PausePanel.Visible = true;
-          //  PausePanel.Focus();
+            pause_panel.Visible = true;
+            pause_panel.Focus();
+
         }
 
        /*

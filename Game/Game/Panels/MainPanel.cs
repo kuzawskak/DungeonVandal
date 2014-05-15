@@ -20,14 +20,14 @@ namespace Game.Panels
             InitializeComponent();
         }
 
-        private void NewGameButton_Click(object sender, EventArgs e)
+        private void LoadGameButton_Click(object sender, EventArgs e)
         {
             this.Visible = false;
             XnaGamePanel game_panel = ((MenuForm)Parent).game_panel;
             MenuForm form = (MenuForm)Parent;
             game_panel.Visible = true;           
-            Game gameInstance = new Game(form, form.player.Name);
-            Thread thread = new Thread(new ThreadStart(gameInstance.Run));
+            form.gameInstance = new Game(form, form.player.Name);
+            Thread thread = new Thread(new ThreadStart(form.gameInstance.Run));
             thread.Start();
             game_panel.GraphicsContainer.Focus();
         }
@@ -65,8 +65,8 @@ namespace Game.Panels
             MenuForm form = (MenuForm)Parent;
             game_panel.Visible = true;
             this.Visible = false;
-            Game gameInstance = new Game(form, form.player.Name);
-            Thread thread = new Thread(new ThreadStart(gameInstance.Run));
+            form.gameInstance = new Game(form, form.player.Name);
+            Thread thread = new Thread(new ThreadStart(form.gameInstance.Run));
             thread.Start();
             game_panel.GraphicsContainer.Focus();
         }
