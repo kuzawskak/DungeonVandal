@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Windows.Forms;
 using Microsoft.Xna.Framework.Audio;
+using Game.Features;
 
 namespace Game.Characters
 {
@@ -19,11 +20,11 @@ namespace Game.Characters
         /// Czas pozostaly przez ktory Vandal jest niesmiertelny
         /// </summary>
         TimeSpan immortal_time_left;
-        const int velocity = 5;
+        const int velocity = 30;
         /// <summary>
         /// Kierunek ruchu
         /// </summary>
-        Game.direction current_direction;
+        public Game.direction current_direction { get; private set; }
         int max_height, max_width;
         /// <summary>
         /// Obiekt na mapie , z ktorym nastapila kolizja
@@ -32,12 +33,15 @@ namespace Game.Characters
 
         public Vandal(ContentManager content, Rectangle rectangle, int max_width, int max_height)
         {
-            this.content = content;
+            this.content = content;      
             texture = content.Load<Texture2D>("vandal_right");
             this.rectangle = rectangle;
+            this.x =(int)( rectangle.X / rectangle.Width);
+            this.y = (int)(rectangle.Y / rectangle.Height);
             this.max_height = max_height;
             this.max_width = max_width;
- 
+            current_direction = Game.direction.none;
+
         }
 
         /// <summary>
@@ -47,8 +51,24 @@ namespace Game.Characters
         /// <param name="gametime"></param>
         public void LeftDynamite(Map.Map game_map, GameTime gametime)
         {
-            Map.MapObject dynamite = new Weapon.Dynamit(content, this.Rectangle, max_width, max_height, rectangle.X, rectangle.Y,gametime);
-            game_map.setObject(rectangle.X / rectangle.Width, rectangle.Y / rectangle.Height, dynamite);
+            
+            current_direction = Game.direction.right;
+            int new_x = x + 1;
+            int new_y = y + 0;
+            collision_obj = game_map.getObject(new_x, new_y);
+          //  if (collision_obj.IsAccesible)
+            {
+                if (collision_obj is Zniszczalny)
+                   (collision_obj as Zniszczalny).OnDestroy(game_map);
+
+                game_map.setObject(new_x, new_y, this);
+                game_map.setObject(x, y, new Weapon.Dynamit(content, new Rectangle(x * this.rectangle.Width, y * this.rectangle.Height, this.rectangle.Width, this.rectangle.Height),max_width,max_height,x,y,gametime));
+
+
+
+                x = new_x;
+                y = new_y;
+            }
             game_map.addPlayersDynamites(-1);
 
         }
@@ -60,10 +80,10 @@ namespace Game.Characters
         public void AttackWithRacket(Map.Map game_map)
         {
             Map.MapObject racket = new Weapon.Racket(content, this.Rectangle, max_width, max_height, rectangle.X, rectangle.Y, current_direction);
-            game_map.setObject(rectangle.X/rectangle.Width, rectangle.Y/rectangle.Height, racket);
+            game_map.setObject(rectangle.X / rectangle.Width, rectangle.Y / rectangle.Height, racket);
             game_map.addPlayersRacket(-1);
             SoundEffect fire_racket_effect = content.Load<SoundEffect>("fire_racket");
-            
+
             fire_racket_effect.Play();
             //TODO
         }
@@ -85,7 +105,7 @@ namespace Game.Characters
         /// <param name="game_map"></param>
         public void LoadCurrentTexture(Map.Map game_map)
         {
-            collision_obj = game_map.getObject(rectangle.X / rectangle.Width, rectangle.Y / rectangle.Height);
+            //collision_obj = game_map.getObject(rectangle.X / rectangle.Width, rectangle.Y / rectangle.Height);
             string asset_name = null;
             switch (current_direction)
             {
@@ -104,83 +124,77 @@ namespace Game.Characters
                 default: break;
 
             }
-            if (collision_obj != null && collision_obj.GetType().BaseType == typeof(NonDestroyableObjects.StaticObject))
-                asset_name += "_inv";
+           // if (collision_obj != null && collision_obj.GetType().BaseType == typeof(NonDestroyableObjects.StaticObject))
+            //    asset_name += "_inv";
             this.texture = content.Load<Texture2D>(asset_name);
         }
 
-        /// <summary>
-        /// Ustaw finalna pozycje (tak aby po zatrzymaniu Vandal nie był na miejscy posrednim miedy kratkami mapy)
-        /// </summary>
-        /// <param name="game_map"></param>
-        public void SetFinalPosition(Map.Map game_map)
+        void Draw(GameTime gameTime) { }
+
+        public void MoveInDirection(int add_x, int add_y, Map.Map map)
         {
-            int x_rest = rectangle.X % rectangle.Width;
-            int y_rest = rectangle.Y % rectangle.Height;
-            int i = (int)(rectangle.X / rectangle.Width);
-            int j = (int)(rectangle.Y / rectangle.Height);
-            rectangle.X = x_rest < rectangle.Width / 2 ? i * rectangle.Width :(i+1) * rectangle.Width;
-            rectangle.Y = y_rest < rectangle.Height / 2 ? j * rectangle.Height : (j + 1) * rectangle.Height;
-          
+            int new_x = x + add_x;
+            int new_y = y + add_y;
+            collision_obj = map.getObject(new_x, new_y);
+            if (collision_obj.IsAccesible)
+            {
+                if(collision_obj is Zniszczalny)
+                (collision_obj as Zniszczalny).OnDestroy(map);
+
+                map.setObject(new_x, new_y, this);
+                map.setObject(x, y, new NonDestroyableObjects.Puste(content, new Rectangle(x * this.rectangle.Width, y * this.rectangle.Height, this.rectangle.Width, this.rectangle.Height)));
+               
+                
+                
+                x = new_x;
+                y = new_y;
+            }
         }
+
 
         /// <summary>
         /// Poruszanie
         /// </summary>
         /// <param name="direction"></param>
         /// <param name="map"></param>
-        public void Move(Game.direction direction,Map.Map map)
+        public void Move(Game.direction direction)
         {
             current_direction = direction;
-            switch (direction)
+        }
+
+
+         public override void Update(GameTime gametime, Map.Map map)
+        {
+            if (gametime.TotalGameTime.Milliseconds % 20 == 0)
             {
-                case Game.direction.down:
-                    if (rectangle.Y + velocity< max_height - rectangle.Height)
-                    { 
-                        collision_obj = map.getObject(rectangle.X/rectangle.Width,(rectangle.Y+velocity)/rectangle.Height +1);
-                        if (collision_obj.IsAccesible)
-                        {
-                            rectangle.Y += velocity;
-                        }
-                    }
+                switch (current_direction)
+                {
+                    case Game.direction.down:
+                        if (rectangle.Y + velocity < max_height - rectangle.Height)
+                            MoveInDirection(0, 1, map);
+                        current_direction = Game.direction.none;
+                        break;
+                    case Game.direction.left:
+                        if (rectangle.X > 0)
+                            MoveInDirection(-1, 0, map);
+                        current_direction = Game.direction.none;
+                        break;
+                    case Game.direction.right:
+                        if (rectangle.X + velocity < max_width - rectangle.Width)
+                            MoveInDirection(1, 0, map);
+                        current_direction = Game.direction.none;
+                        break;
+                    case Game.direction.up:
+                        if (rectangle.Y > 0)
+                            MoveInDirection(0, -1, map);
+                        current_direction = Game.direction.none;
+                        break;
+                    default:
+                        MoveInDirection(0, 0, map);
+                        current_direction = Game.direction.none;
+                        break;
 
-                    break;
-                case Game.direction.left:
-                    if (rectangle.X > 0)
-                    { 
-                        collision_obj = map.getObject((rectangle.X-velocity)/rectangle.Width ,rectangle.Y/rectangle.Height);
-                        if (collision_obj.IsAccesible)
-                        {
-                            rectangle.X -= velocity;
-                        }
-                    }
-                        
-                    break;
-                case Game.direction.right:
-                    if (rectangle.X + velocity< max_width - rectangle.Width)
-                    {
-                        collision_obj = map.getObject((rectangle.X+velocity) / rectangle.Width + 1, rectangle.Y / rectangle.Height);
-                        if (collision_obj.IsAccesible)
-                        {
-                            rectangle.X += velocity;
-                        }
-                    }
-                       
-                    break;
-                case Game.direction.up:
-                    if (rectangle.Y > 0)
-                        {
-                        collision_obj = map.getObject(rectangle.X / rectangle.Width ,( rectangle.Y - velocity)/ rectangle.Height);
-                        if (collision_obj.IsAccesible)
-                        {
-                                rectangle.Y -= velocity;
-                        }
-                    }
-                    
-                    break;
-                default:
-                    break;
-
+                }
             }
         }
 

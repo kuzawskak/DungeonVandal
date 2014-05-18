@@ -40,17 +40,17 @@ namespace AIHelper
             Map = new ElementType[map_width, map_height];
 
         }
-       
+
         Random rand = new Random();
 
-        public List<int> RandomMove(int x, int y) { return null ; }
+        public List<int> RandomMove(int x, int y) { return null; }
 
         public void GenerateRandomMap(int width, int height)
         {
 
-            
-            for (int i = 0; i < width ; i++)
-                for (int j = 0; j < height ; j++)
+
+            for (int i = 0; i < width; i++)
+                for (int j = 0; j < height; j++)
                 {
                     if (i == 0 || i == width - 1 || j == 0 || j == height - 1)
                     {
@@ -70,8 +70,17 @@ namespace AIHelper
             {
                 pos_x = rand.Next(1, width - 2);
                 pos_y = rand.Next(1, height - 2);
-                
+
                 Map[pos_x, pos_y] = ElementType.DYNAMIT;
+            }
+            //losowanie 2 pekow dynamitow
+
+            for (int i = 0; i < 2; i++)
+            {
+                pos_x = rand.Next(1, width - 2);
+                pos_y = rand.Next(1, height - 2);
+
+                Map[pos_x, pos_y] = ElementType.PEKDYNAMITOW;
             }
             //10 rakiet
             for (int i = 0; i < 10; i++)
@@ -113,24 +122,23 @@ namespace AIHelper
 
                 Map[pos_x, pos_y] = ElementType.CIEZKIMUR;
             }
-       
+
             //lekki mur
             for (int i = 0; i < 10; i++)
             {
                 pos_x = rand.Next(1, width - 2);
                 pos_y = rand.Next(1, height - 2);
-
                 Map[pos_x, pos_y] = ElementType.LEKKIMUR;
             }
 
             //ameba
-            for (int i = 0; i < 2; i++)
-            {
-                pos_x = rand.Next(1, width - 2);
-                pos_y = rand.Next(1, height - 2);
 
-                Map[pos_x, pos_y] = ElementType.AMEBA;
-            }
+
+            pos_x = rand.Next(1, width - 2);
+            pos_y = rand.Next(1, height - 2);
+
+            Map[pos_x, pos_y] = ElementType.AMEBA;
+
 
             for (int i = 0; i < 1; i++)
             {
@@ -150,10 +158,10 @@ namespace AIHelper
 
             Map[pos_x, pos_y] = ElementType.CHODZACABOMBA;
 
-            Map[1,1] = ElementType.PUSTE;
+            Map[1, 1] = ElementType.VANDAL;
 
-          
-          
+
+
         }
     }
 }

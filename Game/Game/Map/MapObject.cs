@@ -11,7 +11,7 @@ namespace Game.Map
     public class MapObject
     {
         protected Texture2D texture;
-        protected Rectangle rectangle;
+        public Rectangle rectangle;
         protected ContentManager content;
 
         public bool IsAccesible

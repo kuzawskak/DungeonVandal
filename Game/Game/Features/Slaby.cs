@@ -8,7 +8,7 @@ namespace Game.Features
 {
     interface Slaby
     {
-        void Znikaj();
+        void Znikaj(Map.Map map);
 
        
     }

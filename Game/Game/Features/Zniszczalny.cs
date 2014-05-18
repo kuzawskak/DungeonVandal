@@ -7,7 +7,7 @@ namespace Game.Features
 {
     public interface Zniszczalny
     {
-        void OnDestroy(ref Map.MapObject[,] objects);
+        void OnDestroy(Map.Map map);
     }
 
 

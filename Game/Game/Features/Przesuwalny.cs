@@ -7,6 +7,6 @@ namespace Game.Features
 {
     interface Przesuwalny
     {
-        void Przesun();
+        bool Przesun(Map.Map map,int x_vel);
     }
 }

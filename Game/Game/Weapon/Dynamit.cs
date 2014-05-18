@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
+using System.Timers;
 
 namespace Game.Weapon
 {
@@ -61,6 +62,7 @@ namespace Game.Weapon
 
         }
 
+        private Timer timer;
         /// <summary>
         /// Konstruktor dla odpalonego dynamitu
         /// </summary>
@@ -80,13 +82,26 @@ namespace Game.Weapon
             this.y = y;
             this.i = x / rectangle.Width;
             this.j = y / rectangle.Height;
-            this.is_fired = true;
+            this.is_fired = false;
             IsAccesible = true;
             found_soundEffect = content.Load<SoundEffect>("found");
             fired_soundEffect = content.Load<SoundEffect>("explosion_sound");
             this.start_time = gametime;
+            timer = new Timer(3000);
+            timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            timer.Start();
+            
 
         }
+
+
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        {
+            is_fired = true;
+
+         
+        }
+
 
         /// <summary>
         /// Akcja w przypadku znalezienia dynamitu przez Vandala
@@ -111,10 +126,27 @@ namespace Game.Weapon
             if (rectangle.Intersects(map.getVandalRectangle()))
                 this.OnFound(map);
          
-            if (is_fired &&(gametime.TotalGameTime- start_time.TotalGameTime).Milliseconds>=3000)
+            if (is_fired)
                 {
+                    Map.MapObject obj;
                     //TODO: sprawdzic czemu metoda nie startuje
-                    this.OnDestroy(map);                   
+                    this.OnDestroy(map);
+                    obj = map.getObject(x - 1, y-1);
+                    if (obj is Zniszczalny) (obj as Zniszczalny).OnDestroy(map);
+                    obj = map.getObject(x - 1, y+1);
+                    if (obj is Zniszczalny) (obj as Zniszczalny).OnDestroy(map);
+                    obj = map.getObject(x - 1, y );
+                    if (obj is Zniszczalny) (obj as Zniszczalny).OnDestroy(map);
+                    obj = map.getObject(x , y-1);
+                    if (obj is Zniszczalny) (obj as Zniszczalny).OnDestroy(map);
+                    obj = map.getObject(x , y+1);
+                    if (obj is Zniszczalny) (obj as Zniszczalny).OnDestroy(map);
+                    obj = map.getObject(x + 1, y);
+                    if (obj is Zniszczalny) (obj as Zniszczalny).OnDestroy(map);
+                    obj = map.getObject(x + 1, y-1);
+                    if (obj is Zniszczalny) (obj as Zniszczalny).OnDestroy(map);
+                    obj = map.getObject(x + 1, y + 1);
+                    if (obj is Zniszczalny) (obj as Zniszczalny).OnDestroy(map);
                 }
             
         }
@@ -122,19 +154,16 @@ namespace Game.Weapon
 
         public void OnDestroy(Map.Map map)
         {
+            if(is_fired)
             //oznacz odpowiednie pole jak puste
             fired_soundEffect.Play();
+
+            else map.addPlayersDynamites(1);
+
             map.setObject(rectangle.X / rectangle.Width, rectangle.Y / rectangle.Height, new NonDestroyableObjects.Puste(content, this.Rectangle));
         }
 
 
-        /// <summary>
-        /// implementacja interfejsu Zniszczalny
-        /// </summary>
-        /// <param name="objects"></param>
-        public void OnDestroy(ref Map.MapObject[,] objects)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

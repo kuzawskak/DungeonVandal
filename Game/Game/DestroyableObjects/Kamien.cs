@@ -21,10 +21,9 @@ namespace Game.DestroyableObjects
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
             this.rectangle = rectangle;
-            this.x = x;
-            this.y = y;
+
             this.is_falling = false;
-            IsAccesible = true;
+            IsAccesible = false;
         }
 
         public override void Update(GameTime gametime, Map.Map map)
@@ -48,7 +47,8 @@ namespace Game.DestroyableObjects
                     if(map.getVandalRectangle().Intersects(rectangle))
                     {
                         
-                        rectangle.X += ( map.getVandalRectangle().X + map.getVandalRectangle().Width - rectangle.X);
+                       // rectangle.X = ( map.getVandalRectangle().X + map.getVandalRectangle().Width);// - rectangle.X);
+                    //  Przesun(map);
 
                     }
                     return;
@@ -71,6 +71,7 @@ namespace Game.DestroyableObjects
                     //pozniej zmienic na nondestroyable zamista puste
                     if (y_index < map.getHeight() - 1 && map.getObject(x_index, y_index + 1).GetType() == typeof(NonDestroyableObjects.Puste))
                     {
+
                         Spadaj();
                         // break;
                     }
@@ -91,8 +92,10 @@ namespace Game.DestroyableObjects
 
                 if (map.getVandalRectangle().Intersects(rectangle))
                 {
-                    rectangle.X += (-map.getVandalRectangle().X -rectangle.Width+ rectangle.X);
-
+                   // rectangle.X += (-map.getVandalRectangle().X -rectangle.Width+ rectangle.X);
+                    //rectangle.X = (map.getVandalRectangle().X + map.getVandalRectangle().Width);
+                 //  Przesun(map);
+                 
                 }
                 return;
             }
@@ -104,12 +107,45 @@ namespace Game.DestroyableObjects
             rectangle.Y += velocity;
         }
 
-        void Przesuwalny.Przesun()
+
+
+        public bool Przesun(Map.Map map,int x_vel)
         {
-            throw new NotImplementedException();
+            if (map.vandal != null)
+            {
+
+
+                if (map.GetVandalDirection() == Game.direction.left && map.getObject((int)(x_vel / this.Rectangle.Width) - 1, (int)(map.getVandalRectangle().Y / map.getVandalRectangle().Height)).GetType() == typeof(NonDestroyableObjects.Puste))
+                {
+                    if (( x_vel) % this.rectangle.Width == 0)
+                    {
+                        int x_ind =(int)( x_vel / this.Rectangle.Width) ;
+                        int y_ind = (int)(this.Rectangle.Y / this.Rectangle.Height);
+                        map.setObject(x_ind, y_ind,this);
+                        map.setObject(x_ind+1, y_ind, new NonDestroyableObjects.Puste(content, new Rectangle((x_ind +1)* this.rectangle.Width, y_ind * this.Rectangle.Height, this.rectangle.Width, this.rectangle.Width)));
+                   
+                    }
+                    
+                    rectangle.X = x_vel;
+                    return true;
+
+                }
+                if (map.GetVandalDirection() == Game.direction.right && map.getObject((int)(x_vel / this.Rectangle.Width) , (int)(map.getVandalRectangle().Y / map.getVandalRectangle().Height)).GetType() == typeof(NonDestroyableObjects.Puste))
+                {
+                    if (( x_vel) % this.rectangle.Width == 0)
+                    {
+                        int x_ind = (int)(x_vel / this.Rectangle.Width) ;
+                        int y_ind = (int)(this.Rectangle.Y / this.Rectangle.Height);
+                        map.setObject(x_ind-1, y_ind, this);
+                        map.setObject(x_ind,y_ind, new NonDestroyableObjects.Puste(content, new Rectangle((x_ind-1) * this.rectangle.Width, y_ind * this.Rectangle.Height, this.rectangle.Width, this.rectangle.Width)));
+                    }
+                    rectangle.X = x_vel;
+                    return true;
+                }
+            }
+            return false;
+
         }
-
-
 
 
         public void Zgniec()
@@ -117,9 +153,11 @@ namespace Game.DestroyableObjects
             throw new NotImplementedException();
         }
 
-        public void OnDestroy(ref Map.MapObject[,] objects)
+        public void OnDestroy(Map.Map map)
         {
             throw new NotImplementedException();
         }
+
+   
     }
 }

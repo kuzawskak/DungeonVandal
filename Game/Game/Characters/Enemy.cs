@@ -7,13 +7,12 @@ using Microsoft.Xna.Framework;
 
 namespace Game.Characters
 {
-
     /// <summary>
     /// Klasa bazowa przeciwnika 
     /// kazdy przeciwnik uzywa AIHelper-a
     /// Kazdy przeciwnik porusza się z nadana mu predkoscia
     /// </summary>
-    class Enemy:Map.MapObject
+    public class Enemy:Map.MapObject
     {
         protected int velocity;
         
@@ -28,7 +27,7 @@ namespace Game.Characters
             {
                 case Game.direction.down:
                     if(rectangle.Y<max_height-rectangle.Height)
-                    rectangle.Y += velocity;                  
+                    this.rectangle.Y += velocity;                  
                     break;
                 case Game.direction.left:
                     if(rectangle.X>0)
@@ -45,6 +44,26 @@ namespace Game.Characters
                 default:
                     break;
                 
+            }
+        }
+
+        /// <summary>
+        /// Obiekt na mapie , z ktorym nastapila kolizja
+        /// </summary>
+        Map.MapObject collision_obj = null;
+
+
+        public void MoveInDirection(int add_x, int add_y, Map.Map map)
+        {
+            int new_x = x + add_x;
+            int new_y = y + add_y;
+            collision_obj = map.getObject(new_x, new_y);
+            if (collision_obj.GetType() == typeof(NonDestroyableObjects.Puste))
+            {
+                map.setObject(new_x, new_y, this);
+                map.setObject(x, y, new NonDestroyableObjects.Puste(content, new Rectangle(x * this.rectangle.Width, y * this.rectangle.Height, this.rectangle.Width, this.rectangle.Height)));
+                x = new_x;
+                y = new_y;
             }
         }
 

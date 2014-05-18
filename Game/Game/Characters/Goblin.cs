@@ -45,14 +45,14 @@ namespace Game.Characters
             {
                 case Game.direction.down:
                     {
-                        if (map.getObject(rectangle.X / rectangle.Width, (rectangle.Y + velocity) / rectangle.Height + 1).IsAccesible)
+                        if (map.getObject(rectangle.X / rectangle.Width, (rectangle.Y ) / rectangle.Height + 1).IsAccesible)
                             return true;
                     }break;
                     
                 case Game.direction.left:
                     if (rectangle.X > 0)
                     {
-                      if(map.getObject((rectangle.X - velocity) / rectangle.Width, rectangle.Y / rectangle.Height).IsAccesible)
+                      if(map.getObject((rectangle.X ) / rectangle.Width, rectangle.Y / rectangle.Height).IsAccesible)
                         return true;
                     }
 
@@ -60,7 +60,7 @@ namespace Game.Characters
                 case Game.direction.right:
                     if (rectangle.X + velocity < max_width - rectangle.Width)
                     {
-                        if(map.getObject((rectangle.X + velocity) / rectangle.Width + 1, rectangle.Y / rectangle.Height).IsAccesible) 
+                        if(map.getObject((rectangle.X ) / rectangle.Width + 1, rectangle.Y / rectangle.Height).IsAccesible) 
                             return true;                       
                     }
 
@@ -68,7 +68,7 @@ namespace Game.Characters
                 case Game.direction.up:
                     if (rectangle.Y > 0)
                     {
-                        if (map.getObject(rectangle.X / rectangle.Width, (rectangle.Y - velocity) / rectangle.Height).IsAccesible)
+                        if (map.getObject(rectangle.X / rectangle.Width, (rectangle.Y) / rectangle.Height).IsAccesible)
 
                             return true;
                     }break;
@@ -94,72 +94,73 @@ namespace Game.Characters
             this.y = y;
             current_direction = Game.direction.down;
             //same as vandals' velocity
-            this.velocity = 1;
+            this.velocity = 30;
         }
         
 
         public override void Update(GameTime gametime, Map.Map map)
         {
-          
 
-            current_direction = Move(map);
-
-            switch (current_direction)
+            if (gametime.TotalGameTime.Milliseconds % 20 == 0)
             {
-                case Game.direction.down:
-                    if (rectangle.Y + velocity < max_height - rectangle.Height)
-                    {
-                        collision_obj = map.getObject(rectangle.X / rectangle.Width, (rectangle.Y + velocity) / rectangle.Height + 1);
-                        if (collision_obj.IsAccesible)
+                current_direction = Move(map);
+
+                switch (current_direction)
+                {
+                    case Game.direction.down:
+                        if (rectangle.Y + velocity < max_height - rectangle.Height)
                         {
-                            rectangle.Y += velocity;
+                            collision_obj = map.getObject(rectangle.X / rectangle.Width, (rectangle.Y) / rectangle.Height + 1);
+                            if (collision_obj.IsAccesible)
+                            {
+                                rectangle.Y += velocity;
+                            }
                         }
-                    }
 
-                    break;
-                case Game.direction.left:
-                    if (rectangle.X > 0)
-                    {
-                        collision_obj = map.getObject((rectangle.X - velocity) / rectangle.Width, rectangle.Y / rectangle.Height);
-                        if (collision_obj.IsAccesible)
+                        break;
+                    case Game.direction.left:
+                        if (rectangle.X > 0)
                         {
-                            rectangle.X -= velocity;
+                            collision_obj = map.getObject((rectangle.X) / rectangle.Width, rectangle.Y / rectangle.Height);
+                            if (collision_obj.IsAccesible)
+                            {
+                                rectangle.X -= velocity;
+                            }
                         }
-                    }
 
-                    break;
-                case Game.direction.right:
-                    if (rectangle.X + velocity < max_width - rectangle.Width)
-                    {
-                        collision_obj = map.getObject((rectangle.X + velocity) / rectangle.Width + 1, rectangle.Y / rectangle.Height);
-                        if (collision_obj.IsAccesible)
+                        break;
+                    case Game.direction.right:
+                        if (rectangle.X + velocity < max_width - rectangle.Width)
                         {
-                            rectangle.X += velocity;
+                            collision_obj = map.getObject((rectangle.X) / rectangle.Width + 1, rectangle.Y / rectangle.Height);
+                            if (collision_obj.IsAccesible)
+                            {
+                                rectangle.X += velocity;
+                            }
                         }
-                    }
 
-                    break;
-                case Game.direction.up:
-                    if (rectangle.Y > 0)
-                    {
-                        collision_obj = map.getObject(rectangle.X / rectangle.Width, (rectangle.Y - velocity) / rectangle.Height);
-                        if (collision_obj.IsAccesible)
+                        break;
+                    case Game.direction.up:
+                        if (rectangle.Y > 0)
                         {
-                            rectangle.Y -= velocity;
+                            collision_obj = map.getObject(rectangle.X / rectangle.Width, (rectangle.Y) / rectangle.Height);
+                            if (collision_obj.IsAccesible)
+                            {
+                                rectangle.Y -= velocity;
+                            }
                         }
-                    }
 
-                    break;
-                default:
-                    break;
+                        break;
+                    default:
+                        break;
 
+                }
             }
 
 
         }
 
 
-        void Draw(GameTime gameTime) { }
         public void Die()
         {
             //TODO: fire animation

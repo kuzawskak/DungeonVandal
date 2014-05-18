@@ -25,15 +25,15 @@ namespace Game.DestroyableObjects
             throw new NotImplementedException();
         }
 
-        void Przesuwalny.Przesun()
+        bool Przesuwalny.Przesun(Map.Map map,int velocity)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         void Update(GameTime gameTime) { }
         void Draw(GameTime gameTime) { }
 
-        public void OnDestroy(ref Map.MapObject[,] objects)
+        public void OnDestroy(Map.Map map)
         {
             throw new NotImplementedException();
         }

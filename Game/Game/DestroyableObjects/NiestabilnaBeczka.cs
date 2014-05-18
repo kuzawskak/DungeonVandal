@@ -26,7 +26,7 @@ namespace Game.DestroyableObjects
             throw new NotImplementedException();
         }
 
-        void Niestabilny.Znikaj()
+        void Niestabilny.Znikaj(Map.Map map)
         {
             throw new NotImplementedException();
         }
@@ -42,7 +42,7 @@ namespace Game.DestroyableObjects
 
 
 
-        public void OnDestroy(ref Map.MapObject[,] objects)
+        public void OnDestroy(Map.Map map)
         {
             throw new NotImplementedException();
         }

@@ -14,7 +14,7 @@ namespace Game.DestroyableObjects
     {
         Random rand = new Random();
         private int random_new_ameba_time;
-        
+        private int points;
         private string asset_name = "ameba";
         private bool create_ameba = false;
         private System.Timers.Timer timer;
@@ -26,6 +26,7 @@ namespace Game.DestroyableObjects
             this.x = x;
             this.y = y;
             this.IsAccesible = false;
+            this.points = 2;
             random_new_ameba_time = rand.Next(6, 10);
             timer = new System.Timers.Timer(random_new_ameba_time * 1000);
             timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
@@ -38,9 +39,10 @@ namespace Game.DestroyableObjects
            int x = this.rectangle.X/this.Rectangle.Width;
            int y = this.rectangle.Y/this.Rectangle.Height;
 
+
+
             if (create_ameba)
             {
-                List<Point> accessible_places = new List<Point>();
                 if (map.getObject(x - 1, y-1).IsAccesible)
                     map.setObject(x - 1, y - 1, new DestroyableObjects.Ameba(content, new Rectangle((x - 1) * rectangle.Width, (y - 1) * rectangle.Height, rectangle.Width, rectangle.Height), x - 1, y - 1, x - 1, y - 1));
                 if (map.getObject(x - 1, y).IsAccesible)
@@ -59,6 +61,7 @@ namespace Game.DestroyableObjects
                     map.setObject(x + 1, y + 1, new DestroyableObjects.Ameba(content, new Rectangle((x + 1) * rectangle.Width, (y + 1) * rectangle.Height, rectangle.Width, rectangle.Height), x + 1, y + 1, x + 1, y + 1));
                 create_ameba = false;
             }
+
             
 
         }
@@ -83,7 +86,7 @@ namespace Game.DestroyableObjects
             throw new NotImplementedException();
         }
 
-        void Niestabilny.Znikaj()
+        void Niestabilny.Znikaj(Map.Map map)
         {
             throw new NotImplementedException();
         }
@@ -101,13 +104,13 @@ namespace Game.DestroyableObjects
         void Update(GameTime gameTime) { 
             //
         }
-        void Draw(GameTime gameTime) { }
 
 
-        public void OnDestroy(ref Map.MapObject[,] objects)
+        public void OnDestroy(Map.Map map)
         {
 
-            throw new NotImplementedException();
+            map.setObject(rectangle.X / rectangle.Width, rectangle.Y / rectangle.Height, new NonDestroyableObjects.Puste(content, this.Rectangle));
+            map.AddPlayersPoints(points);
         }
     }
 }

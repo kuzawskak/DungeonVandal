@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Game.Weapon;
 using AIHelper;
+using System.Windows.Forms;
 
 
 namespace Game.Map
@@ -16,6 +17,7 @@ namespace Game.Map
         public RandomOperator random_operator;
     
         Player player;
+        public Characters.Vandal vandal;
         Rectangle vandal_rectangle;
         public Random rand = new Random();
         private int tile_size;
@@ -38,8 +40,9 @@ namespace Game.Map
         private List<Characters.Enemy> enemies = new List<Characters.Enemy>(); 
 
         ContentManager content;
-        public Map(int tile_size,int width, int height, ContentManager content, Player player)
+        public Map(int tile_size,int width, int height, ContentManager content, Player player,Characters.Vandal vandal)
         {
+            this.vandal = vandal;
             this.content = content;
             this.width = width;
             this.height = height;
@@ -49,12 +52,16 @@ namespace Game.Map
             random_operator = new RandomOperator(width, height);
             random_operator.GenerateRandomMap( width, height);
             CovertIntToObjects(ref objects, random_operator.Map);
+            vandal_rectangle = vandal.rectangle;
            
         }
 
         public void setObject(int x, int y,MapObject obj)
         {
+            obj.rectangle.X = x * tile_size;
+            obj.rectangle.Y = y * tile_size;
             objects[x,y] = obj;
+
         }
         int last_update = 0;
 
@@ -74,12 +81,10 @@ namespace Game.Map
                         case ElementType.BECZKAZGAZEM:
                             break;
                         case ElementType.BLOB:
-                            map_obj[x, y] = new NonDestroyableObjects.Puste(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size));
-                            enemies.Add( new Characters.Blob(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y));
+                           map_obj[x,y] =  new Characters.Blob(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
                             break;
-                        case ElementType.CHODZACABOMBA:
-                             map_obj[x, y] = new NonDestroyableObjects.Puste(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size));
-                            enemies.Add( new Characters.ChodzacaBomba(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y));
+                        case ElementType.CHODZACABOMBA:                         
+                            map_obj[x,y] =  new Characters.ChodzacaBomba(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
                             break;
                         case ElementType.CIEZKIMUR:
                             map_obj[x,y] = new NonDestroyableObjects.CiezkiMur(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x,y);
@@ -90,8 +95,8 @@ namespace Game.Map
                         case ElementType.GIGANTYCZNYSZCZUR:
                              break;
                         case ElementType.GOBLIN:
-                            map_obj[x, y] = new NonDestroyableObjects.Puste(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size));
-                            enemies.Add( new Characters.Goblin(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y));
+                           // map_obj[x, y] = new NonDestroyableObjects.Puste(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size));
+                           map_obj[x,y] =  new Characters.Goblin(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
                             break;
                            
                         case ElementType.KAMIEN:
@@ -109,8 +114,8 @@ namespace Game.Map
                         case ElementType.NIESTABILNABECZKA:
                             break;
                         case ElementType.PEKDYNAMITOW:
-
-                            break;
+                             map_obj[x,y] = new Weapon.PekDynamitow(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size,x,y);
+                             break;
                         case ElementType.POLESILOWE:
                             break;
                         case ElementType.PUSTE:
@@ -120,12 +125,16 @@ namespace Game.Map
                             map_obj[x,y] =  new Weapon.Racket(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
                             break;
                         case ElementType.RADIOAKTYWNYGLAZ:
-                            map_obj[x,y] = new NonDestroyableObjects.RadioaktywnyGlaz(content, new Rectangle(x* tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x,y);
+                            map_obj[x, y] = new NonDestroyableObjects.RadioaktywnyGlaz(content, new Rectangle(x * tile_size, y * tile_size, tile_size, tile_size), width * tile_size, height * tile_size, x, y);
                             break;
                         case ElementType.VANDAL:
+
+                            map_obj[x, y] = vandal;
+                           // MessageBox.Show(vandal.rectangle.X + "  " + vandal.rectangle.Y);
+
                             break;
                         case ElementType.ZIEMIA:
-                            map_obj[x,y] = new DestroyableObjects.Ziemia(content, new Rectangle(x* tile_size, y * tile_size, tile_size, tile_size));
+                            map_obj[x,y] = new DestroyableObjects.Ziemia(content, new Rectangle(x* tile_size, y * tile_size, tile_size, tile_size),player.IntelligenceLevel);
                             break;
 
 
@@ -138,6 +147,14 @@ namespace Game.Map
         {
             
         }
+        public void RemoveCharacter(Characters.Enemy enemy)
+        {
+            try
+            {
+                enemies.Remove(enemy);
+            }
+            catch { }
+        }
 
         public void Draw(SpriteBatch spritebatch)
         {
@@ -146,18 +163,18 @@ namespace Game.Map
                 {
                     try
                     {
-                        spritebatch.Draw(objects[i, j].Texture, objects[i, j].Rectangle, Color.White);
+                        spritebatch.Draw(objects[i, j].Texture, objects[i, j].rectangle, Color.White);
                     }
                     catch { }
                 }
-            foreach (Characters.Enemy e in enemies)
+           /* foreach (Characters.Enemy e in enemies)
             {
                 try
                 {
                     spritebatch.Draw(e.Texture, e.Rectangle, Color.White);
                 }
                 catch { }
-            }
+            }*/
         }
 
         public bool is_vandal_on_rectangle(int x, int y)
@@ -189,24 +206,32 @@ namespace Game.Map
             return vandal_rectangle;
         }
 
+
         public void Update(Rectangle vandal_rectangle, GameTime gametime)
         {
-            this.vandal_rectangle = vandal_rectangle;
+            this.vandal_rectangle = vandal.rectangle;// _rectangle;
+
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
                 {
                      objects[i,j].Update(gametime,this);
                 }
 
-            foreach (Characters.Enemy e in enemies)
+           /* foreach (Characters.Enemy e in enemies)
             {
                 e.Update(gametime, this);
-            }
+            }*/
         }
-        public void setPlayerName(string name)
-        {
-            player.Name = name;
 
+
+        public Game.direction GetVandalDirection()
+        {
+            return vandal.current_direction;
+        }
+
+        public void AddPlayersPoints(int points)
+        {
+            player.Points += points;
         }
     }
 

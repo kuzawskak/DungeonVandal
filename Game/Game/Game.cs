@@ -33,7 +33,8 @@ namespace Game
         public int map_width, map_height;
         bool move = false;
    
-        public enum direction { left, up, right, down };
+        public enum direction { left, up, right, down,none };
+
         private bool IsPaused;
         private Player player;
         private Map.Map map;
@@ -53,7 +54,7 @@ namespace Game
             tile_size = 30;
             map_height = Form.ViewportSize.Height / tile_size;
             map_width = Form.ViewportSize.Width / tile_size;
-
+            
         }
 
 
@@ -172,8 +173,9 @@ namespace Game
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             setMapDimension();
-            game_map = new Map.Map(tile_size, map_width, map_height, this.Content, player);
+         
             vandal = new Characters.Vandal(this.Content, new Rectangle(1*tile_size, 1*tile_size, tile_size, tile_size), tile_size * map_width, tile_size * map_height);
+            game_map = new Map.Map(tile_size, map_width, map_height, this.Content, player, vandal);
             music = Content.Load<Song>("background_music");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(music);
@@ -200,92 +202,95 @@ namespace Game
         {
 
 
-            // Allows the game to exit
-            if (!IsPaused)
-            {
-                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
-                    this.Exit();
-
-
-                updateLabel(gameTime.TotalGameTime.Minutes - lastUpdateMinutes, gameTime.TotalGameTime.Seconds - lastUpdateSeconds);
-
-                game_map.Update(vandal.Rectangle, gameTime);
-
-
-                if (key_pressed == System.Windows.Forms.Keys.None)
+                // Allows the game to exit
+                if (!IsPaused)
                 {
-                    if (move)
+                    if (GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+                        this.Exit();
+
+
+                    updateLabel(gameTime.TotalGameTime.Minutes - lastUpdateMinutes, gameTime.TotalGameTime.Seconds - lastUpdateSeconds);
+                    game_map.Update(vandal.Rectangle, gameTime);
+
+                    if (key_pressed == System.Windows.Forms.Keys.None)
                     {
-                        vandal.SetFinalPosition(game_map);
-                        move = false;
+                        if (move)
+                        {
+                            // if (gameTime.TotalGameTime.Milliseconds % 20 == 0)
+                            // vandal.SetFinalPosition(game_map);
+                            move = false;
+                            vandal.Move(direction.none);
+                        }
                     }
-                }
-                if (player.KeyboardSettings == null)
-                {
-                    MessageBox.Show("aaa");
-                }
 
 
-                else if (key_pressed == player.KeyboardSettings.Up)
-                {
-                    vandal.Move(direction.up, game_map);
-                }
-                else if (key_pressed == player.KeyboardSettings.Down)
-                {
-                    vandal.Move(direction.down, game_map);
-
-                }
-                else if (key_pressed == player.KeyboardSettings.Left)
-                {
-
-                    vandal.Move(direction.left, game_map);
-                }
-                else if (key_pressed == player.KeyboardSettings.Right)
-                {
-
-                    vandal.Move(direction.right, game_map);
-                }
-                else if (key_pressed == player.KeyboardSettings.Block)
-                {
-                    vandal.changeDirectionToNext(game_map);
-                }
-                else if (key_pressed == player.KeyboardSettings.Dynamite)
-                {
-                    if (player.Dynamite > 0)
-                        vandal.LeftDynamite(game_map, gameTime);
-                    else
+                    else if (key_pressed == player.KeyboardSettings.Up)
                     {
-                        SoundEffect null_sound = Content.Load<SoundEffect>("null_sound");
-                        SoundEffect.MasterVolume = (float)player.AudioSettings.SoundVolume;
-                        null_sound.Play();
-              
-                        
+                        if (gameTime.TotalGameTime.Milliseconds % 20 == 0)
+                            vandal.Move(direction.up);
                     }
-                }
-                else if (key_pressed == player.KeyboardSettings.Pause)
-                {
-
-                    PauseGame();
-                }
-                else if (key_pressed == player.KeyboardSettings.Racket)
-                {
-                    if (player.Rackets > 0)
-                        vandal.AttackWithRacket(game_map);
-                    else
+                    else if (key_pressed == player.KeyboardSettings.Down)
                     {
-                        SoundEffect.MasterVolume = (float)player.AudioSettings.SoundVolume;
-                        SoundEffect null_sound = Content.Load<SoundEffect>("null_sound");
-                        null_sound.Play();
+                        if (gameTime.TotalGameTime.Milliseconds % 20 == 0)
+                            vandal.Move(direction.down);
+
                     }
-                }
+                    else if (key_pressed == player.KeyboardSettings.Left)
+                    {
+                        if (gameTime.TotalGameTime.Milliseconds % 20 == 0)
+                            vandal.Move(direction.left);
+                    }
+                    else if (key_pressed == player.KeyboardSettings.Right)
+                    {
+                        if (gameTime.TotalGameTime.Milliseconds % 20 == 0)
+                            vandal.Move(direction.right);
+                    }
+                    else if (key_pressed == player.KeyboardSettings.Block)
+                    {
+                        if (gameTime.TotalGameTime.Milliseconds % 20 == 0)
+                            vandal.changeDirectionToNext(game_map);
+                    }
+                    else if (key_pressed == player.KeyboardSettings.Dynamite)
+                    {
+                        if (player.Dynamite > 0)
+                        {
+                            vandal.LeftDynamite(game_map, gameTime);
+                            key_pressed = System.Windows.Forms.Keys.None;
+                        }
+                        else
+                        {
+                            SoundEffect null_sound = Content.Load<SoundEffect>("null_sound");
+                            SoundEffect.MasterVolume = (float)player.AudioSettings.SoundVolume;
+                            null_sound.Play();
+
+
+                        }
+                    }
+                    else if (key_pressed == player.KeyboardSettings.Pause)
+                    {
+
+                        PauseGame();
+                    }
+                    else if (key_pressed == player.KeyboardSettings.Racket)
+                    {
+                        if (player.Rackets > 0)
+                            vandal.AttackWithRacket(game_map);
+                        else
+                        {
+                            SoundEffect.MasterVolume = (float)player.AudioSettings.SoundVolume;
+                            SoundEffect null_sound = Content.Load<SoundEffect>("null_sound");
+                            null_sound.Play();
+                        }
+                    }
+
+
+                   
+                    // vandal.LoadCurrentTexture(game_map);
 
                 
-
-                vandal.LoadCurrentTexture(game_map);
- 
-
-                base.Update(gameTime);
             }
+                base.Update(gameTime);
+            
             lastUpdateMinutes = gameTime.TotalGameTime.Minutes;
             lastUpdateSeconds = gameTime.TotalGameTime.Seconds;
         }

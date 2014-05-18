@@ -31,8 +31,7 @@ namespace Game.Weapon
         /// <param name="x"> the initial rectangle x value</param>
         /// <param name="y"> the initail rectangle y value</param>
         public Racket(ContentManager content, Rectangle rectangle, int max_width, int max_height, int x, int y)
-        {
-           
+        {           
             soundEffect = content.Load<SoundEffect>("found"); 
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
@@ -162,10 +161,11 @@ namespace Game.Weapon
             }
 
         }
-        public void OnDestroy(ref Map.MapObject[,] objects)
+        public void OnDestroy(Map.Map map)
         {
             //oznacz odpowiednie pole jak puste
-            objects[i, j] = new NonDestroyableObjects.Puste(content, objects[i, j].Rectangle);
+            map.setObject(rectangle.X / rectangle.Width, rectangle.Y / rectangle.Height, new NonDestroyableObjects.Puste(content, this.Rectangle));
+        
         }
 
         

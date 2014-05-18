@@ -15,7 +15,7 @@ namespace Game.Weapon
             throw new NotImplementedException();
         }
 
-        public void OnDestroy(ref Map.MapObject[,] objects)
+        public void OnDestroy(Map.Map map)
         {
             throw new NotImplementedException();
         }

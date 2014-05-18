@@ -30,7 +30,7 @@ namespace Game.DestroyableObjects
         }
         void Draw(GameTime gameTime) { }
 
-        public void OnDestroy(ref Map.MapObject[,] objects)
+        public void OnDestroy(Map.Map map)
         {
 
 

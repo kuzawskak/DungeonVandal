@@ -8,6 +8,6 @@ namespace Game.Features
 {
     interface Niestabilny
     {
-        void Znikaj();
+        void Znikaj(Map.Map map);
     }
 }

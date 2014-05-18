@@ -3,53 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Game.Weapon;
-using  Game.Characters;
+using Game.Characters;
 
 namespace Game
 {
     public class Player
     {
-        private string name;
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
+        public string Name {get; private set;}
 
-        private int rackets_count;
-        public int Rackets
-        {
-            get { return rackets_count; }
-            set { rackets_count = value; }
-        }
+        public int Rackets  {get; set;}
 
-        private int dynamites_count;
-        public int Dynamite
-        {
-            get { return dynamites_count; }
-            set { dynamites_count = value; }
-        }
+        public int Dynamite { get; set; }
 
-        private int points;
-        public int Points
-        {
-            get { return points; }
-            set { points = value; }
-        }
+        public int Points { get; set; }
 
-        public Player(string name) 
+        public int IntelligenceLevel { get; private set; }
+
+        public Player(string name)
         {
             KeyboardSettings = new Settings.KeySettings();
             GraphicsSettings = new Settings.GraphicsSettings();
             AudioSettings = new Settings.AudioSettings();
-            this.name = name;
-            this.points = 0;
-            this.rackets_count = 0;
-            this.dynamites_count = 0;
+            this.Name = name;
+            this.Points = 0;
+            this.Rackets = 0;
+            this.Dynamite = 0;
 
         }
         private bool is_immortal;
-        private int targets_count;        
+        private int targets_count;
         private int intelligence_level;
 
         void UpGrade() { }

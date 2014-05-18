@@ -43,10 +43,9 @@ namespace Game.Weapon
             if (rectangle.Intersects(map.getVandalRectangle()))
                 this.OnFound(map);
         }
-        public void OnDestroy(ref Map.MapObject[,] objects)
+        public void OnDestroy(Map.Map map)
         {
-            //oznacz odpowiednie pole jak puste
-            objects[i, j] = new NonDestroyableObjects.Puste(content, objects[i, j].Rectangle);
+            OnFound(map);
         }
 
     }

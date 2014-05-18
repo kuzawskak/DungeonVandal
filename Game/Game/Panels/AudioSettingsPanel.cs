@@ -19,8 +19,8 @@ namespace Game.Panels
     {
         static MediaPlayer mp;
         static MediaPlayer sp;
-        static Thread mp_thread = new Thread(MusicThreadFunc);
-        static Thread sp_thread = new Thread(SoundThreadFunc);
+         Thread mp_thread = new Thread(MusicThreadFunc);
+         Thread sp_thread = new Thread(SoundThreadFunc);
 
         public static bool music_stop = false;
         public static bool sound_stop = false;
