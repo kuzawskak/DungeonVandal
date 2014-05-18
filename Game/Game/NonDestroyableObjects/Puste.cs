@@ -9,9 +9,16 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Game.NonDestroyableObjects
 {
+    /// <summary>
+    /// Niezniszczalne pole, po którym moga się swobodnie poruszac bohater i przeciwnicy
+    /// oraz moga spadac na tej sciezce obiekty reagujace na grawitacje
+    /// </summary>
     class Puste:Map.MapObject
     {
-        const string asset_name = "puste";
+        /// <summary>
+        /// Content dla tekstury
+        /// </summary>
+        const string asset_name = "Textures\\puste";
 
         public Puste(ContentManager content, Rectangle rectangle)
         {

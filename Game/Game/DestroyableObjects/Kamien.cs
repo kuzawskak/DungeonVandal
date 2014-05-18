@@ -14,9 +14,9 @@ namespace Game.DestroyableObjects
     {
         int velocity = 1;
 
-        private string asset_name = "kamien";
+        private string asset_name = "Textures\\kamien";
         private bool is_falling;
-        public Kamien(ContentManager content, Rectangle rectangle, int max_width, int max_height, int x, int y)
+        public Kamien(ContentManager content, Rectangle rectangle, int x, int y)
         {
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
@@ -155,7 +155,7 @@ namespace Game.DestroyableObjects
 
         public void OnDestroy(Map.Map map)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
    

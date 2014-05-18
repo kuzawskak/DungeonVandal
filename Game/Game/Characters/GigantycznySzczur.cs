@@ -18,7 +18,7 @@ namespace Game.Characters
     {
         Random rand = new Random();
         //TODO; Dodac grafike go GameContent
-        const string asset_name = "gigantyczny_szczur";
+        const string asset_name = "Textures\\gigantyczny_szczur";
                     /// <summary>
         /// Obiekt na mapie , z ktorym nastapila kolizja
         /// </summary>

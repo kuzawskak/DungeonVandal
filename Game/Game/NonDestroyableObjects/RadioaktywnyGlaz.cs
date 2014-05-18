@@ -10,12 +10,32 @@ using System.Windows.Forms;
 
 namespace Game.NonDestroyableObjects
 {
-    class RadioaktywnyGlaz:StaticObject,ReagujeNaGrawitacje,Skazony,Ciezki
+    /// <summary>
+    /// Obiekt reagujacy na gawitację, niezniszczalny, skażony i ciężki
+    /// </summary>
+    class RadioaktywnyGlaz:Map.MapObject,ReagujeNaGrawitacje,Skazony,Ciezki
     {
-        private string asset_name = "skazony";
+        /// <summary>
+        /// Content dla tekstury
+        /// </summary>
+        private string asset_name = "Textures\\skazony";
+        /// <summary>
+        /// Stan (czy spada czy nie)
+        /// </summary>
         private bool is_falling;
-        private int velocity = 1;
-         public RadioaktywnyGlaz(ContentManager content, Rectangle rectangle, int max_width, int max_height, int x, int y)
+        /// <summary>
+        /// /Predkosc spadania
+        /// </summary>
+        private int velocity = 5;
+
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
+        /// <param name="content">Content odpowiedzilany za ladowanie tekstury</param>
+        /// <param name="rectangle">Prostokat okreslajacy pozycje na ekranie gry</param>
+        /// <param name="x"> Indeks x na mapie obiektow</param>
+        /// <param name="y"> Indeks y na mapie obiektow</param>
+         public RadioaktywnyGlaz(ContentManager content, Rectangle rectangle, int x, int y)
         {
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
@@ -24,12 +44,7 @@ namespace Game.NonDestroyableObjects
             this.y = y;
             IsAccesible = false;
             is_falling = false;
-            
-
         }
-
-
-
 
          public override void Update(GameTime gametime, Map.Map map)
          {
@@ -47,7 +62,7 @@ namespace Game.NonDestroyableObjects
                  map.is_vandal_exact_on_rectangle(x_index + 1, y_index + 1) ||
                  map.is_vandal_exact_on_rectangle(x_index + 1, y_index - 1))
              {
-                 Zabij();
+                 Zabij(map);
                  return;
              }
 
@@ -92,7 +107,6 @@ namespace Game.NonDestroyableObjects
                  is_falling = true;
                  Spadaj();
              }
-
          }
 
         public void Spadaj()
@@ -100,11 +114,9 @@ namespace Game.NonDestroyableObjects
             rectangle.Y += velocity;
         }
 
-        public void Zabij()
+        public void Zabij(Map.Map map)
         {
-           // MessageBox.Show("Zabij!");
-
-            //throw new NotImplementedException();
+            map.vandal.is_alive = false;
         }
 
         public void Zgniec()

@@ -30,202 +30,246 @@
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.VideoImporters, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="vandal_down.png">
+    <Compile Include="Textures\vandal_down.png">
       <Name>vandal_down</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="vandal_right.png">
+    <Compile Include="Textures\vandal_right.png">
       <Name>vandal_right</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="vandal_left.png">
+    <Compile Include="Textures\vandal_left.png">
       <Name>vandal_left</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="vandal_up.png">
+    <Compile Include="Textures\vandal_up.png">
       <Name>vandal_up</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="dynamite.png">
+    <Compile Include="Textures\dynamite.png">
       <Name>dynamite</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="racket.png">
+    <Compile Include="Textures\racket.png">
       <Name>racket</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ameba.png">
+    <Compile Include="Textures\ameba.png">
       <Name>ameba</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="beczka.png">
+    <Compile Include="Textures\beczka.png">
       <Name>beczka</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="eteryczny_mur.jpg">
+    <Compile Include="Textures\eteryczny_mur.jpg">
       <Name>eteryczny_mur</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="magiczny_mur.jpg">
+    <Compile Include="Textures\magiczny_mur.jpg">
       <Name>magiczny_mur</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="marmur.jpg">
+    <Compile Include="Textures\marmur.jpg">
       <Name>marmur</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="puste.png">
+    <Compile Include="Textures\puste.png">
       <Name>puste</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="vandal_down_inv.png">
+    <Compile Include="Textures\vandal_down_inv.png">
       <Name>vandal_down_inv</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="vandal_left_inv.png">
+    <Compile Include="Textures\vandal_left_inv.png">
       <Name>vandal_left_inv</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="vandal_right_inv.png">
+    <Compile Include="Textures\vandal_right_inv.png">
       <Name>vandal_right_inv</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="vandal_up_inv.png">
+    <Compile Include="Textures\vandal_up_inv.png">
       <Name>vandal_up_inv</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="skazony.png">
+    <Compile Include="Textures\skazony.png">
       <Name>skazony</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="skazony_round.png">
+    <Compile Include="Textures\skazony_round.png">
       <Name>skazony_round</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="dynamites.png">
+    <Compile Include="Textures\dynamites.png">
       <Name>dynamites</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="found.mp3">
+    <Compile Include="Audio\found.mp3">
       <Name>found</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="explosion_sound.mp3">
+    <Compile Include="Audio\explosion_sound.mp3">
       <Name>explosion_sound</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="fire_racket.mp3">
+    <Compile Include="Audio\fire_racket.mp3">
       <Name>fire_racket</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="missed.wav">
+    <Compile Include="Audio\missed.wav">
       <Name>missed</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="null_sound.mp3">
+    <Compile Include="Audio\null_sound.mp3">
       <Name>null_sound</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="kamien.jpg">
+    <Compile Include="Textures\kamien.jpg">
       <Name>kamien</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ciezki_mur.jpg">
+    <Compile Include="Textures\ciezki_mur.jpg">
       <Name>ciezki_mur</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="background_music.mp3">
+    <Compile Include="Audio\background_music.mp3">
       <Name>background_music</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ziemia.jpg">
+    <Compile Include="Textures\ziemia.jpg">
       <Name>ziemia</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="lekki_mur.jpg">
+    <Compile Include="Textures\lekki_mur.jpg">
       <Name>lekki_mur</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="blob.jpg">
+    <Compile Include="Textures\blob.jpg">
       <Name>blob</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="goblin.jpg">
+    <Compile Include="Textures\goblin.jpg">
       <Name>goblin</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="chodzaca_bomba.jpg">
+    <Compile Include="Textures\chodzaca_bomba.jpg">
       <Name>chodzaca_bomba</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="gigantyczny_szczur.jpg">
+    <Compile Include="Textures\gigantyczny_szczur.jpg">
       <Name>gigantyczny_szczur</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\pole_silowe.jpg">
+      <Name>pole_silowe</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\vandal_left_immortal.jpg">
+      <Name>vandal_left_immortal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\vandal_right_immortal.jpg">
+      <Name>vandal_right_immortal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\level1_goal.jpg">
+      <Name>level1_goal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\level2_goal.jpg">
+      <Name>level2_goal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\level3_goal.jpg">
+      <Name>level3_goal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\level4_goal.jpg">
+      <Name>level4_goal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\level5_goal.jpg">
+      <Name>level5_goal</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

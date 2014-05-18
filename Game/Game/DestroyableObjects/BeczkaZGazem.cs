@@ -35,7 +35,7 @@ namespace Game.DestroyableObjects
 
         public void OnDestroy(Map.Map map)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

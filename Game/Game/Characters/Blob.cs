@@ -9,20 +9,24 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Game.Characters
 {
+    /// <summary>
+    /// Przeciwnik poruszajacy sie losowo
+    /// po smierci zostawia pole ameby
+    /// </summary>
     class Blob : Enemy
     {
-
+        /// <summary>
+        /// Czynnik losowy przy wyborze ruchu
+        /// </summary>
         Random rand = new Random();
-        const string asset_name = "blob";
+        const string asset_name = "Textures\\blob";
 
 
-        public Blob(ContentManager content, Rectangle rectangle, int max_width, int max_height, int x, int y)
+        public Blob(ContentManager content, Rectangle rectangle, int x, int y)
         {
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
-            this.rectangle = rectangle;
-            this.max_height = max_height;
-            this.max_width = max_width;
+            this.rectangle = rectangle; 
             this.x = x;
             this.y = y;
             current_direction = Game.direction.down;
@@ -52,7 +56,7 @@ namespace Game.Characters
 
         public override void Update(GameTime gametime, Map.Map map)
         {
-            if (gametime.TotalGameTime.Milliseconds % 40 == 0)
+            if (gametime.TotalGameTime.Milliseconds % 20 == 0)
             {
                 Move(map);
                 switch (current_direction)
@@ -77,11 +81,14 @@ namespace Game.Characters
 
         }
 
-
-        public void Die()
+        /// <summary>
+        /// Zostawia na swoim miejscu pole ameby
+        /// </summary>
+        /// <param name="map"></param>
+         public void Die(Map.Map map)
         {
-            //TODO: fire animation
-            //remove object from map(insert Puste in its place)
+            map.setObject(x,y,new DestroyableObjects.Ameba(content, new Rectangle(x * this.rectangle.Width, y * this.rectangle.Height, this.rectangle.Width, this.rectangle.Height), x, y));
+       
         }
     }
 }

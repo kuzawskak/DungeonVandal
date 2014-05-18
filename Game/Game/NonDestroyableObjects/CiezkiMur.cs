@@ -9,11 +9,17 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Game.NonDestroyableObjects
 {
-    class CiezkiMur:StaticObject
+    /// <summary>
+    /// Obiekt niezniszczalny bez specjalnych wlasciwosci
+    /// </summary>
+    class CiezkiMur:Map.MapObject
     {
-        private string asset_name = "ciezki_mur";
+        /// <summary>
+        /// Content dla tekstury
+        /// </summary>
+        private string asset_name = "Textures\\ciezki_mur";
 
-        public CiezkiMur(ContentManager content, Rectangle rectangle, int max_width, int max_height, int x, int y)
+        public CiezkiMur(ContentManager content, Rectangle rectangle, int x, int y)
         {
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);

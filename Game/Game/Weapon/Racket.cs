@@ -15,7 +15,7 @@ namespace Game.Weapon
     {
        
         SoundEffect soundEffect;
-        private string asset_name = "racket";
+        private string asset_name = "Textures\\racket";
         private bool is_fired = false;
         private const int speed = 5;
         Game.direction direction;
@@ -30,16 +30,14 @@ namespace Game.Weapon
         /// <param name="max_height">height of the whole map</param>
         /// <param name="x"> the initial rectangle x value</param>
         /// <param name="y"> the initail rectangle y value</param>
-        public Racket(ContentManager content, Rectangle rectangle, int max_width, int max_height, int x, int y)
+        public Racket(ContentManager content, Rectangle rectangle, int x, int y)
         {           
-            soundEffect = content.Load<SoundEffect>("found"); 
+            soundEffect = content.Load<SoundEffect>("Audio\\found"); 
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
             this.rectangle = rectangle;
             this.x = x;
             this.y = y;
-            this.i =x / rectangle.Width;
-            this.j = y / rectangle.Height;
             IsAccesible = true;
 
         }
@@ -54,11 +52,11 @@ namespace Game.Weapon
         /// <param name="x"> the initial rectangle x value</param>
         /// <param name="y"> the initail rectangle y value</param>
         /// <param name="direction">direction of the move</param>
-        public Racket(ContentManager content, Rectangle rectangle, int max_width, int max_height, int x, int y,Game.direction direction)
+        public Racket(ContentManager content, Rectangle rectangle, int x, int y,Game.direction direction)
         {
             is_fired = true;
             this.direction = direction;
-            soundEffect = content.Load<SoundEffect>("found");
+            soundEffect = content.Load<SoundEffect>("Audio\\found");
             this.content = content;
             switch (direction)
             {
@@ -80,8 +78,6 @@ namespace Game.Weapon
             this.rectangle = rectangle;
             this.x = x;
             this.y = y;
-            this.i = x / rectangle.Width;
-            this.j = y / rectangle.Height;
             IsAccesible = true;
 
         }
@@ -92,7 +88,7 @@ namespace Game.Weapon
         {
             soundEffect.Play();
             map.addPlayersRacket(1);
-            map.setObject(rectangle.X/rectangle.Width, rectangle.Y/rectangle.Height,new NonDestroyableObjects.Puste(content, this.Rectangle));
+            map.setObject(x, y,new NonDestroyableObjects.Puste(content, this.Rectangle));
           
         }
 
@@ -104,12 +100,12 @@ namespace Game.Weapon
             if (is_fired)
             {
 
-                int x_index = rectangle.X / rectangle.Width;
-                int y_index = rectangle.Y / rectangle.Height;
+                int x_index = x;
+                int y_index = y;
                 if (map.getObject(x_index, y_index).GetType() != typeof(NonDestroyableObjects.Puste) && map.getObject(x_index, y_index)!=this)
                 {
                     //explosion
-                    SoundEffect explosion_sound = content.Load<SoundEffect>("explosion_sound");
+                    SoundEffect explosion_sound = content.Load<SoundEffect>("Audio\\explosion_sound");
                     explosion_sound.Play();
                     //TODO: dodac sprawdzanie czy nie wykraczamy indeksow w mapie i czy obiekt nie jest niezniszczalny
                     //tak naprawde powinno sie to zmienic na wywolanie onDestroy dla kazdego z tych obiektow!!!!!!!!!!
@@ -135,9 +131,7 @@ namespace Game.Weapon
                 {
                     case Game.direction.down:
                         texture = content.Load<Texture2D>("vandal_down_inv");
-                        rectangle.Y += speed;
-                       
-                       
+                        rectangle.Y += speed;                     
                         break;
                     case Game.direction.up:
                         texture = content.Load<Texture2D>("vandal_up_inv");
@@ -164,7 +158,7 @@ namespace Game.Weapon
         public void OnDestroy(Map.Map map)
         {
             //oznacz odpowiednie pole jak puste
-            map.setObject(rectangle.X / rectangle.Width, rectangle.Y / rectangle.Height, new NonDestroyableObjects.Puste(content, this.Rectangle));
+            map.setObject(x, y, new NonDestroyableObjects.Puste(content, this.Rectangle));
         
         }
 

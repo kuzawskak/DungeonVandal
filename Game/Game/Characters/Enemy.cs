@@ -67,6 +67,9 @@ namespace Game.Characters
             }
         }
 
+        public void Die(Map.Map map)
+        {
+        }
 
 
         

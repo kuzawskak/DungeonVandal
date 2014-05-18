@@ -16,9 +16,9 @@ namespace Game.DestroyableObjects
     {
 
 
-        private string asset_name = "lekki_mur";
+        private string asset_name = "Textures\\lekki_mur";
 
-        public LekkiMur(ContentManager content, Rectangle rectangle, int max_width, int max_height, int x, int y)
+        public LekkiMur(ContentManager content, Rectangle rectangle, int x, int y)
         {
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
@@ -33,8 +33,6 @@ namespace Game.DestroyableObjects
         public void OnDestroy(Map.Map map)
         {
 
-
-            throw new NotImplementedException();
         }
     }
 }

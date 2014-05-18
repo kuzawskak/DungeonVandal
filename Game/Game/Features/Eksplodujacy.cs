@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Game.Features
 {
+    /// <summary>
+    /// Po znieszceniu obiekt generuje eksplozje
+    /// </summary>
     interface Eksplodujacy
     {
         void Eksploduj();

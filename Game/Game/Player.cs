@@ -28,11 +28,10 @@ namespace Game
             this.Points = 0;
             this.Rackets = 0;
             this.Dynamite = 0;
+            this.IntelligenceLevel = 1;
 
         }
-        private bool is_immortal;
-        private int targets_count;
-        private int intelligence_level;
+
 
         void UpGrade() { }
 
@@ -46,6 +45,7 @@ namespace Game
             KeyboardSettings = new Settings.KeySettings();
             GraphicsSettings = new Settings.GraphicsSettings();
             AudioSettings = new Settings.AudioSettings();
+            IntelligenceLevel = 1;
             //inicializacja wszytkich pol na 0   
         }
 

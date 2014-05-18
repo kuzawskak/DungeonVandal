@@ -21,7 +21,7 @@ namespace Game.DestroyableObjects
             throw new NotImplementedException();
         }
 
-        void Skazony.Zabij()
+        void Skazony.Zabij(Map.Map map)
         {
             throw new NotImplementedException();
         }
@@ -44,7 +44,7 @@ namespace Game.DestroyableObjects
 
         public void OnDestroy(Map.Map map)
         {
-            throw new NotImplementedException();
+           
         }
     }
 }

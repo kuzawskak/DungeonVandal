@@ -7,18 +7,23 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Timers;
+using System.Windows.Forms;
 
 namespace Game.DestroyableObjects
 {
-    class Ameba : Map.MapObject, Kruchy, Skazony,Niestabilny,Zniszczalny
+    /// <summary>
+    /// Obiekt zniszczalny , co losowy czas tworzy kolejne ameby dookola siebie na SŁABYCH polach
+    /// </summary>
+    class Ameba : Map.MapObject, Kruchy, Skazony, Niestabilny, Zniszczalny
     {
         Random rand = new Random();
+        List<Map.MapObject> available_tiles;
         private int random_new_ameba_time;
         private int points;
-        private string asset_name = "ameba";
+        private string asset_name = "Textures\\ameba";
         private bool create_ameba = false;
         private System.Timers.Timer timer;
-        public Ameba(ContentManager content, Rectangle rectangle, int max_width, int max_height, int x, int y)
+        public Ameba(ContentManager content, Rectangle rectangle, int x, int y)
         {
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
@@ -36,42 +41,40 @@ namespace Game.DestroyableObjects
 
         public override void Update(GameTime gametime, Map.Map map)
         {
-           int x = this.rectangle.X/this.Rectangle.Width;
-           int y = this.rectangle.Y/this.Rectangle.Height;
-
-
-
+            int x = this.rectangle.X / this.Rectangle.Width;
+            int y = this.rectangle.Y / this.Rectangle.Height;
             if (create_ameba)
             {
-                if (map.getObject(x - 1, y-1).IsAccesible)
-                    map.setObject(x - 1, y - 1, new DestroyableObjects.Ameba(content, new Rectangle((x - 1) * rectangle.Width, (y - 1) * rectangle.Height, rectangle.Width, rectangle.Height), x - 1, y - 1, x - 1, y - 1));
-                if (map.getObject(x - 1, y).IsAccesible)
-                    map.setObject(x - 1, y, new DestroyableObjects.Ameba(content, new Rectangle((x - 1) * rectangle.Width, y * rectangle.Height, rectangle.Width, rectangle.Height), x - 1, y, x - 1, y));
-                if (map.getObject(x - 1, y+1).IsAccesible)
-                    map.setObject(x - 1, y + 1, new DestroyableObjects.Ameba(content, new Rectangle((x - 1) * rectangle.Width, (y + 1) * rectangle.Height, rectangle.Width, rectangle.Height), x - 1, y + 1, x - 1, y + 1));
-                if (map.getObject(x , y-1).IsAccesible)
-                    map.setObject(x, y - 1, new DestroyableObjects.Ameba(content, new Rectangle(x * rectangle.Width, (y - 1) * rectangle.Height, rectangle.Width, rectangle.Height), x, y - 1, x, y - 1));
-                if (map.getObject(x , y+1).IsAccesible)
-                    map.setObject(x, y + 1, new DestroyableObjects.Ameba(content, new Rectangle(x * rectangle.Width, (y + 1) * rectangle.Height, rectangle.Width, rectangle.Height), x, y + 1, x, y + 1));
-                if (map.getObject(x + 1, y-1).IsAccesible)
-                    map.setObject(x + 1, y - 1, new DestroyableObjects.Ameba(content, new Rectangle((x + 1) * rectangle.Width, (y - 1) * rectangle.Height, rectangle.Width, rectangle.Height), x + 1, y - 1, x + 1, y - 1));
-                if (map.getObject(x + 1, y).IsAccesible)
-                    map.setObject(x + 1, y, new DestroyableObjects.Ameba(content, new Rectangle((x + 1) * rectangle.Width, y * rectangle.Height, rectangle.Width, rectangle.Height), x + 1, y, x + 1, y));
-                if (map.getObject(x + 1, y+1).IsAccesible)
-                    map.setObject(x + 1, y + 1, new DestroyableObjects.Ameba(content, new Rectangle((x + 1) * rectangle.Width, (y + 1) * rectangle.Height, rectangle.Width, rectangle.Height), x + 1, y + 1, x + 1, y + 1));
+                available_tiles = new List<Map.MapObject>();
+
+                if (x > 0 && y > 0 && map.getObject(x - 1, y - 1) is Features.Slaby)
+                    available_tiles.Add(map.getObject(x - 1, y - 1));
+                if (x > 0 && map.getObject(x - 1, y) is Features.Slaby)
+                    available_tiles.Add(map.getObject(x - 1, y));
+                if (x > 0 && y < map.getHeight() - 1 && map.getObject(x - 1, y + 1) is Features.Slaby)
+                    available_tiles.Add(map.getObject(x - 1, y + 1));
+                if (y > 0 && map.getObject(x, y - 1) is Features.Slaby)
+                    available_tiles.Add(map.getObject(x, y - 1));
+                if (y < map.getHeight() - 1 && map.getObject(x, y + 1) is Features.Slaby)
+                    available_tiles.Add(map.getObject(x, y + 1));
+                if (x < map.getWidth() - 1 && y > 0 && map.getObject(x + 1, y - 1) is Features.Slaby)
+                    available_tiles.Add(map.getObject(x + 1, y - 1));
+                if (x<map.getWidth()-1&&map.getObject(x + 1, y) is Features.Slaby)
+                    available_tiles.Add(map.getObject(x + 1, y));
+                if (x<map.getWidth()-1&&y<map.getHeight()-1&&map.getObject(x + 1, y + 1) is Features.Slaby)
+                    available_tiles.Add(map.getObject(x + 1, y + 1));
+                CreateNewAmeba(map);
                 create_ameba = false;
             }
-
-            
 
         }
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             create_ameba = true;
-       
+
             timer.Start();
-    
+
         }
 
 
@@ -81,7 +84,7 @@ namespace Game.DestroyableObjects
             throw new NotImplementedException();
         }
 
-        void Skazony.Zabij()
+        void Skazony.Zabij(Map.Map map)
         {
             throw new NotImplementedException();
         }
@@ -92,16 +95,22 @@ namespace Game.DestroyableObjects
         }
 
 
-        void CreateNewAmeba(ref Map.Map map)
+        void CreateNewAmeba(Map.Map map)
         {
             //losuj dostepne puste miejsce
-            //
+            if (available_tiles.Capacity > 0)
+            {
+
+                int random_pos = rand.Next(0, available_tiles.Capacity - 1);
+                map.setObject(available_tiles[random_pos].x, available_tiles[random_pos].y, new DestroyableObjects.Ameba(content, new Rectangle(available_tiles[random_pos].x * rectangle.Width, available_tiles[random_pos].y * rectangle.Height, rectangle.Width, rectangle.Height), available_tiles[random_pos].x, available_tiles[random_pos].y));
+            }
         }
         void OnExplosion()
         {
 
         }
-        void Update(GameTime gameTime) { 
+        void Update(GameTime gameTime)
+        {
             //
         }
 

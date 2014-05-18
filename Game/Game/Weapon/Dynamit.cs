@@ -24,8 +24,9 @@ namespace Game.Weapon
         /// <summary>
         /// Czas po ktorym wybuchnie w przypadku odpalonego dynamitu
         /// </summary>
-        private int sleep_time = 3000;
-        private string asset_name = "dynamite";
+        const int sleep_time = 3000;
+
+        private string asset_name = "Textures\\dynamite";
         /// <summary>
         /// Czy dynamit jest odpalony
         /// </summary>
@@ -41,23 +42,19 @@ namespace Game.Weapon
         /// </summary>
         /// <param name="content"></param>
         /// <param name="rectangle"></param>
-        /// <param name="max_width"></param>
-        /// <param name="max_height"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public Dynamit(ContentManager content, Rectangle rectangle, int max_width, int max_height, int x, int y)
+        public Dynamit(ContentManager content, Rectangle rectangle, int x, int y)
         {
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
             this.rectangle = rectangle;
             this.x = x;
             this.y = y;
-            this.i =x / rectangle.Width;
-            this.j = y / rectangle.Height;
             this.is_fired = false;
             this.IsAccesible = true;
-            found_soundEffect = content.Load<SoundEffect>("found");
-            fired_soundEffect = content.Load<SoundEffect>("explosion_sound");
+            found_soundEffect = content.Load<SoundEffect>("Audio\\found");
+            fired_soundEffect = content.Load<SoundEffect>("Audio\\explosion_sound");
 
 
         }
@@ -68,26 +65,22 @@ namespace Game.Weapon
         /// </summary>
         /// <param name="content"></param>
         /// <param name="rectangle"></param>
-        /// <param name="max_width"></param>
-        /// <param name="max_height"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="gametime"></param>
-        public Dynamit(ContentManager content, Rectangle rectangle, int max_width, int max_height, int x, int y, GameTime gametime)
+        public Dynamit(ContentManager content, Rectangle rectangle,int x, int y, GameTime gametime)
         {
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
             this.rectangle = rectangle;
             this.x = x;
             this.y = y;
-            this.i = x / rectangle.Width;
-            this.j = y / rectangle.Height;
             this.is_fired = false;
             IsAccesible = true;
-            found_soundEffect = content.Load<SoundEffect>("found");
-            fired_soundEffect = content.Load<SoundEffect>("explosion_sound");
+            found_soundEffect = content.Load<SoundEffect>("Audio\\found");
+            fired_soundEffect = content.Load<SoundEffect>("Audio\\explosion_sound");
             this.start_time = gametime;
-            timer = new Timer(3000);
+            timer = new Timer(sleep_time);
             timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             timer.Start();
             
@@ -97,9 +90,7 @@ namespace Game.Weapon
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            is_fired = true;
-
-         
+            is_fired = true;        
         }
 
 
@@ -133,20 +124,37 @@ namespace Game.Weapon
                     this.OnDestroy(map);
                     obj = map.getObject(x - 1, y-1);
                     if (obj is Zniszczalny) (obj as Zniszczalny).OnDestroy(map);
+                    else if (obj.GetType() == typeof(Characters.Enemy))
+                        (obj as Characters.Enemy).Die(map);
+                    
                     obj = map.getObject(x - 1, y+1);
                     if (obj is Zniszczalny) (obj as Zniszczalny).OnDestroy(map);
+                    else if (obj.GetType() == typeof(Characters.Enemy))
+                        (obj as Characters.Enemy).Die(map);
                     obj = map.getObject(x - 1, y );
                     if (obj is Zniszczalny) (obj as Zniszczalny).OnDestroy(map);
+                    else if (obj.GetType() == typeof(Characters.Enemy))
+                        (obj as Characters.Enemy).Die(map);
                     obj = map.getObject(x , y-1);
                     if (obj is Zniszczalny) (obj as Zniszczalny).OnDestroy(map);
+                    else if (obj.GetType() == typeof(Characters.Enemy))
+                        (obj as Characters.Enemy).Die(map);
                     obj = map.getObject(x , y+1);
                     if (obj is Zniszczalny) (obj as Zniszczalny).OnDestroy(map);
+                    else if (obj.GetType() == typeof(Characters.Enemy))
+                        (obj as Characters.Enemy).Die(map);
                     obj = map.getObject(x + 1, y);
                     if (obj is Zniszczalny) (obj as Zniszczalny).OnDestroy(map);
+                    else if (obj.GetType() == typeof(Characters.Enemy))
+                        (obj as Characters.Enemy).Die(map);
                     obj = map.getObject(x + 1, y-1);
                     if (obj is Zniszczalny) (obj as Zniszczalny).OnDestroy(map);
+                    else if (obj.GetType() == typeof(Characters.Enemy))
+                        (obj as Characters.Enemy).Die(map);
                     obj = map.getObject(x + 1, y + 1);
                     if (obj is Zniszczalny) (obj as Zniszczalny).OnDestroy(map);
+                    else if (obj.GetType() == typeof(Characters.Enemy))
+                        (obj as Characters.Enemy).Die(map);
                 }
             
         }

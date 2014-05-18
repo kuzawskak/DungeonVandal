@@ -77,6 +77,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DestroyableObjects\CelMisji.cs" />
     <Compile Include="MenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,7 +113,6 @@
     <Compile Include="NonDestroyableObjects\MagicznyMur.cs" />
     <Compile Include="NonDestroyableObjects\MarmurowyKamien.cs" />
     <Compile Include="NonDestroyableObjects\RadioaktywnyGlaz.cs" />
-    <Compile Include="NonDestroyableObjects\StaticObject.cs" />
     <Compile Include="Panels\BestScoresPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -124,6 +124,12 @@
     </Compile>
     <Compile Include="Panels\ChooseLevelPanel.Designer.cs">
       <DependentUpon>ChooseLevelPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\GameOver.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\GameOver.Designer.cs">
+      <DependentUpon>GameOver.cs</DependentUpon>
     </Compile>
     <Compile Include="Panels\GraphicSettingsPanel.cs">
       <SubType>UserControl</SubType>
@@ -276,6 +282,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Panels\ChooseLevelPanel.resx">
       <DependentUpon>ChooseLevelPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\GameOver.resx">
+      <DependentUpon>GameOver.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Panels\GraphicSettingsPanel.resx">
       <DependentUpon>GraphicSettingsPanel.cs</DependentUpon>

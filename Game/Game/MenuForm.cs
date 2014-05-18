@@ -32,6 +32,9 @@ namespace DungeonVandal
         public BestScoresPanel best_scores_panel = new BestScoresPanel();
         public ChooseLevelPanel choose_level_panel = new ChooseLevelPanel();
         public XnaGamePanel game_panel = new XnaGamePanel();
+        public GameOver game_over_panel = new GameOver();
+
+    
 
 
         public Game.Game gameInstance;
@@ -47,6 +50,18 @@ namespace DungeonVandal
             activePanel.Visible = true;
             player = new Game.Player();
         }
+
+        public void GameOver()
+        {
+            
+           
+            game_panel.Visible = false;
+            game_over_panel.setScoreLabel(player.Points);
+            game_over_panel.Visible = true;
+            game_over_panel.Focus();
+        }
+
+
 
         public void InitializePanels()
         {
@@ -94,9 +109,15 @@ namespace DungeonVandal
             this.Controls.Add(game_panel);
             game_panel.Visible = false;
 
+            game_over_panel.Dock = DockStyle.Fill;
+            this.Controls.Add(game_over_panel);
+            game_over_panel.Visible = false;
+
             main_panel.Dock = DockStyle.Fill;
             this.Controls.Add(main_panel);
             main_panel.Visible = true;
+
+        
 
   
         }

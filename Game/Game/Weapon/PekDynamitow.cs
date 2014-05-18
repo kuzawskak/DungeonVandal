@@ -14,18 +14,16 @@ namespace Game.Weapon
     {
         SoundEffect soundEffect;
 
-        private string asset_name = "dynamites";
+        private string asset_name = "Textures\\dynamites";
         private int i, j;
-        public PekDynamitow(ContentManager content, Rectangle rectangle, int max_width, int max_height, int x, int y)
+        public PekDynamitow(ContentManager content, Rectangle rectangle, int x, int y)
         {
-            soundEffect = content.Load<SoundEffect>("found");
+            soundEffect = content.Load<SoundEffect>("Audio\\found");
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
             this.rectangle = rectangle;
             this.x = x;
             this.y = y;
-            this.i = x / rectangle.Width;
-            this.j = y / rectangle.Height;
             IsAccesible = true;
 
         }

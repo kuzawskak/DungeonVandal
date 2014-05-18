@@ -12,7 +12,7 @@ namespace Game.DestroyableObjects
     class Ziemia : Map.MapObject,Slaby,Zniszczalny
     {
         int points;
-        const string asset_name = "ziemia";
+        const string asset_name = "Textures\\ziemia";
         public void Znikaj(Map.Map map)
         {
         
@@ -21,7 +21,7 @@ namespace Game.DestroyableObjects
             map.setObject(x_ind, y_ind, new NonDestroyableObjects.Puste(content, new Rectangle((x_ind) * this.rectangle.Width, y_ind * this.Rectangle.Height, this.rectangle.Width, this.rectangle.Width)));
         }
 
-        public Ziemia(ContentManager content, Rectangle rectangle,int intelligence_level)
+        public Ziemia(ContentManager content, Rectangle rectangle,int x, int y,int intelligence_level)
         {
             switch (intelligence_level)
             {
@@ -35,6 +35,8 @@ namespace Game.DestroyableObjects
                     this.points = 1;
                     break;
             }
+            this.x = x;
+            this.y = y;
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
             this.rectangle = rectangle;

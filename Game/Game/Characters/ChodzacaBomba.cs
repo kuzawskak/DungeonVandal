@@ -12,109 +12,108 @@ namespace Game.Characters
     /// Klasa przeciwnika poruszajacego sie 2 razy szybciej niz Vandal, 
     /// gdy trafi na jakis obiekt wybucha
     /// </summary>
-class ChodzacaBomba : Enemy 
+    class ChodzacaBomba : Enemy
     {
         Random rand = new Random();
-        const string asset_name = "chodzaca_bomba";
+        const string asset_name = "Textures\\chodzaca_bomba";
         public Game.direction Move(Map.Map map)
         {
-            if (rectangle.X % rectangle.Width == 0 && rectangle.Y % rectangle.Height == 0)
-            {
-                map.setObject((int)(rectangle.X / rectangle.Width), (int)(rectangle.Y / rectangle.Height), new NonDestroyableObjects.Puste(content, this.Rectangle));
-                current_direction =  (Game.direction)(rand.Next() % 4);
-            }
+
+            current_direction = (Game.direction)(rand.Next() % 4);
+
             return current_direction;
-           
+
         }
-            /// <summary>
+        /// <summary>
         /// Obiekt na mapie , z ktorym nastapila kolizja
         /// </summary>
         Map.MapObject collision_obj = null;
 
-        public ChodzacaBomba(ContentManager content, Rectangle rectangle, int max_width, int max_height,int x, int y)
+        public ChodzacaBomba(ContentManager content, Rectangle rectangle, int x, int y)
         {
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
             this.rectangle = rectangle;
-            this.max_height = max_height;
-            this.max_width = max_width;
+
             this.x = x;
             this.y = y;
             current_direction = Game.direction.down;
-            this.velocity = 2;
+            this.velocity = 30;
         }
-    
 
-        public override void Update(GameTime gametime,Map.Map map)
+
+        public override void Update(GameTime gametime, Map.Map map)
         {
-           current_direction = Move(map);
+            if (gametime.TotalGameTime.Milliseconds % 10 == 0)
+            {
+                current_direction = Move(map);
 
-           switch (current_direction)
-           {
-               case Game.direction.down:
-                   if (rectangle.Y + velocity < max_height - rectangle.Height)
-                   {
-                       collision_obj = map.getObject(rectangle.X / rectangle.Width, (rectangle.Y ) / rectangle.Height + 1);
-                       if (collision_obj.IsAccesible)
-                       {
-                           rectangle.Y += velocity;
-                       }
-                       else
-                       {
-                           FireBomb(map);
-                       }
-                   }
+                switch (current_direction)
+                {
+                    case Game.direction.down:
+                       
+                        {
+                            collision_obj = map.getObject(x,y + 1);
+                            if (collision_obj.GetType()==typeof(NonDestroyableObjects.Puste))
+                            {
+                                MoveInDirection(0, 1, map);
+                            }
+                             else if(collision_obj.GetType()!=typeof(DestroyableObjects.Ziemia))
+                            {
+                               FireBomb(map);
+                            }
+                        }
 
-                   break;
-               case Game.direction.left:
-                   if (rectangle.X > 0)
-                   {
-                       collision_obj = map.getObject((rectangle.X ) / rectangle.Width, rectangle.Y / rectangle.Height);
-                       if (collision_obj.IsAccesible)
-                       {
-                           rectangle.X -= velocity;
-                       }
-                       else
-                       {
-                           FireBomb(map);
-                       }
-                   }
+                        break;
+                    case Game.direction.left:
+                        if (rectangle.X > 0)
+                        {
+                            collision_obj = map.getObject(x-1,y);
+                            if (collision_obj.GetType() == typeof(NonDestroyableObjects.Puste))
+                            {
+                                MoveInDirection(-1, 0, map);
+                            }
+                            else if(collision_obj.GetType()!=typeof(DestroyableObjects.Ziemia))
+                            {
+                               FireBomb(map);
+                            }
+                        }
 
-                   break;
-               case Game.direction.right:
-                   if (rectangle.X + velocity < max_width - rectangle.Width)
-                   {
-                       collision_obj = map.getObject((rectangle.X ) / rectangle.Width + 1, rectangle.Y / rectangle.Height);
-                       if (collision_obj.IsAccesible)
-                       {
-                           rectangle.X += velocity;
-                       }
-                       else
-                       {
-                           FireBomb(map);
-                       }
-                   }
+                        break;
+                    case Game.direction.right:
+                 
+                            collision_obj = map.getObject(x + 1, y);
+                            if (collision_obj.GetType() == typeof(NonDestroyableObjects.Puste))
+                            {
+                                MoveInDirection(1, 0, map);
+                            }
+                             else if(collision_obj.GetType()!=typeof(DestroyableObjects.Ziemia))
+                            {
+                               FireBomb(map);
+                            }
+                        
 
-                   break;
-               case Game.direction.up:
-                   if (rectangle.Y > 0)
-                   {
-                       collision_obj = map.getObject(rectangle.X / rectangle.Width, (rectangle.Y) / rectangle.Height);
-                       if (collision_obj.IsAccesible)
-                       {
-                           rectangle.Y -= velocity;
-                       }
-                       else
-                       {
-                           FireBomb(map);
-                       }
-                   }
+                        break;
+                    case Game.direction.up:
+                        if (rectangle.Y > 0)
+                        {
+                            collision_obj = map.getObject(x , y-1);
+                            if (collision_obj.GetType() == typeof(NonDestroyableObjects.Puste))
+                            {
+                                MoveInDirection(0, -1, map);
+                            }
+                             else if(collision_obj.GetType()!=typeof(DestroyableObjects.Ziemia))
+                            {
+                               FireBomb(map);
+                            }
+                        }
 
-                   break;
-               default:
-                   break;
+                        break;
+                    default:
+                        break;
 
-           }
+                }
+            }
         
         }
 
@@ -125,19 +124,19 @@ class ChodzacaBomba : Enemy
             //remove object from map(insert Puste in its place)
         }
 
-      public void FireBomb(Map.Map map)
+        public void FireBomb(Map.Map map)
         {
-            map.setObject((int)(rectangle.X / rectangle.Width), (int)(rectangle.Y / rectangle.Height), new NonDestroyableObjects.Puste(content, this.Rectangle));
-           // map.RemoveCharacter(this);
+            map.setObject(x, y, new NonDestroyableObjects.Puste(content, this.Rectangle));
+            // map.RemoveCharacter(this);
 
         }
- 
+
         public void Move()
         {
         }
     }
 
-      
-       
-    }
+
+
+}
 

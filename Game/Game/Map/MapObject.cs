@@ -20,12 +20,13 @@ namespace Game.Map
             protected set;
         }
         //wspolrzedne na mapie
-        protected int x, y;
+        public int x { get; protected set; }
+        public int y { get; protected set; }
 
         public Texture2D Texture
         {
-            get { return texture;}
-            set {texture = value;}
+            get { return texture; }
+            set { texture = value; }
         }
         public Rectangle Rectangle
         {
@@ -33,39 +34,43 @@ namespace Game.Map
             set { rectangle = value; }
         }
         public MapObject() { }
-        public MapObject(ContentManager content , Rectangle rectangle, string assetName)
+        public MapObject(ContentManager content, Rectangle rectangle, string assetName)
         {
             this.texture = content.Load<Texture2D>(assetName);
             this.rectangle = rectangle;
             IsAccesible = true;
-            
+
         }
 
-        public MapObject(ContentManager content, Rectangle rectangle, string assetName,int x, int y)
+        public MapObject(ContentManager content, Rectangle rectangle, string assetName, int x, int y)
         {
             this.texture = content.Load<Texture2D>(assetName);
             this.rectangle = rectangle;
-            this.x = x;
-            this.y = y;
+          //  this.x = x;
+          //  this.y = y;
         }
 
-        public void Draw(SpriteBatch spritebatch) {
+        public void Draw(SpriteBatch spritebatch)
+        {
 
-           spritebatch.Draw(texture, rectangle, Color.White);
+            spritebatch.Draw(texture, rectangle, Color.White);
         }
 
-        public virtual void onCollisionDetected(Map map,MapObject map_object)
+        public virtual void onCollisionDetected(Map map, MapObject map_object)
         {
 
         }
 
-        public virtual void Update(GameTime gametime,Map map) {
+        public virtual void Update(GameTime gametime, Map map)
+        {
         }
 
-        void onExplosion() { 
+        void onExplosion()
+        {
             //default do nothing
         }
-        void Die() { 
+        void Die()
+        {
             //change itself to empty firld
             //get map and 
         }

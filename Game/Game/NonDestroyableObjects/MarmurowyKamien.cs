@@ -10,15 +10,29 @@ using System.Windows.Forms;
 
 namespace Game.NonDestroyableObjects
 {
-    class MarmurowyKamien:StaticObject,ReagujeNaGrawitacje,Ciezki
+    class MarmurowyKamien:Map.MapObject,ReagujeNaGrawitacje,Ciezki
     {
-
-        const int fall_velocity = 1;
+        /// <summary>
+        /// Predkosc spadania
+        /// </summary>
+        const int fall_velocity = 5;
+        /// <summary>
+        /// stan (spada czy nie)
+        /// </summary>
         bool is_falling = false;
-        private string asset_name = "marmur";
-       
+        /// <summary>
+        /// Content dla tekstury
+        /// </summary>
+        private string asset_name = "Textures\\marmur";
 
-         public MarmurowyKamien(ContentManager content, Rectangle rectangle, int max_width, int max_height, int x, int y)
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
+        /// <param name="content">Content odpowiedzilany za ladowanie tekstury</param>
+        /// <param name="rectangle">Prostokat okreslajacy pozycje na ekranie gry</param>
+        /// <param name="x"> Indeks x na mapie obiektow</param>
+        /// <param name="y"> Indeks y na mapie obiektow</param>
+         public MarmurowyKamien(ContentManager content, Rectangle rectangle, int x, int y)
         {
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
@@ -27,17 +41,16 @@ namespace Game.NonDestroyableObjects
             this.y = y;
             IsAccesible = false;
             is_falling = false;
-            
-
+           
         }
 
-        //sprawdzanie kolizji
-
-
-
+        /// <summary>
+        /// Aktualizacja stanu (uzalezniona od stanu sasiadujacych komórek na mapie)
+        /// </summary>
+        /// <param name="gametime"></param>
+        /// <param name="map"></param>
          public override void Update(GameTime gametime,Map.Map map)
          {
-
              int x_index = rectangle.X / rectangle.Width;
              int y_index = rectangle.Y / rectangle.Height;
              if (y_index == map.getHeight() - 1)
@@ -59,33 +72,24 @@ namespace Game.NonDestroyableObjects
                  //nie spadl calkowice jeszcze na odpowiedni prosokat
                  if (rectangle.Y % rectangle.Height != 0)
                  {
-                     //   MessageBox.Show(x_index.ToString() + "  " + y_index.ToString());
                      Spadaj();
                  }
                  else
                  {
-                     // MessageBox.Show(x_index.ToString() + "  " + y_index.ToString());
                      map.setObject(x_index, y_index, this);
                      map.setObject(x_index, y_index - 1, new NonDestroyableObjects.Puste(content, rectangle));
-                    //pozniej zmienic na nondestroyable zamista puste
                      if (y_index < map.getHeight() - 1 && map.getObject(x_index, y_index + 1).GetType() == typeof(NonDestroyableObjects.Puste))
                      {
                          Spadaj();
-                         // break;
                      }
-                     else is_falling = false;
-
-                    // Spadaj();
-                    //  is_falling = false;            
+                     else is_falling = false;       
                  }
              }
              else if (map.getObject(x_index, y_index + 1).GetType() == typeof(NonDestroyableObjects.Puste)&& !map.is_vandal_on_rectangle(x_index, y_index + 1))
              {//rozpoczecie spadania
                  is_falling = true;
                  Spadaj();
-             }
-            // else is_falling = false;
-          
+             }        
          }
 
         public void Spadaj()

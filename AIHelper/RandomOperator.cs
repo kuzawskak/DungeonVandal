@@ -15,7 +15,7 @@ namespace AIHelper
         CIEZKIMUR, MAGICZNYMUR, MARMUROWYKAMIEN,
         PUSTE, RADIOAKTYWNYGLAZ, DYNAMIT, PEKDYNAMITOW,
         RACKET, POLESILOWE, AMEBA, BECZKAZGAZEM, KAMIEN,
-        LEKKIMUR, NIESTABILNABECZKA, ZIEMIA, BLOB, VANDAL, GOBLIN, GIGANTYCZNYSZCZUR, CHODZACABOMBA
+        LEKKIMUR, NIESTABILNABECZKA, ZIEMIA, BLOB, VANDAL, GOBLIN, GIGANTYCZNYSZCZUR, CHODZACABOMBA,CELMISJI
     };
     public class RandomOperator
     {
@@ -45,7 +45,7 @@ namespace AIHelper
 
         public List<int> RandomMove(int x, int y) { return null; }
 
-        public void GenerateRandomMap(int width, int height)
+        public void GenerateRandomMap(int width, int height,int gameLevel)
         {
 
 
@@ -107,13 +107,13 @@ namespace AIHelper
                 Map[pos_x, pos_y] = ElementType.KAMIEN;
             }
             //radioaktywny glaz
-            for (int i = 0; i < 10; i++)
+           /* for (int i = 0; i < 10; i++)
             {
                 pos_x = rand.Next(1, width - 2);
                 pos_y = rand.Next(1, height - 2);
 
                 Map[pos_x, pos_y] = ElementType.RADIOAKTYWNYGLAZ;
-            }
+            }*/
             //ciezki mur
             for (int i = 0; i < 10; i++)
             {
@@ -153,12 +153,21 @@ namespace AIHelper
 
             Map[pos_x, pos_y] = ElementType.GOBLIN;
 
+
+
+            pos_x = 7;
+            pos_y = 7;
+
+            Map[pos_x, pos_y] = ElementType.POLESILOWE;
+
             pos_x = 10;
             pos_y = 10;
 
             Map[pos_x, pos_y] = ElementType.CHODZACABOMBA;
 
             Map[1, 1] = ElementType.VANDAL;
+
+            Map[width - 2,height - 2 ] = ElementType.CELMISJI;
 
 
 

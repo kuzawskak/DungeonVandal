@@ -123,6 +123,12 @@ namespace Game
             Form.Pause();
         }
 
+        private void GameOver()
+        {
+            MediaPlayer.Pause();
+            IsPaused = true;
+            Form.GameOver();
+        }
 
         public Game(Game game)
         {
@@ -176,7 +182,7 @@ namespace Game
          
             vandal = new Characters.Vandal(this.Content, new Rectangle(1*tile_size, 1*tile_size, tile_size, tile_size), tile_size * map_width, tile_size * map_height);
             game_map = new Map.Map(tile_size, map_width, map_height, this.Content, player, vandal);
-            music = Content.Load<Song>("background_music");
+            music = Content.Load<Song>("Audio\\background_music");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(music);
             MediaPlayer.Volume = (float)player.AudioSettings.MusicVolume;
@@ -259,7 +265,7 @@ namespace Game
                         }
                         else
                         {
-                            SoundEffect null_sound = Content.Load<SoundEffect>("null_sound");
+                            SoundEffect null_sound = Content.Load<SoundEffect>("Audio\\null_sound");
                             SoundEffect.MasterVolume = (float)player.AudioSettings.SoundVolume;
                             null_sound.Play();
 
@@ -278,7 +284,7 @@ namespace Game
                         else
                         {
                             SoundEffect.MasterVolume = (float)player.AudioSettings.SoundVolume;
-                            SoundEffect null_sound = Content.Load<SoundEffect>("null_sound");
+                            SoundEffect null_sound = Content.Load<SoundEffect>("Audio\\null_sound");
                             null_sound.Play();
                         }
                     }
@@ -289,10 +295,21 @@ namespace Game
 
                 
             }
-                base.Update(gameTime);
-            
-            lastUpdateMinutes = gameTime.TotalGameTime.Minutes;
-            lastUpdateSeconds = gameTime.TotalGameTime.Seconds;
+                if (!vandal.is_alive)
+                {
+                    // MessageBox.Show("AAAAAAAAA");
+                    GameOver();
+                    //GAME OVER
+                    //show message box
+                   // PauseGame();
+                }
+                else
+                {
+                    base.Update(gameTime);
+
+                    lastUpdateMinutes = gameTime.TotalGameTime.Minutes;
+                    lastUpdateSeconds = gameTime.TotalGameTime.Seconds;
+                }
         }
 
         /// <summary>

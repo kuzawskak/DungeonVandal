@@ -37,7 +37,7 @@ namespace Game.Panels
             try
             {
                 mp = new MediaPlayer();
-                mp.Open(new System.Uri(Path.GetFullPath(@"background_music.wav")));
+                mp.Open(new System.Uri(Path.GetFullPath(@"Audio\\background_music.wav")));
                 mp.Volume = (double)MusicVolumeTrackBar.Value / 10;
                 mp.Play();
             }

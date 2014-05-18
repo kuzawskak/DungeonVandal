@@ -8,18 +8,24 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Windows.Forms;
 using Microsoft.Xna.Framework.Audio;
 using Game.Features;
+using System.Timers;
 
 namespace Game.Characters
 {
     /// <summary>
     /// Postac któej ruchem i zachowaniem steruje gracz
     /// </summary>
-    public class Vandal : Map.MapObject
+    public class Vandal :  Map.MapObject
     {
+
+        public bool is_alive { get; set; }
         /// <summary>
         /// Czas pozostaly przez ktory Vandal jest niesmiertelny
         /// </summary>
-        TimeSpan immortal_time_left;
+        bool is_immortal;
+        /// <summary>
+        /// Predkosc poruszania
+        /// </summary>
         const int velocity = 30;
         /// <summary>
         /// Kierunek ruchu
@@ -31,18 +37,46 @@ namespace Game.Characters
         /// </summary>
         Map.MapObject collision_obj = null;
 
+        private System.Timers.Timer immortal_timer;
+
+
         public Vandal(ContentManager content, Rectangle rectangle, int max_width, int max_height)
         {
-            this.content = content;      
-            texture = content.Load<Texture2D>("vandal_right");
+            this.content = content;
+            texture = content.Load<Texture2D>("Textures\\vandal_right");
             this.rectangle = rectangle;
-            this.x =(int)( rectangle.X / rectangle.Width);
-            this.y = (int)(rectangle.Y / rectangle.Height);
+            x = (int)(rectangle.X / rectangle.Width);
+            y = (int)(rectangle.Y / rectangle.Height);
             this.max_height = max_height;
             this.max_width = max_width;
+            this.is_alive = true;
             current_direction = Game.direction.none;
 
         }
+
+
+        /// <summary>
+        /// Ustawienie niesmertelnosci po podniesieniu Pola Silowego
+        /// </summary>
+        public void setImmortal()
+        {
+            is_immortal = true;
+            immortal_timer = new System.Timers.Timer(5000);
+            immortal_timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            immortal_timer.Start();
+        }
+
+        /// <summary>
+        /// Utrata niesmiertelnosci po czasie 5 sekund
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        {
+            is_immortal = false;
+            LoadCurrentTexture(null);
+        }
+
 
         /// <summary>
         /// Upusc dynamit
@@ -51,20 +85,18 @@ namespace Game.Characters
         /// <param name="gametime"></param>
         public void LeftDynamite(Map.Map game_map, GameTime gametime)
         {
-            
+
             current_direction = Game.direction.right;
             int new_x = x + 1;
             int new_y = y + 0;
             collision_obj = game_map.getObject(new_x, new_y);
-          //  if (collision_obj.IsAccesible)
+            //  if (collision_obj.IsAccesible)
             {
                 if (collision_obj is Zniszczalny)
-                   (collision_obj as Zniszczalny).OnDestroy(game_map);
+                    (collision_obj as Zniszczalny).OnDestroy(game_map);
 
                 game_map.setObject(new_x, new_y, this);
-                game_map.setObject(x, y, new Weapon.Dynamit(content, new Rectangle(x * this.rectangle.Width, y * this.rectangle.Height, this.rectangle.Width, this.rectangle.Height),max_width,max_height,x,y,gametime));
-
-
+                game_map.setObject(x, y, new Weapon.Dynamit(content, new Rectangle(x * this.rectangle.Width, y * this.rectangle.Height, this.rectangle.Width, this.rectangle.Height), x, y, gametime));
 
                 x = new_x;
                 y = new_y;
@@ -79,13 +111,11 @@ namespace Game.Characters
         /// <param name="game_map"></param>
         public void AttackWithRacket(Map.Map game_map)
         {
-            Map.MapObject racket = new Weapon.Racket(content, this.Rectangle, max_width, max_height, rectangle.X, rectangle.Y, current_direction);
+            Map.MapObject racket = new Weapon.Racket(content, this.Rectangle,rectangle.X, rectangle.Y, current_direction);
             game_map.setObject(rectangle.X / rectangle.Width, rectangle.Y / rectangle.Height, racket);
             game_map.addPlayersRacket(-1);
-            SoundEffect fire_racket_effect = content.Load<SoundEffect>("fire_racket");
-
+            SoundEffect fire_racket_effect = content.Load<SoundEffect>("Audio\\fire_racket");
             fire_racket_effect.Play();
-            //TODO
         }
 
         /// <summary>
@@ -110,22 +140,24 @@ namespace Game.Characters
             switch (current_direction)
             {
                 case Game.direction.left:
-                    asset_name = "vandal_left";
+                    asset_name = "Textures\\vandal_left";
                     break;
                 case Game.direction.right:
-                    asset_name = "vandal_right";
+                    asset_name = "Textures\\vandal_right";
                     break;
                 case Game.direction.up:
-                    asset_name = "vandal_left";
+                    asset_name = "Textures\\vandal_left";
                     break;
                 case Game.direction.down:
-                    asset_name = "vandal_right";
+                    asset_name = "Textures\\vandal_right";
                     break;
                 default: break;
 
             }
-           // if (collision_obj != null && collision_obj.GetType().BaseType == typeof(NonDestroyableObjects.StaticObject))
+            // if (collision_obj != null && collision_obj.GetType().BaseType == typeof(NonDestroyableObjects.StaticObject))
             //    asset_name += "_inv";
+            if (is_immortal)
+                asset_name += "_immortal";
             this.texture = content.Load<Texture2D>(asset_name);
         }
 
@@ -138,22 +170,21 @@ namespace Game.Characters
             collision_obj = map.getObject(new_x, new_y);
             if (collision_obj.IsAccesible)
             {
-                if(collision_obj is Zniszczalny)
-                (collision_obj as Zniszczalny).OnDestroy(map);
+                if (collision_obj is Zniszczalny)
+                    (collision_obj as Zniszczalny).OnDestroy(map);
 
                 map.setObject(new_x, new_y, this);
-                map.setObject(x, y, new NonDestroyableObjects.Puste(content, new Rectangle(x * this.rectangle.Width, y * this.rectangle.Height, this.rectangle.Width, this.rectangle.Height)));
-               
-                
-                
+                if (!(collision_obj is Eteryczny))
+                    map.setObject(x, y, new NonDestroyableObjects.Puste(content, new Rectangle(x * this.rectangle.Width, y * this.rectangle.Height, this.rectangle.Width, this.rectangle.Height)));
+
                 x = new_x;
                 y = new_y;
-            }
+            }      
         }
 
 
         /// <summary>
-        /// Poruszanie
+        /// Poruszanie - ustalenie aktualnego kierunku poruszania
         /// </summary>
         /// <param name="direction"></param>
         /// <param name="map"></param>
@@ -163,8 +194,32 @@ namespace Game.Characters
         }
 
 
-         public override void Update(GameTime gametime, Map.Map map)
+        public override void Update(GameTime gametime, Map.Map map)
         {
+            if (!is_immortal)
+            {
+                //sprawdzenie czy styka sie z wrogiem 
+                if (map.getObject(x , y).GetType() == typeof(Characters.Enemy) || map.getObject(x , y) is Skazony)
+                { is_alive = false; return; }
+             /*   if (map.getObject(x + 1, y).GetType() == typeof(Characters.Enemy) || map.getObject(x + 1, y) is Skazony)
+                { is_alive = false; return; }
+                if (map.getObject(x, y - 1).GetType() == typeof(Characters.Enemy) || map.getObject(x, y - 1) is Skazony)
+                { is_alive = false; return; }
+                if (map.getObject(x, y + 1).GetType() == typeof(Characters.Enemy) || map.getObject(x, y + 1) is Skazony)
+                { is_alive = false; return; }
+                //lub skazonym polem po skosie
+                if (map.getObject(x - 1, y - 1) is Skazony)
+                { is_alive = false; return; }
+                if (map.getObject(x + 1, y - 1) is Skazony)
+                { is_alive = false; return; }
+                if (map.getObject(x - 1, y + 1) is Skazony)
+                { is_alive = false; return; }
+                if (map.getObject(x + 1, y + 1) is Skazony)
+                { is_alive = false; return; }*/
+            }
+
+
+
             if (gametime.TotalGameTime.Milliseconds % 20 == 0)
             {
                 switch (current_direction)
