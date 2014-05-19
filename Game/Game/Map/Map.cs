@@ -16,7 +16,7 @@ namespace Game.Map
     {
         public RandomOperator random_operator;
 
-        int gameLevel;
+        public int gameLevel { get;  set; }
         Player player;
         public Characters.Vandal vandal;
         Rectangle vandal_rectangle;
@@ -158,11 +158,20 @@ namespace Game.Map
         {
             if (gameLevel < 5)
             {
-                vandal_rectangle = new Rectangle(tile_size, tile_size, tile_size, tile_size);
-                gameLevel++;
+              //  vandal.rectangle = new Rectangle(tile_size, tile_size, tile_size, tile_size);
+               // vandal.x = 1;
+              //  vandal.y = 1;
+              //  vandal = new Characters.Vandal(content, new Rectangle(tile_size, tile_size, tile_size, tile_size), tile_size * width, tile_size * height);
+              //  this.vandal_rectangle = vandal.rectangle;
+               
+               // setObject(1, 1, vandal);
+                ++gameLevel;
                 objects = new MapObject[width, height];
                 random_operator.GenerateRandomMap(width, height, gameLevel);
                 CovertIntToObjects(ref objects, random_operator.Map);
+               
+               
+
 
             }
         }

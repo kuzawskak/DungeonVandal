@@ -19,8 +19,8 @@ namespace Game.Panels
     {
         static MediaPlayer mp;
         static MediaPlayer sp;
-         Thread mp_thread = new Thread(MusicThreadFunc);
-         Thread sp_thread = new Thread(SoundThreadFunc);
+        static  Thread mp_thread = new Thread(MusicThreadFunc);
+         static Thread sp_thread = new Thread(SoundThreadFunc);
 
         public static bool music_stop = false;
         public static bool sound_stop = false;
@@ -37,7 +37,7 @@ namespace Game.Panels
             try
             {
                 mp = new MediaPlayer();
-                mp.Open(new System.Uri(Path.GetFullPath(@"Audio\\background_music.wav")));
+                mp.Open(new System.Uri(Path.GetFullPath(@"background_music.wav")));
                 mp.Volume = (double)MusicVolumeTrackBar.Value / 10;
                 mp.Play();
             }

@@ -64,6 +64,7 @@
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Storage, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="mscorlib" />
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
@@ -185,6 +186,12 @@
     <Compile Include="Panels\AudioSettingsPanel.Designer.cs">
       <DependentUpon>AudioSettingsPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Panels\Win.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\Win.Designer.cs">
+      <DependentUpon>Win.cs</DependentUpon>
+    </Compile>
     <Compile Include="Panels\XnaGamePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -236,6 +243,10 @@
     <ProjectReference Include="..\..\AIHelper\AIHelper.csproj">
       <Project>{4C523D33-1C91-4E4B-B87D-FC308A255959}</Project>
       <Name>AIHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XMLManager\XMLManager.csproj">
+      <Project>{3626CBF1-255C-4C1F-B95A-3C30CB3AFDDD}</Project>
+      <Name>XMLManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\GameContent\GameContent.contentproj">
       <Name>GameContent</Name>
@@ -309,6 +320,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Panels\SettingsPanel.resx">
       <DependentUpon>SettingsPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\Win.resx">
+      <DependentUpon>Win.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Panels\XnaGamePanel.resx">
       <DependentUpon>XnaGamePanel.cs</DependentUpon>

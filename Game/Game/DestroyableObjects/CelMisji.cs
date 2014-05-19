@@ -65,7 +65,8 @@ namespace Game.DestroyableObjects
         {
 
             map.AddPlayersPoints(points);
-            map.UpgradePlayersLevel();
+            //map.UpgradePlayersLevel();
+            map.vandal.level_up = true;
         }
     }
 }

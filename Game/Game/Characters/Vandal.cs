@@ -19,6 +19,7 @@ namespace Game.Characters
     {
 
         public bool is_alive { get; set; }
+        public bool level_up { get; set; }
         /// <summary>
         /// Czas pozostaly przez ktory Vandal jest niesmiertelny
         /// </summary>
@@ -50,6 +51,7 @@ namespace Game.Characters
             this.max_height = max_height;
             this.max_width = max_width;
             this.is_alive = true;
+            this.level_up = false;
             current_direction = Game.direction.none;
 
         }

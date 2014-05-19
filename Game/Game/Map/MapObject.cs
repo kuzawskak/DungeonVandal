@@ -20,8 +20,8 @@ namespace Game.Map
             protected set;
         }
         //wspolrzedne na mapie
-        public int x { get; protected set; }
-        public int y { get; protected set; }
+        public int x { get;  set; }
+        public int y { get; set; }
 
         public Texture2D Texture
         {
