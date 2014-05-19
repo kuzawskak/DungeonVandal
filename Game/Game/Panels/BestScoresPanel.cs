@@ -50,14 +50,14 @@ namespace Game.Panels
             }
             else
             {
-            
+
                 for (int wiersz = 1; wiersz <= saved_data.Count; wiersz++)
                 {
                     for (int kolumna = 0; kolumna < 3; kolumna++)
                     {
                         Label l = new Label();
                         l.Anchor = AnchorStyles.None;
-                        l.Size = new Size(200,50);
+                        l.Size = new Size(200, 50);
 
                         if (kolumna == 0)
                         {
@@ -79,11 +79,6 @@ namespace Game.Panels
                 }
             }
         }
-
-
-
-
-
 
 
         /// <summary>

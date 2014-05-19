@@ -41,7 +41,8 @@ namespace Game.Panels
 
         private void saveGameButton_Click(object sender, EventArgs e)
         {
-            //TODO: save game state
+            ((MenuForm)Parent).gameInstance.SaveGameState();
+            MessageBox.Show("Zapisano stan gry");
         }
 
         private void backtoMenuPanel_Click(object sender, EventArgs e)

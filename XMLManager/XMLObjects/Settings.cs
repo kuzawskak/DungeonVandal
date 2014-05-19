@@ -35,7 +35,7 @@ namespace XMLManager.XMLObjects
             public int AudioVolume;
             public int MusicVolume;
             public bool isMuted;
-
+            public int MaxEnabledLevel;
             public int BrightnessRatio;
             public int ContrastRatio;
             public Keys UpKey;
@@ -47,23 +47,25 @@ namespace XMLManager.XMLObjects
             public Keys RacketKey;
             public Keys PauseKey;
 
-            public SettingsData(int audio, int music, bool mute, int bright, int contrast,Keys u, Keys d, Keys r, Keys l,Keys blo, Keys dyn, Keys rac, Keys pau )
+            public SettingsData(int maxlevel, int audio, int music, bool mute, int bright, int contrast, Keys u, Keys d, Keys r, Keys l, Keys blo, Keys dyn, Keys rac, Keys pau)
             {
-               AudioVolume = audio;
-               MusicVolume = music;
-               isMuted = mute;
-               BrightnessRatio = bright;
-               ContrastRatio = contrast;
-               UpKey = u;
-               DownKey = d;
-               RightKey = r;
-               LeftKey = l;
-               BlockKey = blo;
-               DynamiteKey = dyn;
-               RacketKey = rac;
-               PauseKey = pau;
+                MaxEnabledLevel = maxlevel;
+                AudioVolume = audio;
+                MusicVolume = music;
+                isMuted = mute;
+                BrightnessRatio = bright;
+                ContrastRatio = contrast;
+                UpKey = u;
+                DownKey = d;
+                RightKey = r;
+                LeftKey = l;
+                BlockKey = blo;
+                DynamiteKey = dyn;
+                RacketKey = rac;
+                PauseKey = pau;
 
             }
+
             public SettingsData(int def)
             {
                 AudioVolume = 5;
@@ -79,6 +81,7 @@ namespace XMLManager.XMLObjects
                 DynamiteKey = Keys.Space;
                 RacketKey = Keys.Return;
                 PauseKey = Keys.Escape;
+                MaxEnabledLevel = 1;
 
             }
         }

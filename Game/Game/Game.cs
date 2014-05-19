@@ -349,7 +349,43 @@ namespace Game
             }
         }
 
+        /// <summary>
+        /// Zapis stanu gry do pliku zwi¹zanego z aktualnym graczem
+        /// </summary>
+        public void SaveGameState()
+        {
+            // Create the data to save
+            IAsyncResult result = StorageDevice.BeginShowSelector(PlayerIndex.One, null, null);
+            //za³adowanie pliku z wynikami dla odpowiedniego poziomu
+            GameState.GameStateData saved_data = GameState.LoadGameState(result,player.Name);
+            GameState.GameStateData new_saved_data = new GameState.GameStateData(saved_data.Count + 1,game_map.getWidth(),game_map.getHeight());
+            for (int i = 0; i < saved_data.Count; i++)
+            {
+                new_saved_data.Dynamites[i] = saved_data.Dynamites[i];
+                new_saved_data.Rackets[i] = saved_data.Rackets[i];
+                new_saved_data.Points[i] = saved_data.Points[i];
+                new_saved_data.Levels[i] = saved_data.Levels[i] ;
+                new_saved_data.TotalMinutes[i] =saved_data.TotalMinutes[i];
+                new_saved_data.TotalSeconds[i] = saved_data.TotalSeconds[i];
+                new_saved_data.Intelligence[i] = saved_data.Intelligence[i];
+                new_saved_data.GameMaps[i] =saved_data.GameMaps[i];
+            }
+            
+                
+                new_saved_data.Dynamites[new_saved_data.Count - 1] = player.Dynamite;
+                new_saved_data.Rackets[new_saved_data.Count - 1] = player.Rackets;
+                new_saved_data.Points[new_saved_data.Count - 1] = player.Points;
+                new_saved_data.Levels[new_saved_data.Count - 1] = game_map.gameLevel;
+                new_saved_data.TotalMinutes[new_saved_data.Count - 1] = totalMinutes;
+                new_saved_data.TotalSeconds[new_saved_data.Count - 1] = totalSeconds;
+                new_saved_data.Intelligence[new_saved_data.Count - 1] = player.IntelligenceLevel;
+                new_saved_data.GameMaps[new_saved_data.Count - 1] = game_map.getIntMap();
 
+                GameState.gameStateToSave = new_saved_data;
+                GameState.SaveToDevice(result, player.Name);
+            
+        }
+        
         /// <summary>
         /// Zapis wyniku obecnego gracza do listy najlepszych (pod warunkiem , ¿e mieœci siê w 5 najlepeszych z danego poziomu)
         /// </summary>

@@ -36,7 +36,7 @@ namespace XMLManager.XMLObjects
             public int Count;
 
             public int[] Levels;
-            public int[][,]GameMaps;
+            public int[][]GameMaps;
             public int[] Points;
             public int[] TotalSeconds;
             public int[] TotalMinutes;
@@ -49,7 +49,7 @@ namespace XMLManager.XMLObjects
             {
                 Count = count;
                 Levels = new int[count];
-                GameMaps = new int[count][,];
+                GameMaps = new int[count][];
                 Points = new int[count];
                 TotalSeconds = new int[count];
                 TotalMinutes = new int[count];
