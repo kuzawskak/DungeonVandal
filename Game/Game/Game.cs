@@ -299,27 +299,27 @@ namespace Game
 
                 // vandal.LoadCurrentTexture(game_map);
 
-
+                if (vandal.level_up)
+                {
+                    int current_level = game_map.gameLevel;
+                    if (current_level < 5)
+                    {
+                        vandal = new Characters.Vandal(this.Content, new Rectangle(1 * tile_size, 1 * tile_size, tile_size, tile_size), tile_size * map_width, tile_size * map_height);
+                        game_map = new Map.Map(tile_size, map_width, map_height, this.Content, player, vandal, current_level + 1);
+                    }
+                    else
+                    {
+                        SaveHighScore();
+                        Win();
+                    }
+                }
             }
             if (!vandal.is_alive)
             {
                 SaveHighScore();
                 GameOver();
             }
-            else if (vandal.level_up)
-            {
-                int current_level = game_map.gameLevel;
-                if (current_level < 5)
-                {                   
-                    vandal = new Characters.Vandal(this.Content, new Rectangle(1 * tile_size, 1 * tile_size, tile_size, tile_size), tile_size * map_width, tile_size * map_height);
-                    game_map = new Map.Map(tile_size, map_width, map_height, this.Content, player, vandal, current_level + 1);
-                }
-                else
-                {
-                    SaveHighScore();
-                    Win();
-                }
-            }
+            
             else
             {
                 base.Update(gameTime);
@@ -359,17 +359,28 @@ namespace Game
             IAsyncResult result = StorageDevice.BeginShowSelector(PlayerIndex.One, null, null);
             //za³adowanie pliku z wynikami dla odpowiedniego poziomu
             HighScores.HighScoreData saved_data = HighScores.LoadHighScores(result,game_map.gameLevel);
-            if (saved_data.Count == 0)
+            HighScores.HighScoreData new_highscores;
+            if (saved_data.Count < 5)
             {
                 //Pierwsze uruchomienie gry ( brak listy najlepszych wynikow dla danego poziomu)
-                saved_data = new HighScores.HighScoreData(5);
-                HighScores.highScoreToSave = saved_data;
+                new_highscores = new HighScores.HighScoreData(saved_data.Count + 1);
+                if (saved_data.Count != 0)
+                {
+                    for (int i = 0; i < saved_data.Count; i++)
+                    {
+                        new_highscores.PlayerName[i] = saved_data.PlayerName[i];
+                        new_highscores.Score[i] = saved_data.Score[i];
+                        new_highscores.Time[i] = saved_data.Time[i];
+                    }
+                }
+
             }
+            else new_highscores = saved_data;
 
             int scoreIndex = -1;
-            for (int i = 0; i < saved_data.Count; i++)
+            for (int i = 0; i < new_highscores.Count; i++)
             {
-                if (player.Points > saved_data.Score[i])
+                if (player.Points > new_highscores.Score[i])
                 {
                     scoreIndex = i;
                     break;
@@ -379,15 +390,20 @@ namespace Game
             if (scoreIndex > -1)
             {
                 //Nowy high score znaleziony  (przeskakiwanie wynikow)
-                for (int i = saved_data.Count - 1; i > scoreIndex; i--)
+                for (int i = new_highscores.Count - 1; i > scoreIndex; i--)
                 {
-                    saved_data.PlayerName[i] = saved_data.PlayerName[i - 1];
-                    saved_data.Score[i] = saved_data.Score[i - 1];         
+                    new_highscores.PlayerName[i] = new_highscores.PlayerName[i - 1];
+                    new_highscores.Score[i] = new_highscores.Score[i - 1];         
                 }
-                saved_data.PlayerName[scoreIndex] = player.Name;
-                saved_data.Score[scoreIndex] = player.Points;              
+                new_highscores.PlayerName[scoreIndex] = player.Name;
+                new_highscores.Score[scoreIndex] = player.Points;
+                string minutes_str = totalMinutes == 0 ? "00" :totalMinutes.ToString();
+                if (minutes_str.Length == 1) minutes_str = "0" + minutes_str;
+                string seconds_str = totalSeconds == 0 ? "00" : totalSeconds.ToString();
+                if (seconds_str.Length == 1) seconds_str = "0" + seconds_str;
+                new_highscores.Time[scoreIndex] = minutes_str + ":" + seconds_str;
             }
-            HighScores.highScoreToSave = saved_data;
+            HighScores.highScoreToSave = new_highscores;
             HighScores.SaveToDevice(result,game_map.gameLevel);
         }
     }

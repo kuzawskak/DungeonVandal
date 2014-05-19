@@ -31,11 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BestScoresPanel));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.BestScoresLabel = new System.Windows.Forms.Label();
-            this.ScoresTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.exitButton = new System.Windows.Forms.Button();
-            this.nickLabel = new System.Windows.Forms.Label();
-            this.timelabel = new System.Windows.Forms.Label();
+            this.ScoresTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.pointsLabel = new System.Windows.Forms.Label();
+            this.timelabel = new System.Windows.Forms.Label();
+            this.nickLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -75,28 +75,6 @@
             this.BestScoresLabel.TabIndex = 0;
             this.BestScoresLabel.Text = "Najlepsze wyniki dla poziomu 1";
             // 
-            // ScoresTableLayoutPanel
-            // 
-            this.ScoresTableLayoutPanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.OutsetDouble;
-            this.ScoresTableLayoutPanel.ColumnCount = 3;
-            this.ScoresTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.ScoresTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.ScoresTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.ScoresTableLayoutPanel.Controls.Add(this.pointsLabel, 2, 0);
-            this.ScoresTableLayoutPanel.Controls.Add(this.timelabel, 1, 0);
-            this.ScoresTableLayoutPanel.Controls.Add(this.nickLabel, 0, 0);
-            this.ScoresTableLayoutPanel.Location = new System.Drawing.Point(0, 3);
-            this.ScoresTableLayoutPanel.Name = "ScoresTableLayoutPanel";
-            this.ScoresTableLayoutPanel.RowCount = 6;
-            this.ScoresTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.ScoresTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16F));
-            this.ScoresTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16F));
-            this.ScoresTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16F));
-            this.ScoresTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16F));
-            this.ScoresTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16F));
-            this.ScoresTableLayoutPanel.Size = new System.Drawing.Size(821, 425);
-            this.ScoresTableLayoutPanel.TabIndex = 0;
-            // 
             // exitButton
             // 
             this.exitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -110,17 +88,44 @@
             this.exitButton.UseVisualStyleBackColor = true;
             this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
-            // nickLabel
+            // ScoresTableLayoutPanel
             // 
-            this.nickLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.nickLabel.AutoSize = true;
-            this.nickLabel.Font = new System.Drawing.Font("Trebuchet MS", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.nickLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.nickLabel.Location = new System.Drawing.Point(93, 21);
-            this.nickLabel.Name = "nickLabel";
-            this.nickLabel.Size = new System.Drawing.Size(89, 43);
-            this.nickLabel.TabIndex = 0;
-            this.nickLabel.Text = "Nick";
+            this.ScoresTableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ScoresTableLayoutPanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.OutsetDouble;
+            this.ScoresTableLayoutPanel.ColumnCount = 3;
+            this.ScoresTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.ScoresTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.ScoresTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.ScoresTableLayoutPanel.Controls.Add(this.pointsLabel, 2, 0);
+            this.ScoresTableLayoutPanel.Controls.Add(this.timelabel, 1, 0);
+            this.ScoresTableLayoutPanel.Controls.Add(this.nickLabel, 0, 0);
+            this.ScoresTableLayoutPanel.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ScoresTableLayoutPanel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.ScoresTableLayoutPanel.Location = new System.Drawing.Point(0, 3);
+            this.ScoresTableLayoutPanel.Name = "ScoresTableLayoutPanel";
+            this.ScoresTableLayoutPanel.RowCount = 6;
+            this.ScoresTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.ScoresTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16F));
+            this.ScoresTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16F));
+            this.ScoresTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16F));
+            this.ScoresTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16F));
+            this.ScoresTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16F));
+            this.ScoresTableLayoutPanel.Size = new System.Drawing.Size(821, 425);
+            this.ScoresTableLayoutPanel.TabIndex = 0;
+            // 
+            // pointsLabel
+            // 
+            this.pointsLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pointsLabel.AutoSize = true;
+            this.pointsLabel.Font = new System.Drawing.Font("Trebuchet MS", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.pointsLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.pointsLabel.Location = new System.Drawing.Point(615, 21);
+            this.pointsLabel.Name = "pointsLabel";
+            this.pointsLabel.Size = new System.Drawing.Size(134, 43);
+            this.pointsLabel.TabIndex = 2;
+            this.pointsLabel.Text = "Punkty";
             // 
             // timelabel
             // 
@@ -134,17 +139,17 @@
             this.timelabel.TabIndex = 1;
             this.timelabel.Text = "Czas";
             // 
-            // pointsLabel
+            // nickLabel
             // 
-            this.pointsLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pointsLabel.AutoSize = true;
-            this.pointsLabel.Font = new System.Drawing.Font("Trebuchet MS", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.pointsLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.pointsLabel.Location = new System.Drawing.Point(615, 21);
-            this.pointsLabel.Name = "pointsLabel";
-            this.pointsLabel.Size = new System.Drawing.Size(134, 43);
-            this.pointsLabel.TabIndex = 2;
-            this.pointsLabel.Text = "Punkty";
+            this.nickLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.nickLabel.AutoSize = true;
+            this.nickLabel.Font = new System.Drawing.Font("Trebuchet MS", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.nickLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.nickLabel.Location = new System.Drawing.Point(93, 21);
+            this.nickLabel.Name = "nickLabel";
+            this.nickLabel.Size = new System.Drawing.Size(89, 43);
+            this.nickLabel.TabIndex = 0;
+            this.nickLabel.Text = "Nick";
             // 
             // BestScoresPanel
             // 

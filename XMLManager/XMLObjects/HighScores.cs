@@ -36,12 +36,23 @@ namespace XMLManager.XMLObjects
         {
             public string[] PlayerName;
             public int[] Score;
+            public string[] Time;
             public int Count;
 
             public HighScoreData(int count)
             {
-                PlayerName = new string[count];
-                Score = new int[count];
+                if (count == 0)
+                {
+                    PlayerName = null;
+                    Time = null;
+                    Score = null;
+                }
+                else
+                {
+                    PlayerName = new string[count];
+                    Time = new string[count];
+                    Score = new int[count];
+                }
                 Count = count;
             }
         }

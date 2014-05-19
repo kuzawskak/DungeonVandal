@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework;
 using System.Windows.Forms;
 using System.Threading;
 using Game.Panels;
+using XMLManager.XMLObjects;
+using Microsoft.Xna.Framework.Storage;
 
 
 namespace DungeonVandal
@@ -16,6 +18,8 @@ namespace DungeonVandal
     public partial class MenuForm : Form
     {
 
+        public bool GamePause = false;
+        public int ChoosenLevel = 1;
         /// <summary>
         /// Wszytkie panele aplikacji
         /// ( w zaleznosci od wyboru menu odpowiedni jest ustwiany na aktywny
@@ -39,6 +43,10 @@ namespace DungeonVandal
         public Game.Player player = null;
         private Panel activePanel = null;
 
+        /// <summary>
+        /// Konstruktor głównego Form dla całej gry
+        /// Na starcie ustawia panel logowania jako aktywny i tworzy instancję gracza
+        /// </summary>
         public MenuForm()
         {
             InitializeComponent();
@@ -49,16 +57,20 @@ namespace DungeonVandal
             player = new Game.Player();
         }
 
+        /// <summary>
+        /// Wyświetlenie okna z informacją o przegranej
+        /// </summary>
         public void GameOver()
-        {
-            
-           
+        {          
             game_panel.Visible = false;
             game_over_panel.setScoreLabel(player.Points);
             game_over_panel.Visible = true;
             game_over_panel.Focus();
         }
 
+        /// <summary>
+        /// Wyświetlenie okna z informacją o wygranej
+        /// </summary>
         public void Win()
         {
             game_panel.Visible = false;
@@ -67,6 +79,9 @@ namespace DungeonVandal
             win_panel.Focus();
         }
 
+        /// <summary>
+        /// Inicjalizacja paneli WindowsForms (do obsługi menu)
+        /// </summary>
         public void InitializePanels()
         {
             pause_panel.Dock = DockStyle.Fill;
@@ -127,31 +142,53 @@ namespace DungeonVandal
   
         }
 
+        /// <summary>
+        /// Ustawienie aktualnie wyświetlanego panelu
+        /// </summary>
+        /// <param name="panel">nowy aktywny panel</param>
         public void setActivePanel(Panel panel)
         {
             activePanel.Visible = false;
             activePanel = panel;
             activePanel.Visible = true;
+            GamePause = true;
         }
 
 
-
+        /// <summary>
+        /// Wskażnik na kontrolkę z oknem gry
+        /// </summary>
         public IntPtr CanvasHandle
         {
             get { return game_panel.GraphicsContainer.Handle; }
         }
 
+        /// <summary>
+        /// Rozmiar okna gry
+        /// </summary>
         public Size ViewportSize
         {
             get { return game_panel.GraphicsContainer.Size; }
         }
 
+
+        /************PANEL STANU GRY******************/
+
+        /// <summary>
+        /// Aktualizacja nazwy gracza na panelu stanu gry
+        /// </summary>
+        /// <param name="player_name">nazwa gracza</param>
         public void setPlayerName(string player_name)
         {
             this.game_panel.playerName.Text = player_name;
 
         }
 
+        /// <summary>
+        /// Aktualizacja czasu gry na panelu stanu gry
+        /// </summary>
+        /// <param name="minutes">liczba minut</param>
+        /// <param name="seconds">liczba sekund</param>
         public void updateGameTime(int minutes, int seconds)
         {
             string minutes_str = minutes == 0 ? "00" : minutes.ToString();
@@ -161,52 +198,92 @@ namespace DungeonVandal
             this.game_panel.timeLabel.Text = minutes_str + ":" + seconds_str;
         }
 
+        /// <summary>
+        /// Aktualizacja liczby punktów na panelu stanu gry
+        /// </summary>
+        /// <param name="points">liczba zdobytych punktów</param>
         public void updatePoints(int points)
         {
             this.game_panel.pointsLabel.Text = points.ToString();
         }
 
+        /// <summary>
+        /// Aktualizacja licznika dynamitu na panelu stanu gry
+        /// </summary>
+        /// <param name="dynamite">ilość zdobytych dynamitów</param>
         public void updateDynamite(int dynamite)
         {
             this.game_panel.dynamiteCounter.Text = "x" + dynamite.ToString();
         }
 
+
+        /// <summary>
+        /// Aktualizacja licznika zdobytych rakiet na Panelu stanu gry 
+        /// </summary>
+        /// <param name="racket">ilość zdobytych rakiet</param>
         public void updateRacket(int racket)
         {
             this.game_panel.racketCounter.Text = "x" + racket.ToString();
         }
 
      
-
+        /// <summary>
+        /// Obsługa zamknięcia aplikacji
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
             Application.Exit();
         }
 
+        /// <summary>
+        /// Obsługa pauzy z poziomu WindowsForms
+        /// Ustawienie fokusu i widoczności dla panelu z Menu na czas Pauzy
+        /// </summary>
         public void Pause()
         {
+
+            GamePause = true;
             game_panel.Visible = false;
             pause_panel.Visible = true;
             pause_panel.Focus();
 
         }
 
-       /*
-        * BUTTON CLICK HANDLERS
-        */
 
         /***************** LOGIN PANEL **********************/
+
+        /// <summary>
+        /// Obsługa kliknięcia przycisku logowania
+        /// automatycznie player jest rejestrowany
+        /// (co oznacza ze przy pierwszym logowaniu tworzone są pliki ustawień dla danego gracza)
+        /// </summary>
+        /// <param name="sender">przycisk wysyłający sygnał logowania</param>
+        /// <param name="e"></param>
         private void loginButton_Click(object sender, EventArgs e)
-        {
-            //TODO: 
-           
-           // sprawdzenie w pliku czy istnieje player - jesli tak zloadowanie jego ustawien , jesli nie stworzenie nowego playera   
+        { 
             player = new Game.Player(usernameTextBox.Text);
             activePanel.Visible = false;
             main_panel.Visible = true;
+
+            //jesli gracz ma zapisane jakies stany gry to odblokuj przycisk ładowania na głownym menu
+            IAsyncResult result = StorageDevice.BeginShowSelector(PlayerIndex.One, null, null);
+            GameState.GameStateData saved_data = GameState.LoadGameState(result, player.Name);
+            if (saved_data.Count == 0)
+            {
+                //Pierwsze uruchomienie gry ( brak listy najlepszych wynikow dla danego poziomu)
+                main_panel.EnableLoadButton(false);
+            }
+            else main_panel.EnableLoadButton(true);
+
         }
 
+        /// <summary>
+        /// Walidacja logowania - przechodzą niezerowe ciągi znaków
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void usernameTextBox_Validating(object sender, CancelEventArgs e)
         {
             if (((TextBox)sender).Text.Length == 0)

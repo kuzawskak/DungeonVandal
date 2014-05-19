@@ -14,7 +14,7 @@ namespace Game.Panels
 {
     public partial class SettingsPanel : UserControl
     {
-        public bool GamePause = false;
+        
         
         public SettingsPanel()
         {
@@ -54,7 +54,7 @@ namespace Game.Panels
         private void exitButton_Click(object sender, EventArgs e)
         {
             this.Visible = false;
-            if (GamePause) ((MenuForm)Parent).pause_panel.Visible = true;
+            if (((MenuForm)Parent).GamePause) ((MenuForm)Parent).pause_panel.Visible = true;
             else ((MenuForm)Parent).main_panel.Visible = true;
                   
         }

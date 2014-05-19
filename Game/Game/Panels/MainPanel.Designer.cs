@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPanel));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ExitGameButton = new System.Windows.Forms.Button();
             this.HelpButton = new System.Windows.Forms.Button();
@@ -37,7 +38,6 @@
             this.ChooseLevelButton = new System.Windows.Forms.Button();
             this.LoadGameButton = new System.Windows.Forms.Button();
             this.NewGameButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -63,6 +63,17 @@
             this.splitContainer1.Size = new System.Drawing.Size(900, 700);
             this.splitContainer1.SplitterDistance = 163;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Trebuchet MS", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label1.Location = new System.Drawing.Point(74, 44);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(772, 119);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Dungeon Vandal";
             // 
             // tableLayoutPanel1
             // 
@@ -96,7 +107,7 @@
             // 
             this.ExitGameButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.ExitGameButton.AutoSize = true;
-            this.ExitGameButton.BackColor = System.Drawing.Color.Black;
+            this.ExitGameButton.BackColor = System.Drawing.Color.Transparent;
             this.ExitGameButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ExitGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ExitGameButton.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -113,7 +124,7 @@
             // 
             this.HelpButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.HelpButton.AutoSize = true;
-            this.HelpButton.BackColor = System.Drawing.Color.Black;
+            this.HelpButton.BackColor = System.Drawing.Color.Transparent;
             this.HelpButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.HelpButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.HelpButton.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -130,7 +141,7 @@
             // 
             this.SettingsButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.SettingsButton.AutoSize = true;
-            this.SettingsButton.BackColor = System.Drawing.Color.Black;
+            this.SettingsButton.BackColor = System.Drawing.Color.Transparent;
             this.SettingsButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.SettingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SettingsButton.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -147,7 +158,7 @@
             // 
             this.ChooseLevelButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.ChooseLevelButton.AutoSize = true;
-            this.ChooseLevelButton.BackColor = System.Drawing.Color.Black;
+            this.ChooseLevelButton.BackColor = System.Drawing.Color.Transparent;
             this.ChooseLevelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ChooseLevelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ChooseLevelButton.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -164,8 +175,9 @@
             // 
             this.LoadGameButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.LoadGameButton.AutoSize = true;
-            this.LoadGameButton.BackColor = System.Drawing.Color.Black;
+            this.LoadGameButton.BackColor = System.Drawing.Color.Transparent;
             this.LoadGameButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.LoadGameButton.Enabled = false;
             this.LoadGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LoadGameButton.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.LoadGameButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -181,7 +193,7 @@
             // 
             this.NewGameButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.NewGameButton.AutoSize = true;
-            this.NewGameButton.BackColor = System.Drawing.Color.Black;
+            this.NewGameButton.BackColor = System.Drawing.Color.Transparent;
             this.NewGameButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.NewGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NewGameButton.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -193,17 +205,6 @@
             this.NewGameButton.Text = "Rozpocznij grę od początku";
             this.NewGameButton.UseVisualStyleBackColor = false;
             this.NewGameButton.Click += new System.EventHandler(this.NewGameButton_Click_1);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Trebuchet MS", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Location = new System.Drawing.Point(74, 44);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(772, 119);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Dungeon Vandal";
             // 
             // MainPanel
             // 

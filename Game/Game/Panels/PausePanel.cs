@@ -28,7 +28,7 @@ namespace Game.Panels
         private void settingsButton_Click(object sender, EventArgs e)
         {
             this.Visible = false;
-            ((MenuForm)Parent).settings_panel.GamePause = true;
+            ((MenuForm)Parent).GamePause = true;
             ((MenuForm)Parent).settings_panel.Visible = true;
             ((MenuForm)Parent).settings_panel.Focus();
         }
