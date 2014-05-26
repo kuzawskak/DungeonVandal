@@ -6,32 +6,56 @@ using System.Windows.Forms;
 
 namespace Game.Settings
 {
+    /// <summary>
+    /// Aktualny stan wyboru ustawień ( determinuje który klawisz jest zmieniany)
+    /// </summary>
     public enum State { NONE, UP, DOWN, LEFT, RIGHT, BLOCK, DYNAMITE, RACKET };
    
+    /// <summary>
+    /// Klasa ustawien sterowania
+    /// </summary>
     public class KeySettings
     {
-
+        /// <summary>
+        /// Klawisz poruszania w górę
+        /// </summary>
         public Keys Up { get; private set; }
+        /// <summary>
+        /// Klawicz poruszania w dół
+        /// </summary>
         public Keys Down { get; private set; }
+        /// <summary>
+        /// Klawisz poruszania w lewo
+        /// </summary>
         public Keys Left { get; private set; }
+        /// <summary>
+        /// Klawisz poruszania w prawo
+        /// </summary>
         public Keys Right { get; private set; }
+        /// <summary>
+        /// Klawisz blokowania ruchu (zmiana kierunku poruszania w miejscu)
+        /// </summary>
         public Keys Block { get; private set; }
+        /// <summary>
+        /// Klawisz odpalenia dynamitu
+        /// </summary>
         public Keys Dynamite { get; private set; }
+        /// <summary>
+        /// Klawisz odpalenia rakiety
+        /// </summary>
         public Keys Racket { get; private set; }
+        /// <summary>
+        /// Klawisz pauzy
+        /// </summary>
         public Keys Pause { get; private set; }
        
 
-        public KeySettings(Dictionary<State, Keys> keys)
-        {
-       
-            Pause = System.Windows.Forms.Keys.Escape;
-            
-        }
+
 
        /// <summary>
-       /// Apply changes made in KeySettingsPanel
+       /// Zastosuj zmiany uwzglednione w Dictionary ze zmianami
        /// </summary>
-       /// <param name="key_changes"></param>
+       /// <param name="key_changes">Zmiany do zastosowania</param>
         public void ApplyChanges(Dictionary<State, Keys> key_changes)
         {
             Pause = System.Windows.Forms.Keys.Escape;
@@ -65,7 +89,10 @@ namespace Game.Settings
             }
         }
 
-
+        /// <summary>
+        /// Konwersja ustawien sterowania na słownik indeksowany STanem klawiszy
+        /// </summary>
+        /// <returns>Słownik z aktualnymi ustawieniami sterowania</returns>
         public Dictionary<State, Keys> ToMap()
         {
             Dictionary<State, Keys> dict = new Dictionary<State, Keys>();
@@ -123,14 +150,14 @@ namespace Game.Settings
         }
 
         /// <summary>
-        /// Domyslne ustawienia
+        /// Domyslne ustawienia (poruszanie strzałkami)
         /// </summary>
         public KeySettings()
         {
-            Up = Keys.W;
-            Down = Keys.S;
-            Left = Keys.A;
-            Right = Keys.D;
+            Up = Keys.Up;
+            Down = Keys.Down;
+            Left = Keys.Left;
+            Right = Keys.Right;
             Block = Keys.Alt;
             Dynamite = Keys.Space;
             Racket = Keys.Return;

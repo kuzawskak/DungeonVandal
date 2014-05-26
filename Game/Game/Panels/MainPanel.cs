@@ -44,8 +44,10 @@ namespace Game.Panels
         /// <param name="e"></param>
         private void LoadGameButton_Click(object sender, EventArgs e)
         {
+          
             this.Visible = false;
             ((MenuForm)Parent).load_game_panel.Visible = true;   
+            
          
         }
 
@@ -112,22 +114,23 @@ namespace Game.Panels
         /// <param name="e"></param>
         private void NewGameButton_Click_1(object sender, EventArgs e)
         {
-            if (thread != null)
-                thread.Suspend();
-       
+
             MenuForm form = (MenuForm)Parent;
-            if (form.gameInstance != null) form.gameInstance.Exit();
             ((MenuForm)Parent).game_panel.Visible = true;
             this.Visible = false;
             //kliknięcie nowej gry w trakcie pauzy kończy dotychczasowa grę i uruchamia nową instancję
             if (((MenuForm)Parent).GamePause)
             {
-                form.gameInstance.Exit();
-                ((MenuForm)Parent).GamePause = false;
+               
+                form.gameInstance.clearGameState();
+
             }
-            form.gameInstance = new Game(form, form.player);
-            thread = new Thread(new ThreadStart(form.gameInstance.Run));
-            thread.Start();
+            else
+            {
+                form.gameInstance = new Game(form, form.player);
+                thread = new Thread(new ThreadStart(form.gameInstance.Run));
+                thread.Start();
+            }
             ((MenuForm)Parent).game_panel.GraphicsContainer.Focus();
         }
     }

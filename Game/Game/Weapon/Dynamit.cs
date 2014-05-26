@@ -11,6 +11,9 @@ using System.Timers;
 
 namespace Game.Weapon
 {
+    /// <summary>
+    /// Klasa dynamitu - w zależności od konstruktora jest to broń odpalona lub do zebrania
+    /// </summary>
     class Dynamit : Weapon, Zniszczalny
     {
 
@@ -23,17 +26,28 @@ namespace Game.Weapon
         /// </summary>
         const int sleep_time = 3000;
 
+        /// <summary>
+        /// Ścieżka do tekstury
+        /// </summary>
         private string asset_name = "Textures\\dynamite";
 
+        /// <summary>
+        /// Czas startowy odpalenia lontu
+        /// </summary>
         private GameTime start_time;
+
+        /// <summary>
+        /// Timer liczący czas na wybuch dynamitu od momentu odpalenia
+        /// </summary>
+        private Timer timer;
 
         /// <summary>
         /// Konstruktor dla nieodpalonego dynamitu
         /// </summary>
-        /// <param name="content"></param>
-        /// <param name="rectangle"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
+        /// <param name="content">XNA Content</param>
+        /// <param name="rectangle">Prostokat reprezentujacy obiekt na mapie</param>
+        /// <param name="x">indeks x na mapie obiektów</param>
+        /// <param name="y">indeks y na mapie obiektów</param>
         public Dynamit(ContentManager content, Rectangle rectangle, int x, int y)
             :base(content,rectangle,x,y)
         {
@@ -45,15 +59,15 @@ namespace Game.Weapon
         }
 
          
-        private Timer timer;
+     
         /// <summary>
         /// Konstruktor dla odpalonego dynamitu
         /// </summary>
-        /// <param name="content"></param>
-        /// <param name="rectangle"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="gametime"></param>
+        /// <param name="content">XNA Content</param>
+        /// <param name="rectangle">Prostokat reprezentujacy obiekt na mapie</param>
+        /// <param name="x">indeks x na mapie obiektów</param>
+        /// <param name="y">indeks y na mapie obiektów</param>
+        /// <param name="gametime">Czas gry</param>
         public Dynamit(ContentManager content, Rectangle rectangle,int x, int y, GameTime gametime)
             : base(content, rectangle, x, y)
         {
@@ -70,18 +84,24 @@ namespace Game.Weapon
 
         }
 
-
+        /// <summary>
+        /// Reakcja na upływ czasu potrzebnego na wybuch odpalonego dynamitu
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             is_fired = true;        
         }
 
-
+        /// <summary>
+        /// Aktualizacja stanu dynamitu
+        /// </summary>
+        /// <param name="gametime">czas gry</param>
+        /// <param name="map">mapa obiektów</param>
         public override void Update(GameTime gametime, Map.Map map)
         {
-            //if (rectangle.Intersects(map.getVandalRectangle()))
-           //     this.OnFound(map);
-         
+
             if (is_fired)
                 {
                     Map.MapObject obj;
@@ -125,10 +145,12 @@ namespace Game.Weapon
 
 
 
-
+        /// <summary>
+        /// Reakcja na znalezienie przez Vandala
+        /// </summary>
+        /// <param name="map">mapa obiektów</param>
          public override void OnFound(Map.Map map)
         {
-
             found_soundEffect.Play();
             map.addPlayersDynamites(1);
 

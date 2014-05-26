@@ -70,13 +70,15 @@ namespace Game.Panels
             //kliknięcie nowej gry w trakcie pauzy kończy dotychczasowa grę i uruchamia nową instancję
             if (((MenuForm)Parent).GamePause)
             {
-                form.gameInstance.Exit();
-                ((MenuForm)Parent).GamePause = false;
+                form.gameInstance.LoadSavedGame(saved_data, index_in_xml);
             }
-            form.player = new Player(form.player.Name);
-            form.gameInstance = new Game(form, form.player,saved_data,index_in_xml);
-            Thread thread = new Thread(new ThreadStart(form.gameInstance.Run));
-            thread.Start();
+            else
+            {
+                form.player = new Player(form.player.Name);
+                form.gameInstance = new Game(form, form.player, saved_data, index_in_xml);
+                Thread thread = new Thread(new ThreadStart(form.gameInstance.Run));
+                thread.Start();
+            }
             ((MenuForm)Parent).game_panel.GraphicsContainer.Focus();
 
            

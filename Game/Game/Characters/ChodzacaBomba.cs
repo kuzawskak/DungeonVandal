@@ -35,7 +35,7 @@ namespace Game.Characters
             TypeTag = AIHelper.ElementType.CHODZACABOMBA;      
             texture = content.Load<Texture2D>(asset_name);       
             current_direction = Game.direction.down;
-            this.velocity = 30;
+            
         }
 
 

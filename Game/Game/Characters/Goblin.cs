@@ -17,28 +17,27 @@ namespace Game.Characters
     class Goblin : Enemy
     {
         /// <summary>
-        /// Conbtent dla rysowania tekstury
+        /// Ścieżka do tekstury
         /// </summary>
         const string asset_name = "Textures\\goblin";
-        /// <summary>
-        /// Obiekt na mapie , z ktorym nastapila kolizja
-        /// </summary>
-        Map.MapObject collision_obj = null;
+
 
         /// <summary>
         /// Konstruktor
         /// </summary>
-        /// <param name="content"></param>
-        /// <param name="rectangle"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
+        /// <param name="content">XNA Content</param>
+        /// <param name="rectangle">Prostokąt określający pozycję na mapie</param>
+        /// <param name="x">indeks w tablicy obiektów</param>
+        /// <param name="y">indeks w tablicy obiektów</param>
         public Goblin(ContentManager content, Rectangle rectangle, int x, int y)
             : base(content, rectangle, x, y)
         {
+            
             TypeTag = AIHelper.ElementType.GOBLIN;
             texture = content.Load<Texture2D>(asset_name);
             current_direction = Game.direction.down;
-            this.velocity = 30;
+            this.collision_obj = null;
+            this.move_frequency = 20;    
         }
 
         /// <summary>
@@ -61,6 +60,12 @@ namespace Game.Characters
             return current_direction;
         }
 
+        /// <summary>
+        /// SPrawdzenie czy punkt jest dostepny ze wzgledu na poruszanie w danym kierunku
+        /// </summary>
+        /// <param name="map">Mapa obiektów</param>
+        /// <param name="dir">Kierunek ruchu</param>
+        /// <returns>Czy jest możliwość ruchu w danym kierunku</returns>
         private bool isPointAccesible(Map.Map map, int dir)
         {
             switch ((Game.direction)dir)
@@ -104,12 +109,12 @@ namespace Game.Characters
         /// <summary>
         /// Aktualizacja pozycji na mapie
         /// </summary>
-        /// <param name="gametime"></param>
-        /// <param name="map"></param>
+        /// <param name="gametime">Czas gry</param>
+        /// <param name="map">Mapa obiektów</param>
         public override void Update(GameTime gametime, Map.Map map)
         {
 
-            if (gametime.TotalGameTime.Milliseconds % 20 == 0)
+            if (gametime.TotalGameTime.Milliseconds % move_frequency == 0)
             {
                 current_direction = Move(map);
 
@@ -131,12 +136,10 @@ namespace Game.Characters
                         break;
                 }
             }
-
-
         }
 
         /// <summary>
-        /// Reakcja na eksplozje, po smmierci upuszcza dynamit
+        /// Reakcja na zabicie, po smierci upuszcza dynamit
         /// </summary>
         public void Die()
         {

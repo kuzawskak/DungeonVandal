@@ -11,6 +11,7 @@ namespace Game.Characters
 {
     /// <summary>
     /// Przeciwnik poruszajacy sie losowo
+    /// z predkoscia Vandala
     /// po smierci zostawia pole ameby
     /// </summary>
     class Blob : Enemy
@@ -19,16 +20,31 @@ namespace Game.Characters
         /// Czynnik losowy przy wyborze ruchu
         /// </summary>
         Random rand = new Random();
+
+        /// <summary>
+        /// Scieżka do tekstury
+        /// </summary>
         const string asset_name = "Textures\\blob";
 
-
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
+        /// <param name="content">XNA Content</param>
+        /// <param name="rectangle">Prostokąt określający pozycję na mapie</param>
+        /// <param name="x">indeks w tablicy obiektów</param>
+        /// <param name="y">indeks w tablicy obiektów</param>
         public Blob(ContentManager content, Rectangle rectangle, int x, int y):base(content,rectangle,x,y)
         {
             TypeTag = AIHelper.ElementType.BLOB;
             texture = content.Load<Texture2D>(asset_name);
             current_direction = Game.direction.down;
+            this.move_frequency = 20;
         }
 
+        /// <summary>
+        /// Poruszanie - ustalenie aktualnego kierunku ruchu
+        /// </summary>
+        /// <param name="map">Mapa obiektów</param>
         public void Move(Map.Map map)
         {
             List<Game.direction> available_dir = new List<Game.direction>();
@@ -49,10 +65,15 @@ namespace Game.Characters
 
         }
 
-
+        /// <summary>
+        /// Aktualizacja stanu Bloba na mapie
+        /// Poruszanie jeśli jest ustalony kierunek ruchu
+        /// </summary>
+        /// <param name="gametime">Czas gry</param>
+        /// <param name="map">Mapa obiektów</param>
         public override void Update(GameTime gametime, Map.Map map)
         {
-            if (gametime.TotalGameTime.Milliseconds % 20 == 0)
+            if (gametime.TotalGameTime.Milliseconds % move_frequency == 0)
             {
                 Move(map);
                 switch (current_direction)
@@ -78,6 +99,7 @@ namespace Game.Characters
         }
 
         /// <summary>
+        /// Reakcja na zabicie
         /// Zostawia na swoim miejscu pole ameby
         /// </summary>
         /// <param name="map"></param>

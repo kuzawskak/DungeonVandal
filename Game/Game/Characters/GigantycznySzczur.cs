@@ -12,25 +12,36 @@ namespace Game.Characters
 {
 
     /// <summary>
-    /// Klasa przcienika, ktory po zauwazeniu Vandala goni go
+    /// Klasa przciwnika, ktory po zauwazeniu Vandala goni go
     /// w przeciwnym przypadku porusza sie losowo
     /// potrafi drazyc w ziemi
     /// Bardzo wolny - 2 razy wolniejszy niz gracz
     /// </summary>
     class GigantycznySzczur : Enemy
     {
-        int updateFrequency;
+
         Random rand = new Random();
-        //TODO; Dodac grafike go GameContent
+
+        /// <summary>
+        /// Scieżka do tekstury
+        /// </summary>
         const string asset_name = "Textures\\gigantyczny_szczur";
 
+        /// <summary>
+        /// Konstruktor 
+        /// </summary>
+        /// <param name="content">XNA Content</param>
+        /// <param name="rectangle">Prostokąt określający pozycję na mapie</param>
+        /// <param name="x">indeks w tablicy obiektów</param>
+        /// <param name="y">indeks w tablicy obiektów</param>
         public GigantycznySzczur(ContentManager content, Rectangle rectangle, int x, int y)
             : base(content, rectangle, x, y)
         {
-            updateFrequency = 800;
+           
             this.current_direction = Game.direction.down;
             TypeTag = AIHelper.ElementType.GIGANTYCZNYSZCZUR;
             texture = content.Load<Texture2D>(asset_name);
+            this.move_frequency = 40;
         }
 
         /// <summary>
@@ -152,7 +163,7 @@ namespace Game.Characters
 
         public override void Update(GameTime gametime, Map.Map map)
         {
-            if (gametime.TotalGameTime.Milliseconds % 20 == 0)
+            if (gametime.TotalGameTime.Milliseconds % move_frequency == 0)
             {
                 Move(map);
                 switch (current_direction)

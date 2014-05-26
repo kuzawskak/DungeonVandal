@@ -11,21 +11,29 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Game.Weapon
 {
+    /// <summary>
+    /// Klasa rakiety
+    /// W zależności od konstruktora - jest bronią do zebrania lub bronią odpaloną
+    /// </summary>
     class Racket : Weapon, Zniszczalny
     {
-
-        private string asset_name = "Textures\\racket";
-        private const int speed = 5;
-        Game.direction direction;
         /// <summary>
-        /// Costructor for static racket (getting this racket gives racket_points)
+        /// Scieżka do tekstury
         /// </summary>
-        /// <param name="content"> XNA Content </param>
-        /// <param name="rectangle"> XNA Rectangle </param>
-        /// <param name="max_width"> width of the whole map</param>
-        /// <param name="max_height">height of the whole map</param>
-        /// <param name="x"> the initial rectangle x value</param>
-        /// <param name="y"> the initail rectangle y value</param>
+        private string asset_name = "Textures\\racket";
+
+        /// <summary>
+        /// Kierunek ruchu wystrzelonej rakiety
+        /// </summary>
+        Game.direction direction;
+
+        /// <summary>
+        /// Konstruktor dla rakiety do zebrania
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="rectangle">Prostokat reprezentujacy obiekt na mapie</param>
+        /// <param name="x">indeks x na mapie obiektów</param>
+        /// <param name="y">indeks y na mapie obiektów</param>
         public Racket(ContentManager content, Rectangle rectangle, int x, int y)
             : base(content, rectangle, x, y)
         {
@@ -34,23 +42,21 @@ namespace Game.Weapon
             this.texture = content.Load<Texture2D>(asset_name);
         }
 
+
         /// <summary>
-        /// Costructor for fired racket (getting this racket gives racket_points)
+        /// Konstruktor dla odpalonej rakiety
         /// </summary>
-        /// <param name="content"> XNA Content </param>
-        /// <param name="rectangle"> XNA Rectangle </param>
-        /// <param name="max_width"> width of the whole map</param>
-        /// <param name="max_height">height of the whole map</param>
-        /// <param name="x"> the initial rectangle x value</param>
-        /// <param name="y"> the initail rectangle y value</param>
-        /// <param name="direction">direction of the move</param>
+        /// <param name="content">XNA Content</param>
+        /// <param name="rectangle">Prostokat reprezentujacy obiekt na mapie</param>
+        /// <param name="x">indeks x na mapie obiektów</param>
+        /// <param name="y">indeks y na mapie obiektów</param>
+        /// <param name="direction">kierunek poruszania odpalonej rakiety</param>
         public Racket(ContentManager content, Rectangle rectangle, int x, int y, Game.direction direction)
             : base(content, rectangle, x, y)
         {
             this.is_fired = true;
             this.direction = direction;
             this.TypeTag = AIHelper.ElementType.RACKET;
-
 
             switch (direction)
             {
@@ -70,6 +76,10 @@ namespace Game.Weapon
             }
         }
 
+        /// <summary>
+        /// Reakcja na zanlezienie przez Vandala
+        /// </summary>
+        /// <param name="map">Mapa obiektów</param>
         public override void OnFound(Map.Map map)
         {
             this.found_soundEffect.Play();
@@ -77,7 +87,11 @@ namespace Game.Weapon
         }
 
 
-
+        /// <summary>
+        /// Aktualizacja stanu rakiety
+        /// </summary>
+        /// <param name="gametime">Czas gry</param>
+        /// <param name="map">Mapa obiektów</param>
         public override void Update(GameTime gametime, Map.Map map)
         {
             if (gametime.TotalGameTime.Milliseconds % 20 == 0 && is_fired)

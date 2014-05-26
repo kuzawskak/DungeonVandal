@@ -23,33 +23,47 @@ namespace Game
     {
         private readonly GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        /// <summary>
+        /// Muzyka w tle
+        /// </summary>
         Song music;
         /// <summary>
         /// Sumaryczna liczba minut gry ( nie naliczany w trakcie pauzy)
         /// </summary>
         int totalMinutes = 0;
+
         /// <summary>
         /// Sumaryczna liczba sekund gry ( nie naliczana w trakcie pauzy)
         /// </summary>
         int totalSeconds = 0;
+
+        /// <summary>
+        /// Ostatnio aktualizowana liczba minut
+        /// </summary>
         int lastUpdateMinutes = 0;
+
+        /// <summary>
+        /// Ostatnio aktualizowana liczba sekund
+        /// </summary>
         int lastUpdateSeconds = 0;
+
         /// <summary>
         /// rozmiar komórki mapy
         /// </summary>
         public int tile_size;
+
         /// <summary>
         /// Szerokosc i wysokosc mapy
         /// </summary>
         public int map_width, map_height;
 
         /// <summary>
-        /// czy obiekt na mapie porusza sie
+        /// czy Vandal na mapie porusza sie
         /// </summary>
         bool move = false;
 
         /// <summary>
-        /// Kierunek poruszania
+        /// Kierunek poruszania Vandala
         /// </summary>
         public enum direction { left, up, right, down, none };
 
@@ -57,6 +71,7 @@ namespace Game
         /// Stan gry (czy pauza w³¹czona)
         /// </summary>
         private bool IsPaused;
+
         /// <summary>
         /// Instancja gracza
         /// </summary>
@@ -66,14 +81,17 @@ namespace Game
         /// Dane gry do za³adowania w przypadku wyboru zapisanej gry
         /// </summary>
         GameState.GameStateData data_to_load = new GameState.GameStateData(0);
+
         /// <summary>
         /// Indeks wybranej gry do za³adowania
         /// </summary>
         int data_index;
+
         /// <summary>
         /// Stan klawiatury
         /// </summary>
         private System.Windows.Forms.Keys key_pressed = System.Windows.Forms.Keys.None;
+
         /// <summary>
         /// Wka¿nik na g³ówne okno aplikacji
         /// </summary>
@@ -120,6 +138,32 @@ namespace Game
             IsMouseVisible = true;
         }
 
+
+        /// <summary>
+        /// Podmiana gry na zapisan¹ instancjê
+        /// </summary>
+        /// <param name="game_state_data_to_load">Dane zapisanej gry</param>
+        /// <param name="data_index">Indeks zapisanej gry</param>
+        public void LoadSavedGame(GameState.GameStateData game_state_data_to_load, int data_index)
+        {
+            data_to_load = game_state_data_to_load;
+            this.data_index = data_index;
+            this.player.Dynamite = data_to_load.Dynamites[data_index];
+            this.player.Points = data_to_load.Points[data_index];
+            this.player.Rackets = data_to_load.Rackets[data_index];
+            totalMinutes = data_to_load.TotalMinutes[data_index];
+            totalSeconds = data_to_load.TotalSeconds[data_index];
+            game_map = new Map.Map(tile_size, map_width, map_height, data_to_load.GameMaps[data_index], this.Content, player);
+            MediaPlayer.Resume();
+            MediaPlayer.Volume = (float)player.AudioSettings.MusicVolume;
+            IsPaused = false;
+        }
+
+
+
+        /// <summary>
+        /// Podmiana gry na now¹ instancjê
+        /// </summary>
         public void clearGameState()
         {
             player.Points = 0;
@@ -127,7 +171,10 @@ namespace Game
             player.Rackets = 0;
             totalMinutes = 0;
             totalSeconds = 0;
-
+            game_map = new Map.Map(tile_size, map_width, map_height, this.Content, player);
+            MediaPlayer.Resume();
+            MediaPlayer.Volume = (float)player.AudioSettings.MusicVolume;
+            IsPaused = false;
         }
 
 
@@ -169,12 +216,17 @@ namespace Game
             IsMouseVisible = true;
         }
 
-
+        /// <summary>
+        /// Obs³uga wciœniêcia klawisza klawiatury w przypadku nie wykrycia przez Form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void Game_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             key_pressed = e.KeyCode;
             move = true;
         }
+
         void Game_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
         {
 
@@ -228,6 +280,7 @@ namespace Game
         public void ContinueGame()
         {
             MediaPlayer.Resume();
+            MediaPlayer.Volume = (float)player.AudioSettings.MusicVolume;
             IsPaused = false;
         }
 
