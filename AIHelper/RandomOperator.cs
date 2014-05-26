@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 
-
 namespace AIHelper
 {
     public enum ElementType
@@ -17,6 +16,10 @@ namespace AIHelper
         RACKET, POLESILOWE, AMEBA, BECZKAZGAZEM, KAMIEN,
         LEKKIMUR, NIESTABILNABECZKA, ZIEMIA, BLOB, VANDAL, GOBLIN, GIGANTYCZNYSZCZUR, CHODZACABOMBA,CELMISJI
     };
+
+    /// <summary>
+    /// Klasa losowego generowania mapy na podstawie poziomu
+    /// </summary>
     public class RandomOperator
     {
         /// <summary>
@@ -47,7 +50,6 @@ namespace AIHelper
 
         public void GenerateRandomMap(int width, int height,int gameLevel)
         {
-
 
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
@@ -115,7 +117,7 @@ namespace AIHelper
                 Map[pos_x, pos_y] = ElementType.RADIOAKTYWNYGLAZ;
             }*/
             //ciezki mur
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < gameLevel*5; i++)
             {
                 pos_x = rand.Next(1, width - 2);
                 pos_y = rand.Next(1, height - 2);
@@ -124,23 +126,21 @@ namespace AIHelper
             }
 
             //lekki mur
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < gameLevel*4; i++)
             {
                 pos_x = rand.Next(1, width - 2);
                 pos_y = rand.Next(1, height - 2);
                 Map[pos_x, pos_y] = ElementType.LEKKIMUR;
             }
 
-            //ameba
-
-
+            //ameba --- cos chyba nie tak
             pos_x = rand.Next(1, width - 2);
             pos_y = rand.Next(1, height - 2);
 
-            Map[pos_x, pos_y] = ElementType.AMEBA;
+            Map[pos_x, pos_y] = ElementType.GIGANTYCZNYSZCZUR;
 
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < gameLevel; i++)
             {
                 pos_x = 5;
                 pos_y = 5;

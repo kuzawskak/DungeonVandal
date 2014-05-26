@@ -8,10 +8,11 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace XMLManager.XMLObjects
 {
+    /// <summary>
+    /// Klasa potzrebna do zapisu stanu gry
+    /// </summary>
     public static class GameState
     {
-
-
         /// <summary>
         /// Device do przechowywania plików XNA
         /// </summary>
@@ -35,6 +36,7 @@ namespace XMLManager.XMLObjects
         {
             public int Count;
 
+            public string[] Date;
             public int[] Levels;
             public int[][]GameMaps;
             public int[] Points;
@@ -48,6 +50,7 @@ namespace XMLManager.XMLObjects
             public GameStateData(int count,int map_width, int map_height)
             {
                 Count = count;
+                Date = new string[count];
                 Levels = new int[count];
                 GameMaps = new int[count][];
                 Points = new int[count];
@@ -61,6 +64,7 @@ namespace XMLManager.XMLObjects
             public GameStateData(int count)
             {
                 Count = count;
+                Date = null;
                 Levels = null;
                 GameMaps = null;
                 Points = null;
@@ -120,6 +124,11 @@ namespace XMLManager.XMLObjects
             return data;
         }
 
+        /// <summary>
+        /// Zapis stanu gry w pliku sygnowanym nazwą gracza
+        /// </summary>
+        /// <param name="result">obiekt typu IAsyncResult dający dostęp do XNA Storage</param>
+        /// <param name="playerName">nazwa gracza</param>
         public static void SaveToDevice(IAsyncResult result, string playerName)
         {
             filename = playerName;

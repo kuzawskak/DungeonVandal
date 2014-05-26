@@ -49,6 +49,7 @@ namespace Game.NonDestroyableObjects
         /// <param name="y"> Indeks y na mapie obiektow</param>
         public MagicznyMur(ContentManager content, Rectangle rectangle, int x, int y)
         {
+            TypeTag = AIHelper.ElementType.MAGICZNYMUR;
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
             this.rectangle = rectangle;

@@ -82,7 +82,6 @@ namespace Game.Panels
             {
                 this.Visible = false;
                 ((MenuForm)Parent).keyboard_settings_panel.Visible = true;
-                ((MenuForm)Parent).keyboard_settings_panel.Focus();
             }
         }
     }

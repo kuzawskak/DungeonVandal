@@ -110,7 +110,6 @@ namespace Game.Panels
                 }
                 keyboard_changes.Add(current_state, e.KeyData);
             }
-            MessageBox.Show("aa");
         }
 
         private void KeyboardSettingsPanel_Load(object sender, EventArgs e)
@@ -118,37 +117,36 @@ namespace Game.Panels
 
         }
 
-        private void exitButton_Click(object sender, EventArgs e)
-        {
-            ((MenuForm)Parent).player.KeyboardSettings = new Settings.KeySettings(keyboard_changes);
-            this.Visible = false;
 
-
-        }
 
         private void KeyboardSettingsPanel_KeyDown(object sender, KeyEventArgs e)
         {
-            MessageBox.Show("aa");
             
         }
 
         private void KeyboardSettingsPanel_KeyPress(object sender, KeyPressEventArgs e)
         {
-            MessageBox.Show("aa");
+       
         }
 
  
 
         private void button1_KeyDown(object sender, KeyEventArgs e)
         {
-            button1.Text= e.KeyCode.ToString();
-            keyboard_changes.Add(current_state, e.KeyData);
+            if (!keyboard_changes.ContainsValue(e.KeyData))
+            {
+                button1.Text = e.KeyCode.ToString();
+                TryAddNewSetting(current_state, e.KeyData);
+            }
         }
 
         private void button2_KeyDown(object sender, KeyEventArgs e)
         {
-            button2.Text = e.KeyCode.ToString();
-            keyboard_changes.Add(current_state, e.KeyData);
+            if (!keyboard_changes.ContainsValue(e.KeyData))
+            {
+                button2.Text = e.KeyCode.ToString();
+                TryAddNewSetting(current_state, e.KeyData);
+            }
         }
 
         private void button1_KeyUp(object sender, KeyEventArgs e)
@@ -158,8 +156,11 @@ namespace Game.Panels
 
         private void button3_KeyDown(object sender, KeyEventArgs e)
         {
-            button3.Text = e.KeyCode.ToString();
-            keyboard_changes.Add(current_state, e.KeyData);
+            if (!keyboard_changes.ContainsValue(e.KeyData))
+            {
+                button3.Text = e.KeyCode.ToString();
+                TryAddNewSetting(current_state, e.KeyData);
+            }
         }
 
         private void button3_KeyUp(object sender, KeyEventArgs e)
@@ -169,8 +170,11 @@ namespace Game.Panels
 
         private void button4_KeyDown(object sender, KeyEventArgs e)
         {
-            button4.Text = e.KeyCode.ToString();
-            keyboard_changes.Add(current_state, e.KeyData);
+            if (!keyboard_changes.ContainsValue(e.KeyData))
+            {
+                button4.Text = e.KeyCode.ToString();
+                TryAddNewSetting(current_state, e.KeyData);
+            }
         }
 
         private void button4_KeyUp(object sender, KeyEventArgs e)
@@ -180,8 +184,11 @@ namespace Game.Panels
 
         private void button5_KeyDown(object sender, KeyEventArgs e)
         {
-            button5.Text = e.KeyCode.ToString();
-            keyboard_changes.Add(current_state, e.KeyData);
+            if (!keyboard_changes.ContainsValue(e.KeyData))
+            {
+                button5.Text = e.KeyCode.ToString();
+                TryAddNewSetting(current_state, e.KeyData);
+            }
         }
 
         private void button5_KeyUp(object sender, KeyEventArgs e)
@@ -191,14 +198,20 @@ namespace Game.Panels
 
         private void button6_KeyDown(object sender, KeyEventArgs e)
         {
-            button6.Text = e.KeyCode.ToString();
-            keyboard_changes.Add(current_state, e.KeyData);
+            if (!keyboard_changes.ContainsValue(e.KeyData))
+            {
+                button6.Text = e.KeyCode.ToString();
+                TryAddNewSetting(current_state, e.KeyData);
+            }
         }
 
         private void button7_KeyDown(object sender, KeyEventArgs e)
         {
-            button7.Text = e.KeyCode.ToString();
-            keyboard_changes.Add(current_state, e.KeyData);
+            if (!keyboard_changes.ContainsValue(e.KeyData))
+            {
+                button7.Text = e.KeyCode.ToString();
+                TryAddNewSetting(current_state, e.KeyData);
+            }
         }
 
         private void button7_KeyUp(object sender, KeyEventArgs e)
@@ -239,8 +252,98 @@ namespace Game.Panels
         {
             if (Visible)
             {
+                keyboard_changes = ((MenuForm)Parent).player.KeyboardSettings.ToMap();
+                ClearSettingsChanges();
                 LoaderPlayerSettings();
             }
+        }
+
+        private void button1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+
+
+        private void button1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (!keyboard_changes.ContainsValue(e.KeyData))
+            {
+                button1.Text = e.KeyCode.ToString();
+                TryAddNewSetting(current_state, e.KeyData);
+                current_state = State.NONE;
+            }
+        }
+
+
+        private void button3_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (!keyboard_changes.ContainsValue(e.KeyData))
+            {
+                button3.Text = e.KeyCode.ToString();
+                TryAddNewSetting(current_state, e.KeyData);
+                current_state = State.NONE;
+            }
+
+        }
+
+        private void button2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (!keyboard_changes.ContainsValue(e.KeyData))
+            {
+                button2.Text = e.KeyCode.ToString();
+                TryAddNewSetting(current_state, e.KeyData);
+                current_state = State.NONE;
+            }
+        }
+
+        private void button4_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (!keyboard_changes.ContainsValue(e.KeyData))
+            {
+                button4.Text = e.KeyCode.ToString();
+                TryAddNewSetting(current_state, e.KeyData);
+                current_state = State.NONE;
+            }
+        }
+
+        private void button5_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (!keyboard_changes.ContainsValue(e.KeyData))
+            {
+                button5.Text = e.KeyCode.ToString();
+                TryAddNewSetting(current_state, e.KeyData);
+                current_state = State.NONE;
+            }
+        }
+
+        private void button6_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (!keyboard_changes.ContainsValue(e.KeyData))
+            {
+                button6.Text = e.KeyCode.ToString();
+                TryAddNewSetting(current_state, e.KeyData);
+                current_state = State.NONE;
+            }
+        }
+
+        private void button7_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            button7.Text = e.KeyCode.ToString();
+            TryAddNewSetting(current_state, e.KeyData);
+            current_state = State.NONE;
+        }
+
+        private void ClearSettingsChanges()
+        {
+            keyboard_changes.Clear();
+        }
+
+        private void TryAddNewSetting(State state, Keys keydata)
+        {
+            if(keyboard_changes.ContainsKey(state))
+            keyboard_changes.Remove(state);
+            keyboard_changes.Add(state, keydata);
         }
 
 

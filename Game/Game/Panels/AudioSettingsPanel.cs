@@ -10,21 +10,47 @@ using System.Windows.Media;
 using DungeonVandal;
 using System.IO;
 using System.Threading;
-
 using System.Runtime.InteropServices;
 
 namespace Game.Panels
 {
+    /// <summary>
+    /// Panel z ustawieniami dźwięku
+    /// </summary>
     public partial class AudioSettingsPanel : UserControl
     {
+        /// <summary>
+        /// Odtwarzacz muzyki w tle gry
+        /// </summary>
         static MediaPlayer mp;
+        /// <summary>
+        /// Odtwarzacz pojedynczych dźwięków w grze
+        /// </summary>
         static MediaPlayer sp;
+        /// <summary>
+        /// Wątek do odtwarzania muzyki w tle
+        /// </summary>
         static  Thread mp_thread = new Thread(MusicThreadFunc);
+        /// <summary>
+        /// Wątek do odtwarzania pojedynczych dżwięków
+        /// </summary>
          static Thread sp_thread = new Thread(SoundThreadFunc);
 
+        /// <summary>
+        /// Informacja czy zakonczyć odtwarzanie muzyki
+        /// </summary>
         public static bool music_stop = false;
+         /// <summary>
+         /// Informacja czy zakonczyc odtwarzanie pojedynczych dzwiekow
+         /// </summary>
         public static bool sound_stop = false;
+        /// <summary>
+        /// Informacja czy zmienic glosnosc muzyki
+        /// </summary>
         public static bool music_changed = false;
+        /// <summary>
+        /// Informacja czy zmienic glosnosc pojedynczych dzwiekow
+        /// </summary>
         public static bool sound_changed = false;
         public AudioSettingsPanel()
         {
@@ -32,6 +58,9 @@ namespace Game.Panels
 
         }
 
+        /// <summary>
+        /// Funkcja wątku odtwarzania muzyki w tle
+        /// </summary>
         public static void MusicThreadFunc()
         {
             try
@@ -64,6 +93,9 @@ namespace Game.Panels
             
 
         }
+        /// <summary>
+        /// Funkcja watku odtwarzania pojedynczych dzwiekow
+        /// </summary>
         public static void SoundThreadFunc()
         {
             try
@@ -100,16 +132,21 @@ namespace Game.Panels
  
         }
         
+        /// <summary>
+        /// Funkcja rozpoczynajaca dzialanie watku z muzyka w tle
+        /// </summary>
         public void playBackgroundMusic()
         {
             try
-            {
-                
+            {               
                 mp_thread.Start();
             }
             catch { }    
         }
 
+        /// <summary>
+        /// Funkcja rozpoczynajaca dzialanie watku z pojedynczym dzwiekiem
+        /// </summary>
         public void startSoundPlayer()
         {
             try
@@ -119,7 +156,9 @@ namespace Game.Panels
             catch { } 
         }
 
-
+        /// <summary>
+        /// Zatrzymanie obu odtwarzaczy dzwieku
+        /// </summary>
         public void stopPlayer()
         {
             sound_stop = true;
@@ -144,6 +183,11 @@ namespace Game.Panels
 
         }
 
+        /// <summary>
+        /// Obsluga zdarzenia zmiany checkboxa do wylaczania dzwieku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MuteCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             music_changed = true;
@@ -151,18 +195,32 @@ namespace Game.Panels
 
         }
 
+        /// <summary>
+        /// Obsluga zdarzenia zmian na scrollbarze do zmiany glosnosci dzwieku w tle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MusicVolumeTrackBar_Scroll(object sender, EventArgs e)
         {
             music_changed = true;
         }
 
+        /// <summary>
+        /// Obsluga zdarzenia zmian na scrollbarze do zmiany glosnosci pojedynczego dzwieku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void musicVolTrackbar_Scroll(object sender, EventArgs e)
         {
             sound_changed = true;
         }
 
 
-        //exit wand apply settings to a player
+        /// <summary>
+        /// Obluga zdarzenia wyjscia z manu suatwien dzwieku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             stopPlayer();

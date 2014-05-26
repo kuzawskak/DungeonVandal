@@ -20,10 +20,10 @@ namespace Game.NonDestroyableObjects
         /// </summary>
         const string asset_name = "Textures\\puste";
 
-        public Puste(ContentManager content, Rectangle rectangle)
+        public Puste(ContentManager content, Rectangle rectangle,int x, int y):base(content,rectangle,x,y)
         {
+            TypeTag = AIHelper.ElementType.PUSTE;
             this.texture = content.Load<Texture2D>(asset_name);
-            this.rectangle = rectangle;
             IsAccesible = true;
 
         }

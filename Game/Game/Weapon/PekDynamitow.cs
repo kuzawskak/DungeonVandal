@@ -10,40 +10,25 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace Game.Weapon
 {
-    class PekDynamitow : Map.MapObject, Zniszczalny, Weapon
+    class PekDynamitow :  Weapon, Zniszczalny
     {
-        SoundEffect soundEffect;
-
         private string asset_name = "Textures\\dynamites";
-        private int i, j;
-        public PekDynamitow(ContentManager content, Rectangle rectangle, int x, int y)
+        public PekDynamitow(ContentManager content, Rectangle rectangle, int x, int y):base(content,rectangle,x,y)
         {
-            soundEffect = content.Load<SoundEffect>("Audio\\found");
-            this.content = content;
-            texture = content.Load<Texture2D>(asset_name);
-            this.rectangle = rectangle;
-            this.x = x;
-            this.y = y;
-            IsAccesible = true;
-
+            this.TypeTag = AIHelper.ElementType.PEKDYNAMITOW;
+            this.texture = content.Load<Texture2D>(asset_name);
         }
 
-        public void OnFound(Map.Map map)
+         public override void OnFound(Map.Map map)
         {
-            soundEffect.Play();
+            found_soundEffect.Play();
             map.addPlayersDynamites(5);
-            map.setObject(rectangle.X / rectangle.Width, rectangle.Y / rectangle.Height, new NonDestroyableObjects.Puste(content, this.Rectangle));
 
         }
 
         public override void Update(GameTime gametime, Map.Map map)
         {
-            if (rectangle.Intersects(map.getVandalRectangle()))
-                this.OnFound(map);
-        }
-        public void OnDestroy(Map.Map map)
-        {
-            OnFound(map);
+
         }
 
     }

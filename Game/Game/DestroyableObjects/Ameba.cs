@@ -23,13 +23,10 @@ namespace Game.DestroyableObjects
         private string asset_name = "Textures\\ameba";
         private bool create_ameba = false;
         private System.Timers.Timer timer;
-        public Ameba(ContentManager content, Rectangle rectangle, int x, int y)
+        public Ameba(ContentManager content, Rectangle rectangle, int x, int y):base(content,rectangle,x,y)
         {
-            this.content = content;
+            TypeTag = AIHelper.ElementType.AMEBA;   
             texture = content.Load<Texture2D>(asset_name);
-            this.rectangle = rectangle;
-            this.x = x;
-            this.y = y;
             this.IsAccesible = false;
             this.points = 2;
             random_new_ameba_time = rand.Next(6, 10);
@@ -41,8 +38,6 @@ namespace Game.DestroyableObjects
 
         public override void Update(GameTime gametime, Map.Map map)
         {
-            int x = this.rectangle.X / this.Rectangle.Width;
-            int y = this.rectangle.Y / this.Rectangle.Height;
             if (create_ameba)
             {
                 available_tiles = new List<Map.MapObject>();
@@ -100,7 +95,6 @@ namespace Game.DestroyableObjects
             //losuj dostepne puste miejsce
             if (available_tiles.Capacity > 0)
             {
-
                 int random_pos = rand.Next(0, available_tiles.Capacity - 1);
                 map.setObject(available_tiles[random_pos].x, available_tiles[random_pos].y, new DestroyableObjects.Ameba(content, new Rectangle(available_tiles[random_pos].x * rectangle.Width, available_tiles[random_pos].y * rectangle.Height, rectangle.Width, rectangle.Height), available_tiles[random_pos].x, available_tiles[random_pos].y));
             }
@@ -117,9 +111,9 @@ namespace Game.DestroyableObjects
 
         public void OnDestroy(Map.Map map)
         {
-
-            map.setObject(rectangle.X / rectangle.Width, rectangle.Y / rectangle.Height, new NonDestroyableObjects.Puste(content, this.Rectangle));
             map.AddPlayersPoints(points);
+            map.setObject(x,y, new NonDestroyableObjects.Puste(content, this.Rectangle,x, y));
+         
         }
     }
 }

@@ -94,6 +94,7 @@
             // 
             this.splitContainer1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.splitContainer1.BackColor = System.Drawing.Color.Transparent;
+            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(50, 50);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -213,11 +214,14 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             this.button1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button1_KeyDown);
+            this.button1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.button1_KeyPress);
             this.button1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.button1_KeyUp);
+            this.button1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.button1_PreviewKeyDown);
             // 
             // splitContainer3
             // 
             this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.IsSplitterFixed = true;
             this.splitContainer3.Location = new System.Drawing.Point(3, 83);
             this.splitContainer3.Name = "splitContainer3";
             // 
@@ -265,10 +269,12 @@
             this.button2.Click += new System.EventHandler(this.button2_Click);
             this.button2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button2_KeyDown);
             this.button2.KeyUp += new System.Windows.Forms.KeyEventHandler(this.button2_KeyUp);
+            this.button2.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.button2_PreviewKeyDown);
             // 
             // splitContainer4
             // 
             this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer4.IsSplitterFixed = true;
             this.splitContainer4.Location = new System.Drawing.Point(3, 163);
             this.splitContainer4.Name = "splitContainer4";
             // 
@@ -315,10 +321,12 @@
             this.button3.Click += new System.EventHandler(this.button3_Click);
             this.button3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button3_KeyDown);
             this.button3.KeyUp += new System.Windows.Forms.KeyEventHandler(this.button3_KeyUp);
+            this.button3.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.button3_PreviewKeyDown);
             // 
             // splitContainer5
             // 
             this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer5.IsSplitterFixed = true;
             this.splitContainer5.Location = new System.Drawing.Point(3, 243);
             this.splitContainer5.Name = "splitContainer5";
             // 
@@ -365,10 +373,12 @@
             this.button4.Click += new System.EventHandler(this.button4_Click);
             this.button4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button4_KeyDown);
             this.button4.KeyUp += new System.Windows.Forms.KeyEventHandler(this.button4_KeyUp);
+            this.button4.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.button4_PreviewKeyDown);
             // 
             // splitContainer6
             // 
             this.splitContainer6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer6.IsSplitterFixed = true;
             this.splitContainer6.Location = new System.Drawing.Point(3, 323);
             this.splitContainer6.Name = "splitContainer6";
             // 
@@ -415,10 +425,12 @@
             this.button5.Click += new System.EventHandler(this.button5_Click);
             this.button5.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button5_KeyDown);
             this.button5.KeyUp += new System.Windows.Forms.KeyEventHandler(this.button5_KeyUp);
+            this.button5.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.button5_PreviewKeyDown);
             // 
             // splitContainer7
             // 
             this.splitContainer7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer7.IsSplitterFixed = true;
             this.splitContainer7.Location = new System.Drawing.Point(403, 3);
             this.splitContainer7.Name = "splitContainer7";
             // 
@@ -465,10 +477,12 @@
             this.button6.Click += new System.EventHandler(this.button6_Click);
             this.button6.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button6_KeyDown);
             this.button6.KeyUp += new System.Windows.Forms.KeyEventHandler(this.button6_KeyUp);
+            this.button6.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.button6_PreviewKeyDown);
             // 
             // splitContainer8
             // 
             this.splitContainer8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer8.IsSplitterFixed = true;
             this.splitContainer8.Location = new System.Drawing.Point(403, 83);
             this.splitContainer8.Name = "splitContainer8";
             // 
@@ -515,6 +529,7 @@
             this.button7.Click += new System.EventHandler(this.button7_Click);
             this.button7.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button7_KeyDown);
             this.button7.KeyUp += new System.Windows.Forms.KeyEventHandler(this.button7_KeyUp);
+            this.button7.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.button7_PreviewKeyDown);
             // 
             // button8
             // 

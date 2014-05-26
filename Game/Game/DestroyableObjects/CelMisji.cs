@@ -16,6 +16,7 @@ namespace Game.DestroyableObjects
 
         public CelMisji(ContentManager content, Rectangle rectangle, int x, int y,int game_level,int intelligence_level)
         {
+            TypeTag = AIHelper.ElementType.CELMISJI;
             this.content = content;
             
             this.rectangle = rectangle;

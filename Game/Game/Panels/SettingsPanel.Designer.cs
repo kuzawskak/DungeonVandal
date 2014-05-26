@@ -33,7 +33,6 @@
             this.exitButton = new System.Windows.Forms.Button();
             this.defaultSettingsButton = new System.Windows.Forms.Button();
             this.keyboardButton = new System.Windows.Forms.Button();
-            this.graphicsButton = new System.Windows.Forms.Button();
             this.audioButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -44,10 +43,9 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.exitButton, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.defaultSettingsButton, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.keyboardButton, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.graphicsButton, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.audioButton, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.keyboardButton, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.defaultSettingsButton, 0, 2);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(40, 43);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 5;
@@ -80,7 +78,7 @@
             this.defaultSettingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.defaultSettingsButton.Font = new System.Drawing.Font("Trebuchet MS", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.defaultSettingsButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.defaultSettingsButton.Location = new System.Drawing.Point(423, 391);
+            this.defaultSettingsButton.Location = new System.Drawing.Point(423, 269);
             this.defaultSettingsButton.Margin = new System.Windows.Forms.Padding(50, 3, 50, 3);
             this.defaultSettingsButton.Name = "defaultSettingsButton";
             this.defaultSettingsButton.Size = new System.Drawing.Size(345, 72);
@@ -95,7 +93,7 @@
             this.keyboardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.keyboardButton.Font = new System.Drawing.Font("Trebuchet MS", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.keyboardButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.keyboardButton.Location = new System.Drawing.Point(50, 266);
+            this.keyboardButton.Location = new System.Drawing.Point(50, 144);
             this.keyboardButton.Margin = new System.Windows.Forms.Padding(50, 3, 3, 3);
             this.keyboardButton.Name = "keyboardButton";
             this.keyboardButton.Size = new System.Drawing.Size(376, 78);
@@ -103,21 +101,6 @@
             this.keyboardButton.Text = "Ustawienia sterowania";
             this.keyboardButton.UseVisualStyleBackColor = true;
             this.keyboardButton.Click += new System.EventHandler(this.keyboardButton_Click);
-            // 
-            // graphicsButton
-            // 
-            this.graphicsButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.graphicsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.graphicsButton.Font = new System.Drawing.Font("Trebuchet MS", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.graphicsButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.graphicsButton.Location = new System.Drawing.Point(50, 150);
-            this.graphicsButton.Margin = new System.Windows.Forms.Padding(50, 3, 3, 3);
-            this.graphicsButton.Name = "graphicsButton";
-            this.graphicsButton.Size = new System.Drawing.Size(376, 65);
-            this.graphicsButton.TabIndex = 5;
-            this.graphicsButton.Text = "Ustawienia grafiki";
-            this.graphicsButton.UseVisualStyleBackColor = true;
-            this.graphicsButton.Click += new System.EventHandler(this.graphicsButton_Click);
             // 
             // audioButton
             // 
@@ -154,7 +137,6 @@
         private System.Windows.Forms.Button exitButton;
         private System.Windows.Forms.Button defaultSettingsButton;
         private System.Windows.Forms.Button keyboardButton;
-        private System.Windows.Forms.Button graphicsButton;
         private System.Windows.Forms.Button audioButton;
     }
 }

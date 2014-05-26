@@ -10,6 +10,10 @@ using DungeonVandal;
 
 namespace Game.Panels
 {
+    /// <summary>
+    /// Panel wyboru poziomu gry 
+    /// ( z możliwością obejrzenia listy najlepszych wyników dla każdego z poziomów)
+    /// </summary>
     public partial class ChooseLevelPanel : UserControl
     {
         /// <summary>
@@ -97,7 +101,6 @@ namespace Game.Panels
             ((MenuForm)Parent).ChoosenLevel = this.choosenLevel;
             this.Visible = false;
             ((MenuForm)Parent).main_panel.Visible = true;
-            ((MenuForm)Parent).main_panel.Focus();
         }
 
         /// <summary>
@@ -148,6 +151,39 @@ namespace Game.Panels
         private void Level5Button_Click(object sender, EventArgs e)
         {
             this.choosenLevel = 5;
+        }
+
+        /// <summary>
+        /// Odblokowanie przycisków ładownaia poziomu do wybranego poziomu
+        /// </summary>
+        /// <param name="level_no">Numer maksymalnego poziomu</param>
+        public void EnableTillLevel(int level_no)
+        {
+            int i = 1;
+            while (i < level_no)
+            {
+                ++i;
+                switch (i)
+                {
+                    case 1:
+                        Level1Button.Enabled = true;
+                        break;
+                    case 2:
+                        Level2Button.Enabled = true;
+                        break;
+                    case 3:
+                        Level3button.Enabled = true;
+                        break;
+                    case 4:
+                        Level4Button.Enabled = true;
+                        break;
+                    case 5:
+                        Level5Button.Enabled = true;
+                        break;
+
+                }
+            }
+
         }
 
 

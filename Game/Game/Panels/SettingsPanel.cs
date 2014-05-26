@@ -12,50 +12,71 @@ using DungeonVandal;
 
 namespace Game.Panels
 {
+    /// <summary>
+    /// Panel z wyborem ustawień
+    /// </summary>
     public partial class SettingsPanel : UserControl
     {
-        
-        
+        /// <summary>
+        /// Konstruktor domyślny generowany przez WindowsForms
+        /// </summary>
+       
         public SettingsPanel()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Wejście do ustawień audio
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void audioButton_Click(object sender, EventArgs e)
         {
             this.Visible = false;
             ((MenuForm)Parent).audio_settings_panel.Visible = true;
             ((MenuForm)Parent).audio_settings_panel.playBackgroundMusic();
             ((MenuForm)Parent).audio_settings_panel.startSoundPlayer();
-          // ((MenuForm)Parent).audio_settings_panel.Focus();           
-
+      
         }
 
-        private void graphicsButton_Click(object sender, EventArgs e)
-        {
-            this.Visible = false;
-            ((MenuForm)Parent).graphic_settings_panel.Visible = true;
-            ((MenuForm)Parent).graphic_settings_panel.Focus();
-        }
 
+
+        /// <summary>
+        /// Wejście do ustawień sterowania
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void keyboardButton_Click(object sender, EventArgs e)
         {
             this.Visible = false;
             ((MenuForm)Parent).keyboard_settings_panel.Visible = true;
-            ((MenuForm)Parent).keyboard_settings_panel.Focus();
+            //MenuForm)Parent).keyboard_settings_panel.Focus();
         }
 
+        /// <summary>
+        ///Przywrócenie usawień domyślnych
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void defaultSettingsButton_Click(object sender, EventArgs e)
         {
-            //przywroc ustawienia domyslne
-            //TODO
+            ((MenuForm)Parent).player.AudioSettings = new Settings.AudioSettings();
+            ((MenuForm)Parent).player.KeyboardSettings = new Settings.KeySettings();
+
         }
 
+        /// <summary>
+        /// Wyjście z menu ustawień
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void exitButton_Click(object sender, EventArgs e)
         {
             this.Visible = false;
             if (((MenuForm)Parent).GamePause) ((MenuForm)Parent).pause_panel.Visible = true;
             else ((MenuForm)Parent).main_panel.Visible = true;
+           
                   
         }
     }

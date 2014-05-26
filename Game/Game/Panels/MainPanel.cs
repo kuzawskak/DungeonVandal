@@ -13,12 +13,17 @@ using Game.Panels;
 
 namespace Game.Panels
 {
+    /// <summary>
+    /// Główne menu gry 9pojawia się bezpośrednio po zalogowaniu użytkownika)
+    /// </summary>
     public partial class MainPanel : UserControl
     {
+        /// <summary>
+        /// Konstruktor domyślny generowany przez WindowsForms
+        /// </summary>
         public MainPanel()
         {
             InitializeComponent();
-
         }
 
         /// <summary>
@@ -40,13 +45,8 @@ namespace Game.Panels
         private void LoadGameButton_Click(object sender, EventArgs e)
         {
             this.Visible = false;
-            XnaGamePanel game_panel = ((MenuForm)Parent).game_panel;
-            MenuForm form = (MenuForm)Parent;
-            game_panel.Visible = true;           
-            form.gameInstance = new Game(form, form.player);
-            Thread thread = new Thread(new ThreadStart(form.gameInstance.Run));
-            thread.Start();
-            game_panel.GraphicsContainer.Focus();
+            ((MenuForm)Parent).load_game_panel.Visible = true;   
+         
         }
 
 
@@ -60,7 +60,6 @@ namespace Game.Panels
             this.Visible = false;
             ((MenuForm)Parent).GamePause = false;
             ((MenuForm)Parent).choose_level_panel.Visible = true;
-            ((MenuForm)Parent).choose_level_panel.Focus();
         }
 
 
@@ -74,7 +73,6 @@ namespace Game.Panels
             this.Visible = false;
             ((MenuForm)Parent).GamePause = false;
             ((MenuForm)Parent).settings_panel.Visible = true;
-            ((MenuForm)Parent).settings_panel.Focus();
 
         }
 
@@ -85,6 +83,7 @@ namespace Game.Panels
         /// <param name="e"></param>
         private void HelpButton_Click(object sender, EventArgs e)
         {
+            ((MenuForm)Parent).GamePause = false;
             HelpPanel help_panel = ((MenuForm)Parent).help_panel;
             this.Visible = false;
             help_panel.Visible = true;
@@ -113,8 +112,11 @@ namespace Game.Panels
         /// <param name="e"></param>
         private void NewGameButton_Click_1(object sender, EventArgs e)
         {
-            
+            if (thread != null)
+                thread.Suspend();
+       
             MenuForm form = (MenuForm)Parent;
+            if (form.gameInstance != null) form.gameInstance.Exit();
             ((MenuForm)Parent).game_panel.Visible = true;
             this.Visible = false;
             //kliknięcie nowej gry w trakcie pauzy kończy dotychczasowa grę i uruchamia nową instancję
@@ -123,8 +125,6 @@ namespace Game.Panels
                 form.gameInstance.Exit();
                 ((MenuForm)Parent).GamePause = false;
             }
-
-            form.player = new Player(form.player.Name);
             form.gameInstance = new Game(form, form.player);
             thread = new Thread(new ThreadStart(form.gameInstance.Run));
             thread.Start();

@@ -1,5 +1,6 @@
 ﻿namespace Game.Panels
 {
+
     partial class HelpPanel
     {
         /// <summary> 
@@ -31,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HelpPanel));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.HelpLabel = new System.Windows.Forms.Label();
-            this.ScrollBar = new System.Windows.Forms.VScrollBar();
+            this.nextSlideButton = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.exitButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -57,8 +58,8 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.nextSlideButton);
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox1);
-            this.splitContainer1.Panel2.Controls.Add(this.ScrollBar);
             this.splitContainer1.Size = new System.Drawing.Size(816, 542);
             this.splitContainer1.SplitterDistance = 84;
             this.splitContainer1.TabIndex = 0;
@@ -72,18 +73,24 @@
             this.HelpLabel.TabIndex = 0;
             this.HelpLabel.Text = "Pomoc";
             // 
-            // ScrollBar
+            // nextSlideButton
             // 
-            this.ScrollBar.Location = new System.Drawing.Point(782, 0);
-            this.ScrollBar.Name = "ScrollBar";
-            this.ScrollBar.Size = new System.Drawing.Size(27, 454);
-            this.ScrollBar.TabIndex = 0;
+            this.nextSlideButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nextSlideButton.Font = new System.Drawing.Font("Trebuchet MS", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.nextSlideButton.Location = new System.Drawing.Point(749, 176);
+            this.nextSlideButton.Name = "nextSlideButton";
+            this.nextSlideButton.Size = new System.Drawing.Size(64, 98);
+            this.nextSlideButton.TabIndex = 2;
+            this.nextSlideButton.Text = ">";
+            this.nextSlideButton.UseVisualStyleBackColor = true;
+            this.nextSlideButton.Click += new System.EventHandler(this.nextSlideButton_Click);
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(57, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(776, 448);
+            this.pictureBox1.Size = new System.Drawing.Size(680, 440);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
@@ -126,7 +133,7 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Label HelpLabel;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.VScrollBar ScrollBar;
         private System.Windows.Forms.Button exitButton;
+        private System.Windows.Forms.Button nextSlideButton;
     }
 }

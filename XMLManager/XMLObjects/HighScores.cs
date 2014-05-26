@@ -12,6 +12,9 @@ using System.Windows.Forms;
 
 namespace XMLManager.XMLObjects
 {
+    /// <summary>
+    /// Klasa potzrebna do zapisy najlepszych wyników
+    /// </summary>
     public static class HighScores
     {
         /// <summary>

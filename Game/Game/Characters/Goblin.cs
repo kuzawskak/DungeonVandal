@@ -33,12 +33,10 @@ namespace Game.Characters
         /// <param name="x"></param>
         /// <param name="y"></param>
         public Goblin(ContentManager content, Rectangle rectangle, int x, int y)
+            : base(content, rectangle, x, y)
         {
-            this.content = content;
+            TypeTag = AIHelper.ElementType.GOBLIN;
             texture = content.Load<Texture2D>(asset_name);
-            this.rectangle = rectangle;
-            this.x = x;
-            this.y = y;
             current_direction = Game.direction.down;
             this.velocity = 30;
         }

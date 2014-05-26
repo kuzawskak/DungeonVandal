@@ -10,12 +10,13 @@ using Microsoft.Xna.Framework.Audio;
 using Game.Features;
 using System.Timers;
 
+
 namespace Game.Characters
 {
     /// <summary>
     /// Postac któej ruchem i zachowaniem steruje gracz
     /// </summary>
-    public class Vandal :  Map.MapObject
+    public class Vandal : Map.MapObject
     {
 
         public bool is_alive { get; set; }
@@ -32,7 +33,11 @@ namespace Game.Characters
         /// Kierunek ruchu
         /// </summary>
         public Game.direction current_direction { get; private set; }
-        int max_height, max_width;
+        /// <summary>
+        /// Kierunek patrzenia
+        /// </summary>
+        public Game.direction view_direction { get; private set; }
+
         /// <summary>
         /// Obiekt na mapie , z ktorym nastapila kolizja
         /// </summary>
@@ -41,19 +46,15 @@ namespace Game.Characters
         private System.Timers.Timer immortal_timer;
 
 
-        public Vandal(ContentManager content, Rectangle rectangle, int max_width, int max_height)
+
+        public Vandal(ContentManager content, Rectangle rectangle, int x, int y)
+            : base(content, rectangle, x, y)
         {
-            this.content = content;
+            this.TypeTag = AIHelper.ElementType.VANDAL;
             texture = content.Load<Texture2D>("Textures\\vandal_right");
-            this.rectangle = rectangle;
-            x = (int)(rectangle.X / rectangle.Width);
-            y = (int)(rectangle.Y / rectangle.Height);
-            this.max_height = max_height;
-            this.max_width = max_width;
             this.is_alive = true;
             this.level_up = false;
             current_direction = Game.direction.none;
-
         }
 
 
@@ -92,17 +93,16 @@ namespace Game.Characters
             int new_x = x + 1;
             int new_y = y + 0;
             collision_obj = game_map.getObject(new_x, new_y);
-            //  if (collision_obj.IsAccesible)
-            {
-                if (collision_obj is Zniszczalny)
-                    (collision_obj as Zniszczalny).OnDestroy(game_map);
 
-                game_map.setObject(new_x, new_y, this);
-                game_map.setObject(x, y, new Weapon.Dynamit(content, new Rectangle(x * this.rectangle.Width, y * this.rectangle.Height, this.rectangle.Width, this.rectangle.Height), x, y, gametime));
+            if (collision_obj is Zniszczalny)
+                (collision_obj as Zniszczalny).OnDestroy(game_map);
 
-                x = new_x;
-                y = new_y;
-            }
+            game_map.setObject(new_x, new_y, this);
+            game_map.setObject(x, y, new Weapon.Dynamit(content, new Rectangle(x * this.rectangle.Width, y * this.rectangle.Height, this.rectangle.Width, this.rectangle.Height), x, y, gametime));
+
+            x = new_x;
+            y = new_y;
+
             game_map.addPlayersDynamites(-1);
 
         }
@@ -113,11 +113,35 @@ namespace Game.Characters
         /// <param name="game_map"></param>
         public void AttackWithRacket(Map.Map game_map)
         {
-            Map.MapObject racket = new Weapon.Racket(content, this.Rectangle,rectangle.X, rectangle.Y, current_direction);
-            game_map.setObject(rectangle.X / rectangle.Width, rectangle.Y / rectangle.Height, racket);
-            game_map.addPlayersRacket(-1);
-            SoundEffect fire_racket_effect = content.Load<SoundEffect>("Audio\\fire_racket");
-            fire_racket_effect.Play();
+            Map.MapObject collision_obj = null;
+            switch (view_direction)
+            {
+                case Game.direction.down:
+                    collision_obj = game_map.getObject(x, y + 1);
+                    break;
+                case Game.direction.up:
+                    collision_obj = game_map.getObject(x, y - 1);
+                    break;
+                case Game.direction.right:
+                    collision_obj = game_map.getObject(x + 1, y);
+                    break;
+                case Game.direction.left:
+                    collision_obj = game_map.getObject(x - 1, y);
+                    break;
+      
+ 
+            }
+
+
+            if (collision_obj != null && (collision_obj.GetType() == typeof(NonDestroyableObjects.Puste) || collision_obj.IsAccesible))
+            {
+
+                Map.MapObject racket = new Weapon.Racket(content, collision_obj.rectangle, collision_obj.x, collision_obj.y, view_direction);
+                game_map.setObject(collision_obj.x, collision_obj.y, racket);
+                game_map.addPlayersRacket(-1);
+                SoundEffect fire_racket_effect = content.Load<SoundEffect>("Audio\\fire_racket");
+                fire_racket_effect.Play();
+            }
         }
 
         /// <summary>
@@ -127,6 +151,7 @@ namespace Game.Characters
         public void changeDirectionToNext(Map.Map game_map)
         {
             current_direction = (Game.direction)(((int)current_direction + 1) % 3 + 1);
+            view_direction = current_direction;
             LoadCurrentTexture(game_map);
 
         }
@@ -172,16 +197,21 @@ namespace Game.Characters
             collision_obj = map.getObject(new_x, new_y);
             if (collision_obj.IsAccesible)
             {
+                if (collision_obj is Weapon.Weapon)
+                {
+                    (collision_obj as Weapon.Weapon).OnFound(map);
+                }
+
                 if (collision_obj is Zniszczalny)
                     (collision_obj as Zniszczalny).OnDestroy(map);
 
                 map.setObject(new_x, new_y, this);
                 if (!(collision_obj is Eteryczny))
-                    map.setObject(x, y, new NonDestroyableObjects.Puste(content, new Rectangle(x * this.rectangle.Width, y * this.rectangle.Height, this.rectangle.Width, this.rectangle.Height)));
+                    map.setObject(x, y, new NonDestroyableObjects.Puste(content, new Rectangle(x * this.rectangle.Width, y * this.rectangle.Height, this.rectangle.Width, this.rectangle.Height),x,y));
 
                 x = new_x;
                 y = new_y;
-            }      
+            }
         }
 
 
@@ -192,6 +222,8 @@ namespace Game.Characters
         /// <param name="map"></param>
         public void Move(Game.direction direction)
         {
+            if (direction != Game.direction.none)
+                view_direction = direction;
             current_direction = direction;
         }
 
@@ -201,23 +233,23 @@ namespace Game.Characters
             if (!is_immortal)
             {
                 //sprawdzenie czy styka sie z wrogiem 
-                if (map.getObject(x , y).GetType() == typeof(Characters.Enemy) || map.getObject(x , y) is Skazony)
+                if (map.getObject(x, y).GetType() == typeof(Characters.Enemy) || map.getObject(x, y) is Skazony)
                 { is_alive = false; return; }
-             /*   if (map.getObject(x + 1, y).GetType() == typeof(Characters.Enemy) || map.getObject(x + 1, y) is Skazony)
-                { is_alive = false; return; }
-                if (map.getObject(x, y - 1).GetType() == typeof(Characters.Enemy) || map.getObject(x, y - 1) is Skazony)
-                { is_alive = false; return; }
-                if (map.getObject(x, y + 1).GetType() == typeof(Characters.Enemy) || map.getObject(x, y + 1) is Skazony)
-                { is_alive = false; return; }
-                //lub skazonym polem po skosie
-                if (map.getObject(x - 1, y - 1) is Skazony)
-                { is_alive = false; return; }
-                if (map.getObject(x + 1, y - 1) is Skazony)
-                { is_alive = false; return; }
-                if (map.getObject(x - 1, y + 1) is Skazony)
-                { is_alive = false; return; }
-                if (map.getObject(x + 1, y + 1) is Skazony)
-                { is_alive = false; return; }*/
+                /*   if (map.getObject(x + 1, y).GetType() == typeof(Characters.Enemy) || map.getObject(x + 1, y) is Skazony)
+                   { is_alive = false; return; }
+                   if (map.getObject(x, y - 1).GetType() == typeof(Characters.Enemy) || map.getObject(x, y - 1) is Skazony)
+                   { is_alive = false; return; }
+                   if (map.getObject(x, y + 1).GetType() == typeof(Characters.Enemy) || map.getObject(x, y + 1) is Skazony)
+                   { is_alive = false; return; }
+                   //lub skazonym polem po skosie
+                   if (map.getObject(x - 1, y - 1) is Skazony)
+                   { is_alive = false; return; }
+                   if (map.getObject(x + 1, y - 1) is Skazony)
+                   { is_alive = false; return; }
+                   if (map.getObject(x - 1, y + 1) is Skazony)
+                   { is_alive = false; return; }
+                   if (map.getObject(x + 1, y + 1) is Skazony)
+                   { is_alive = false; return; }*/
             }
 
 
@@ -227,8 +259,8 @@ namespace Game.Characters
                 switch (current_direction)
                 {
                     case Game.direction.down:
-                        if (rectangle.Y + velocity < max_height - rectangle.Height)
-                            MoveInDirection(0, 1, map);
+                        //  if (rectangle.Y + velocity < max_height - rectangle.Height)
+                        MoveInDirection(0, 1, map);
                         current_direction = Game.direction.none;
                         break;
                     case Game.direction.left:
@@ -237,8 +269,8 @@ namespace Game.Characters
                         current_direction = Game.direction.none;
                         break;
                     case Game.direction.right:
-                        if (rectangle.X + velocity < max_width - rectangle.Width)
-                            MoveInDirection(1, 0, map);
+                        // if (rectangle.X + velocity < max_width - rectangle.Width)
+                        MoveInDirection(1, 0, map);
                         current_direction = Game.direction.none;
                         break;
                     case Game.direction.up:

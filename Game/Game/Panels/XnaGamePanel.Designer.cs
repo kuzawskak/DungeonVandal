@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XnaGamePanel));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.racketCounter = new System.Windows.Forms.Label();
             this.dynamiteCounter = new System.Windows.Forms.Label();
@@ -49,6 +50,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -94,7 +96,7 @@
             // 
             // racketPictureBox
             // 
-            this.racketPictureBox.BackgroundImage = global::Game.Resources.racket;
+            this.racketPictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("racketPictureBox.BackgroundImage")));
             this.racketPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.racketPictureBox.Location = new System.Drawing.Point(729, 13);
             this.racketPictureBox.Name = "racketPictureBox";

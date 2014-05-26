@@ -20,6 +20,7 @@ namespace Game.DestroyableObjects
 
         public LekkiMur(ContentManager content, Rectangle rectangle, int x, int y)
         {
+            TypeTag = AIHelper.ElementType.LEKKIMUR;
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
             this.rectangle = rectangle;

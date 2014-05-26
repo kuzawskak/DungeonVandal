@@ -15,9 +15,12 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace DungeonVandal
 {
+
+    /// <summary>
+    /// Główne okno aplikacji
+    /// </summary>
     public partial class MenuForm : Form
     {
-
         public bool GamePause = false;
         public int ChoosenLevel = 1;
         /// <summary>
@@ -28,7 +31,6 @@ namespace DungeonVandal
         public PausePanel pause_panel = new PausePanel();
         public SettingsPanel settings_panel = new SettingsPanel();
         public AudioSettingsPanel audio_settings_panel = new AudioSettingsPanel();
-        public GraphicSettingsPanel graphic_settings_panel = new GraphicSettingsPanel();
         public KeyboardSettingsPanel keyboard_settings_panel = new KeyboardSettingsPanel();
         public PredefinedSettingsPanel predefined_settings_panel = new PredefinedSettingsPanel();
         public HelpPanel help_panel = new HelpPanel();
@@ -65,7 +67,6 @@ namespace DungeonVandal
             game_panel.Visible = false;
             game_over_panel.setScoreLabel(player.Points);
             game_over_panel.Visible = true;
-            game_over_panel.Focus();
         }
 
         /// <summary>
@@ -76,7 +77,6 @@ namespace DungeonVandal
             game_panel.Visible = false;
             win_panel.setScoreLabel(player.Points);
             win_panel.Visible = true;
-            win_panel.Focus();
         }
 
         /// <summary>
@@ -100,9 +100,6 @@ namespace DungeonVandal
             this.Controls.Add(audio_settings_panel);
             audio_settings_panel.Visible = false;
 
-            graphic_settings_panel.Dock = DockStyle.Fill;
-            this.Controls.Add(graphic_settings_panel);
-            graphic_settings_panel.Visible = false;
 
             predefined_settings_panel.Dock = DockStyle.Fill;
             this.Controls.Add(predefined_settings_panel);
@@ -247,7 +244,6 @@ namespace DungeonVandal
             GamePause = true;
             game_panel.Visible = false;
             pause_panel.Visible = true;
-            pause_panel.Focus();
 
         }
 
@@ -275,7 +271,11 @@ namespace DungeonVandal
                 //Pierwsze uruchomienie gry ( brak listy najlepszych wynikow dla danego poziomu)
                 main_panel.EnableLoadButton(false);
             }
-            else main_panel.EnableLoadButton(true);
+            else
+            {
+                main_panel.EnableLoadButton(true);
+                load_game_panel.InitializeGameStatesList(saved_data);
+            }
 
         }
 

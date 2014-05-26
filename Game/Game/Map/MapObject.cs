@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using AIHelper;
 
 namespace Game.Map
 {
@@ -19,6 +20,7 @@ namespace Game.Map
             get;
             protected set;
         }
+
         //wspolrzedne na mapie
         public int x { get;  set; }
         public int y { get; set; }
@@ -34,20 +36,19 @@ namespace Game.Map
             set { rectangle = value; }
         }
         public MapObject() { }
-        public MapObject(ContentManager content, Rectangle rectangle, string assetName)
-        {
-            this.texture = content.Load<Texture2D>(assetName);
-            this.rectangle = rectangle;
-            IsAccesible = true;
 
-        }
 
-        public MapObject(ContentManager content, Rectangle rectangle, string assetName, int x, int y)
+
+        public ElementType TypeTag { get; protected set; }
+
+
+        public MapObject(ContentManager content, Rectangle rectangle, int x, int y)
         {
-            this.texture = content.Load<Texture2D>(assetName);
+            this.content = content;
             this.rectangle = rectangle;
-          //  this.x = x;
-          //  this.y = y;
+            this.x = x;
+            this.y = y;
+
         }
 
         public void Draw(SpriteBatch spritebatch)

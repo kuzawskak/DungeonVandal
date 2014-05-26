@@ -34,6 +34,7 @@ namespace Game.NonDestroyableObjects
         /// <param name="y"> Indeks y na mapie obiektow</param>
          public MarmurowyKamien(ContentManager content, Rectangle rectangle, int x, int y)
         {
+            TypeTag = AIHelper.ElementType.MARMUROWYKAMIEN;
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
             this.rectangle = rectangle;
@@ -59,7 +60,7 @@ namespace Game.NonDestroyableObjects
                  {
                      MessageBox.Show(x_index.ToString() + "  " + y_index.ToString());
                      map.setObject(x_index, y_index, this);
-                     map.setObject(x_index, y_index - 1, new NonDestroyableObjects.Puste(content, rectangle));
+                     map.setObject(x_index, y_index - 1, new NonDestroyableObjects.Puste(content, rectangle, x_index, y_index - 1));
                      is_falling = false;
                      return;
                  }
@@ -77,7 +78,7 @@ namespace Game.NonDestroyableObjects
                  else
                  {
                      map.setObject(x_index, y_index, this);
-                     map.setObject(x_index, y_index - 1, new NonDestroyableObjects.Puste(content, rectangle));
+                     map.setObject(x_index, y_index - 1, new NonDestroyableObjects.Puste(content, rectangle, x_index, y_index - 1));
                      if (y_index < map.getHeight() - 1 && map.getObject(x_index, y_index + 1).GetType() == typeof(NonDestroyableObjects.Puste))
                      {
                          Spadaj();

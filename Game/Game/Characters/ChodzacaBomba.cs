@@ -30,13 +30,10 @@ namespace Game.Characters
         Map.MapObject collision_obj = null;
 
         public ChodzacaBomba(ContentManager content, Rectangle rectangle, int x, int y)
+            : base(content, rectangle, x, y)
         {
-            this.content = content;
-            texture = content.Load<Texture2D>(asset_name);
-            this.rectangle = rectangle;
-
-            this.x = x;
-            this.y = y;
+            TypeTag = AIHelper.ElementType.CHODZACABOMBA;      
+            texture = content.Load<Texture2D>(asset_name);       
             current_direction = Game.direction.down;
             this.velocity = 30;
         }
@@ -126,8 +123,7 @@ namespace Game.Characters
 
         public void FireBomb(Map.Map map)
         {
-            map.setObject(x, y, new NonDestroyableObjects.Puste(content, this.Rectangle));
-            // map.RemoveCharacter(this);
+            map.setObject(x, y, new NonDestroyableObjects.Puste(content, this.Rectangle,x,y));
 
         }
 

@@ -21,6 +21,7 @@ namespace Game.NonDestroyableObjects
 
         public CiezkiMur(ContentManager content, Rectangle rectangle, int x, int y)
         {
+            TypeTag = AIHelper.ElementType.CIEZKIMUR;
             this.content = content;
             texture = content.Load<Texture2D>(asset_name);
             this.rectangle = rectangle;

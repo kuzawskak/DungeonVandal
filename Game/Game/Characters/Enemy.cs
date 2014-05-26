@@ -20,6 +20,12 @@ namespace Game.Characters
         //ograniczenia mapy - okreslaja granice po ktorych przeciwnik moze sie poruszac
         protected int max_height, max_width;
 
+
+        public Enemy(ContentManager content, Rectangle rectangle, int x, int y)
+            : base(content, rectangle, x, y)
+        {
+        }
+
         public void Move(Game.direction direction) {
             current_direction = direction;
 
@@ -58,10 +64,10 @@ namespace Game.Characters
             int new_x = x + add_x;
             int new_y = y + add_y;
             collision_obj = map.getObject(new_x, new_y);
-            if (collision_obj.GetType() == typeof(NonDestroyableObjects.Puste))
+            if (collision_obj.GetType() == typeof(NonDestroyableObjects.Puste) || collision_obj.GetType() == typeof(DestroyableObjects.Ziemia))
             {
                 map.setObject(new_x, new_y, this);
-                map.setObject(x, y, new NonDestroyableObjects.Puste(content, new Rectangle(x * this.rectangle.Width, y * this.rectangle.Height, this.rectangle.Width, this.rectangle.Height)));
+                map.setObject(x, y, new NonDestroyableObjects.Puste(content, new Rectangle(x * this.rectangle.Width, y * this.rectangle.Height, this.rectangle.Width, this.rectangle.Height),x,y));
                 x = new_x;
                 y = new_y;
             }

@@ -65,6 +65,21 @@ namespace Game.Settings
             }
         }
 
+
+        public Dictionary<State, Keys> ToMap()
+        {
+            Dictionary<State, Keys> dict = new Dictionary<State, Keys>();
+            dict.Add(State.UP, Up);
+            dict.Add(State.DOWN, Down);
+            dict.Add(State.LEFT, Left);
+            dict.Add(State.RIGHT, Right);
+            dict.Add(State.DYNAMITE, Dynamite);
+            dict.Add(State.BLOCK,Block);
+            dict.Add(State.RACKET, Racket);
+            return dict;
+
+        }
+
         /// <summary>
         /// W przypadku kilku predefiniowanych ustawien - konstruktor z numerem ustawien
         /// </summary>

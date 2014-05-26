@@ -11,16 +11,12 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Game.Weapon
 {
-    class Racket:Map.MapObject,Zniszczalny,Weapon
+    class Racket : Weapon, Zniszczalny
     {
-       
-        SoundEffect soundEffect;
+
         private string asset_name = "Textures\\racket";
-        private bool is_fired = false;
         private const int speed = 5;
         Game.direction direction;
-
-        private int i, j;
         /// <summary>
         /// Costructor for static racket (getting this racket gives racket_points)
         /// </summary>
@@ -31,15 +27,11 @@ namespace Game.Weapon
         /// <param name="x"> the initial rectangle x value</param>
         /// <param name="y"> the initail rectangle y value</param>
         public Racket(ContentManager content, Rectangle rectangle, int x, int y)
-        {           
-            soundEffect = content.Load<SoundEffect>("Audio\\found"); 
-            this.content = content;
-            texture = content.Load<Texture2D>(asset_name);
-            this.rectangle = rectangle;
-            this.x = x;
-            this.y = y;
-            IsAccesible = true;
-
+            : base(content, rectangle, x, y)
+        {
+            this.is_fired = false;
+            this.TypeTag = AIHelper.ElementType.RACKET;
+            this.texture = content.Load<Texture2D>(asset_name);
         }
 
         /// <summary>
@@ -52,117 +44,114 @@ namespace Game.Weapon
         /// <param name="x"> the initial rectangle x value</param>
         /// <param name="y"> the initail rectangle y value</param>
         /// <param name="direction">direction of the move</param>
-        public Racket(ContentManager content, Rectangle rectangle, int x, int y,Game.direction direction)
+        public Racket(ContentManager content, Rectangle rectangle, int x, int y, Game.direction direction)
+            : base(content, rectangle, x, y)
         {
-            is_fired = true;
+            this.is_fired = true;
             this.direction = direction;
-            soundEffect = content.Load<SoundEffect>("Audio\\found");
-            this.content = content;
+            this.TypeTag = AIHelper.ElementType.RACKET;
+
+
             switch (direction)
             {
                 case Game.direction.down:
-                    texture = content.Load<Texture2D>("vandal_down_inv");
+                    texture = content.Load<Texture2D>("Textures\\racket_down");
                     break;
                 case Game.direction.up:
-                    texture = content.Load<Texture2D>("vandal_up_inv");
+                    texture = content.Load<Texture2D>("Textures\\racket_up");
                     break;
                 case Game.direction.left:
-                    texture = content.Load<Texture2D>("vandal_left_inv");
+                    texture = content.Load<Texture2D>("Textures\\racket_left");
                     break;
                 case Game.direction.right:
-                    texture = content.Load<Texture2D>("vandal_right_inv");
+                    texture = content.Load<Texture2D>("Textures\\racket_right");
                     break;
 
             }
-            
-            this.rectangle = rectangle;
-            this.x = x;
-            this.y = y;
-            IsAccesible = true;
-
         }
 
-
-
-        public void OnFound( Map.Map map)
+        public override void OnFound(Map.Map map)
         {
-            soundEffect.Play();
+            this.found_soundEffect.Play();
             map.addPlayersRacket(1);
-            map.setObject(x, y,new NonDestroyableObjects.Puste(content, this.Rectangle));
-          
         }
-
 
 
 
         public override void Update(GameTime gametime, Map.Map map)
         {
-            if (is_fired)
+            if (gametime.TotalGameTime.Milliseconds % 20 == 0 && is_fired)
             {
 
-                int x_index = x;
-                int y_index = y;
-                if (map.getObject(x_index, y_index).GetType() != typeof(NonDestroyableObjects.Puste) && map.getObject(x_index, y_index)!=this)
-                {
-                    //explosion
-                    SoundEffect explosion_sound = content.Load<SoundEffect>("Audio\\explosion_sound");
-                    explosion_sound.Play();
-                    //TODO: dodac sprawdzanie czy nie wykraczamy indeksow w mapie i czy obiekt nie jest niezniszczalny
-                    //tak naprawde powinno sie to zmienic na wywolanie onDestroy dla kazdego z tych obiektow!!!!!!!!!!
-                    
-                    map.setObject(x_index - 1, y_index, new NonDestroyableObjects.Puste(content, new Rectangle((x_index - 1) * rectangle.Width, y_index * rectangle.Height, rectangle.Width, rectangle.Height)));
-                    map.setObject(x_index - 1, y_index + 1, new NonDestroyableObjects.Puste(content, new Rectangle((x_index - 1) * rectangle.Width, (y_index + 1) * rectangle.Height, rectangle.Width, rectangle.Height)));
-                    map.setObject(x_index - 1, y_index - 1, new NonDestroyableObjects.Puste(content, new Rectangle((x_index - 1) * rectangle.Width, (y_index - 1) * rectangle.Height, rectangle.Width, rectangle.Height)));
-                   
-                    map.setObject(x_index, y_index-1, new NonDestroyableObjects.Puste(content, new Rectangle((x_index) * rectangle.Width, (y_index-1) * rectangle.Height, rectangle.Width, rectangle.Height)));
-                    map.setObject(x_index, y_index+1, new NonDestroyableObjects.Puste(content, new Rectangle((x_index) * rectangle.Width, (y_index +1)* rectangle.Height, rectangle.Width, rectangle.Height)));
-                    map.setObject(x_index, y_index, new NonDestroyableObjects.Puste(content, new Rectangle((x_index) * rectangle.Width, y_index * rectangle.Height, rectangle.Width, rectangle.Height)));
-                    
-                    map.setObject(x_index + 1, y_index, new NonDestroyableObjects.Puste(content, new Rectangle((x_index + 1) * rectangle.Width, y_index * rectangle.Height, rectangle.Width, rectangle.Height)));
-                    map.setObject(x_index + 1, y_index + 1, new NonDestroyableObjects.Puste(content, new Rectangle((x_index + 1) * rectangle.Width, (y_index + 1) * rectangle.Height, rectangle.Width, rectangle.Height)));
-                    map.setObject(x_index + 1, y_index - 1, new NonDestroyableObjects.Puste(content, new Rectangle((x_index + 1) * rectangle.Width, (y_index + 1) * rectangle.Height, rectangle.Width, rectangle.Height)));
-                   
-                   
-                    map.setObject(this.x / Rectangle.Width, this.y / Rectangle.Height, new NonDestroyableObjects.Puste(content, new Rectangle((this.x / Rectangle.Width)*rectangle.Width, (this.y / Rectangle.Height)*rectangle.Height, rectangle.Width, rectangle.Height)));
-                }
-
-
+                int collision_x = x;
+                int collision_y = y;
                 switch (direction)
                 {
                     case Game.direction.down:
-                        texture = content.Load<Texture2D>("vandal_down_inv");
-                        rectangle.Y += speed;                     
+                        texture = content.Load<Texture2D>("Textures\\racket_down");
+                        collision_x = x;
+                        collision_y = y + 1;
                         break;
                     case Game.direction.up:
-                        texture = content.Load<Texture2D>("vandal_up_inv");
-                        rectangle.Y -= speed;
+                        texture = content.Load<Texture2D>("Textures\\racket_up");
+                        collision_x = x;
+                        collision_y = y - 1;
                         break;
                     case Game.direction.left:
-                        texture = content.Load<Texture2D>("vandal_left_inv");
-                        rectangle.X -= speed;
+                        texture = content.Load<Texture2D>("Textures\\racket_left");
+                        collision_x = x - 1;
+                        collision_y = y;
                         break;
                     case Game.direction.right:
-                        texture = content.Load<Texture2D>("vandal_right_inv");
-                        rectangle.X += speed;
+                        texture = content.Load<Texture2D>("Textures\\racket_right");
+                        collision_x = x + 1;
+                        collision_y = y;
                         break;
+                }
+
+                if (map.getObject(collision_x, collision_y).GetType() != typeof(NonDestroyableObjects.Puste) && map.getObject(collision_x, collision_y) != this)
+                {
+                    //explosion
+                     SoundEffect explosion_sound = content.Load<SoundEffect>("Audio\\explosion_sound");
+                     explosion_sound.Play();
+                     int vandal_x = map.GetVandal().x;
+                     int vandal_y = map.GetVandal().y;
+                    //TODO: dodac sprawdzanie czy nie wykraczamy indeksow w mapie i czy obiekt nie jest niezniszczalny
+                    //tak naprawde powinno sie to zmienic na wywolanie onDestroy dla kazdego z tych obiektow!!!!!!!!!!
+                    if(x-1!=vandal_x&&y!=vandal_y&&map.getObject(x-1,y) is Zniszczalny)
+                    map.setObject(x - 1, y, new NonDestroyableObjects.Puste(content, new Rectangle((x - 1) * rectangle.Width, y * rectangle.Height, rectangle.Width, rectangle.Height), x - 1, y));
+                    if (x - 1 != vandal_x && y+1 != vandal_y && map.getObject(x - 1, y+1) is Zniszczalny)
+                    map.setObject(x - 1, y + 1, new NonDestroyableObjects.Puste(content, new Rectangle((x - 1) * rectangle.Width, (y + 1) * rectangle.Height, rectangle.Width, rectangle.Height), x - 1, y + 1));
+                    if (x - 1 != vandal_x && y-1 != vandal_y && map.getObject(x - 1, y-1) is Zniszczalny)
+                    map.setObject(x - 1, y - 1, new NonDestroyableObjects.Puste(content, new Rectangle((x - 1) * rectangle.Width, (y - 1) * rectangle.Height, rectangle.Width, rectangle.Height), x - 1, y - 1));
+
+                    if (x  != vandal_x && y-1 != vandal_y && map.getObject(x , y-1) is Zniszczalny)
+                    map.setObject(x, y - 1, new NonDestroyableObjects.Puste(content, new Rectangle((x) * rectangle.Width, (y - 1) * rectangle.Height, rectangle.Width, rectangle.Height), x, y - 1));
+                    if (x  != vandal_x && y+1 != vandal_y && map.getObject(x , y+1) is Zniszczalny)
+                    map.setObject(x, y + 1, new NonDestroyableObjects.Puste(content, new Rectangle((x) * rectangle.Width, (y + 1) * rectangle.Height, rectangle.Width, rectangle.Height), x, y + 1));
+                    if (x  != vandal_x && y != vandal_y && map.getObject(x , y) is Zniszczalny)
+                    map.setObject(x, y, new NonDestroyableObjects.Puste(content, new Rectangle((x) * rectangle.Width, y * rectangle.Height, rectangle.Width, rectangle.Height), x, y));
+
+                    if (x + 1 != vandal_x && y != vandal_y && map.getObject(x + 1, y) is Zniszczalny)
+                    map.setObject(x + 1, y, new NonDestroyableObjects.Puste(content, new Rectangle((x + 1) * rectangle.Width, y * rectangle.Height, rectangle.Width, rectangle.Height), x + 1, y));
+                    if (x + 1 != vandal_x && y+1 != vandal_y && map.getObject(x + 1, y+1) is Zniszczalny)
+                    map.setObject(x + 1, y + 1, new NonDestroyableObjects.Puste(content, new Rectangle((x + 1) * rectangle.Width, (y + 1) * rectangle.Height, rectangle.Width, rectangle.Height), x + 1, y + 1));
+                    if (x + 1 != vandal_x && y -1!= vandal_y && map.getObject(x + 1, y-1) is Zniszczalny)
+                    map.setObject(x + 1, y - 1, new NonDestroyableObjects.Puste(content, new Rectangle((x + 1) * rectangle.Width, (y + 1) * rectangle.Height, rectangle.Width, rectangle.Height), x + 1, y - 1));
+
+                   // if (x != vandal_x && y  != vandal_y && map.getObject(x , y ) is Zniszczalny)
+                    map.setObject(x, y, new NonDestroyableObjects.Puste(content, this.rectangle, x, y));
+                }
+                else
+                {
+                    map.setObject(collision_x, collision_y, this);
+                    map.setObject(x, y, new NonDestroyableObjects.Puste(content, this.rectangle, x, y));
+                    this.x = collision_x;
+                    this.y = collision_y;
 
                 }
             }
-            else 
-            {
-                if (rectangle.Intersects(map.getVandalRectangle()))
-                    this.OnFound(map);
-            }
-
         }
-        public void OnDestroy(Map.Map map)
-        {
-            //oznacz odpowiednie pole jak puste
-            map.setObject(x, y, new NonDestroyableObjects.Puste(content, this.Rectangle));
-        
-        }
-
-        
 
 
     }

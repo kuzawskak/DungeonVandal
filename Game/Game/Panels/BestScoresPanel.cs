@@ -14,6 +14,9 @@ using XMLManager.XMLObjects;
 
 namespace Game.Panels
 {
+    /// <summary>
+    /// Panel najlepszych wyników dla wybranego poziomu
+    /// </summary>
     public partial class BestScoresPanel : UserControl
     {
         /// <summary>
@@ -22,6 +25,18 @@ namespace Game.Panels
         public BestScoresPanel()
         {
             InitializeComponent();
+            //brak najlepszych wyników dla danego poziomu
+            for (int wiersz = 1; wiersz <= 5; wiersz++)
+            {
+                for (int kolumna = 0; kolumna <= 2; kolumna++)
+                {
+                    Label l = new Label();
+                    l.Text = "";
+                    l.Anchor = AnchorStyles.None;
+                    l.Size = new Size(200, 50);
+                    ScoresTableLayoutPanel.Controls.Add(l, kolumna, wiersz);
+                }
+            }
         }
 
         /// <summary>
@@ -34,47 +49,44 @@ namespace Game.Panels
             IAsyncResult result = StorageDevice.BeginShowSelector(PlayerIndex.One, null, null);
             //załadowanie pliku z wynikami dla odpowiedniego poziomu
             HighScores.HighScoreData saved_data = HighScores.LoadHighScores(result, level_number);
-            if (saved_data.Count == 0)
-            {
-                //brak najlepszych wyników dla danego poziomu
+           
+            
                 for (int wiersz = 1; wiersz <= 5; wiersz++)
                 {
-                    for (int kolumna = 0; kolumna <= 0; kolumna++)
+                    for (int kolumna = 0; kolumna <= 2; kolumna++)
                     {
-                        Label l = new Label();
+                        Label l = (Label)ScoresTableLayoutPanel.GetControlFromPosition(kolumna, wiersz);
                         l.Text = "";
-                        ScoresTableLayoutPanel.Controls.Add(l, kolumna, wiersz);
+                       
                     }
                 }
 
-            }
-            else
+            
+            if (saved_data.Count != 0)
             {
 
                 for (int wiersz = 1; wiersz <= saved_data.Count; wiersz++)
                 {
                     for (int kolumna = 0; kolumna < 3; kolumna++)
                     {
-                        Label l = new Label();
-                        l.Anchor = AnchorStyles.None;
-                        l.Size = new Size(200, 50);
+                             Label label = (Label)ScoresTableLayoutPanel.GetControlFromPosition(kolumna, wiersz);
+                  
 
                         if (kolumna == 0)
                         {
 
-                            l.Text = saved_data.PlayerName[wiersz - 1];
+                            label.Text = saved_data.PlayerName[wiersz - 1];
 
                         }
                         else if (kolumna == 1)
                         {
-                            l.Text = saved_data.Time[wiersz - 1];
+                            label.Text = saved_data.Time[wiersz - 1];
                         }
                         else if (kolumna == 2)
                         {
-                            l.Text = saved_data.Score[wiersz - 1].ToString();
-                        }
-
-                        ScoresTableLayoutPanel.Controls.Add(l, kolumna, wiersz);
+                            label.Text = saved_data.Score[wiersz - 1].ToString();
+                        }                   
+                        
                     }
                 }
             }
@@ -89,8 +101,8 @@ namespace Game.Panels
         private void exitButton_Click(object sender, EventArgs e)
         {
             this.Visible = false;
+           
             ((MenuForm)Parent).choose_level_panel.Visible = true;
-            ((MenuForm)Parent).choose_level_panel.Focus();
 
         }
     }

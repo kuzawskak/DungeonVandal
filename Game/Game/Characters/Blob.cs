@@ -22,15 +22,11 @@ namespace Game.Characters
         const string asset_name = "Textures\\blob";
 
 
-        public Blob(ContentManager content, Rectangle rectangle, int x, int y)
+        public Blob(ContentManager content, Rectangle rectangle, int x, int y):base(content,rectangle,x,y)
         {
-            this.content = content;
+            TypeTag = AIHelper.ElementType.BLOB;
             texture = content.Load<Texture2D>(asset_name);
-            this.rectangle = rectangle; 
-            this.x = x;
-            this.y = y;
             current_direction = Game.direction.down;
-            this.velocity = 30;
         }
 
         public void Move(Map.Map map)

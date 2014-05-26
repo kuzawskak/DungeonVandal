@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace XMLManager.XMLObjects
 {
+    /// <summary>
+    /// Klasa potzrebna do zapisy ustawień gracza
+    /// </summary>
     class Settings
     {
         /// <summary>
@@ -36,8 +39,6 @@ namespace XMLManager.XMLObjects
             public int MusicVolume;
             public bool isMuted;
             public int MaxEnabledLevel;
-            public int BrightnessRatio;
-            public int ContrastRatio;
             public Keys UpKey;
             public Keys DownKey;
             public Keys RightKey;
@@ -47,14 +48,12 @@ namespace XMLManager.XMLObjects
             public Keys RacketKey;
             public Keys PauseKey;
 
-            public SettingsData(int maxlevel, int audio, int music, bool mute, int bright, int contrast, Keys u, Keys d, Keys r, Keys l, Keys blo, Keys dyn, Keys rac, Keys pau)
+            public SettingsData(int maxlevel, int audio, int music, bool mute, Keys u, Keys d, Keys r, Keys l, Keys blo, Keys dyn, Keys rac, Keys pau)
             {
                 MaxEnabledLevel = maxlevel;
                 AudioVolume = audio;
                 MusicVolume = music;
                 isMuted = mute;
-                BrightnessRatio = bright;
-                ContrastRatio = contrast;
                 UpKey = u;
                 DownKey = d;
                 RightKey = r;
@@ -71,8 +70,6 @@ namespace XMLManager.XMLObjects
                 AudioVolume = 5;
                 MusicVolume = 5;
                 isMuted = false;
-                BrightnessRatio = 5;
-                ContrastRatio = 5;
                 UpKey = Keys.W;
                 DownKey = Keys.S;
                 RightKey = Keys.R;
